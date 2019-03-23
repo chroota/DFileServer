@@ -1,0 +1,217 @@
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <string>
+// #include <iostream>
+
+// class father
+// {
+// private:
+// 	/* data */
+// public:
+// 	father(/* args */);
+// 	~father();
+// 	virtual void handle()=0;
+// };
+
+// father::father(/* args */)
+// {
+// }
+
+// father::~father()
+// {
+// }
+
+// class son:father
+// {
+// private:
+// 	/* data */
+// public:
+// 	son(/* args */);
+// 	~son();
+
+// 	void handle(){
+// 		printf("son son ....");
+// 	}
+// };
+
+// son::son(/* args */)
+// {
+// }
+
+// son::~son()
+// {
+// }
+
+
+
+// int main(){
+// //	perror("fuck!!\n");
+// //	exit(-1);
+// 	//printf("test");
+// 	// son s;
+// 	// s.handle();
+
+// 	// char buf[500];
+// 	// char *x = buf;
+
+// 	char str[100] = "123--141";
+// 	//char *str2 = "123--141";
+// 	//printf("%d\n", str==str2);
+
+// 	//return 1;
+// 	//char *pstr = strsep((char **) &str, "-");
+
+// 	// char *q = str;
+// 	// char *p = strsep(&q, "--");
+
+// 	std::string s(str, str+5);
+// 	std::cout<<s<<std::endl;
+
+
+// 	//puts(p);
+// 	//puts(p+1);
+
+// 	//printf("%d\n", pstr);
+// }
+
+// #include <fstream>
+// #include <openssl/md5.h>
+// #include <string>
+// #include <stdlib.h>
+// #include <memory.h>
+// using std::string;
+
+// int get_file_md5(const std::string &file_name, std::string &md5_value)
+// {
+//     md5_value.clear();
+
+//     std::ifstream file(file_name.c_str(), std::ifstream::binary);
+//     if (!file)
+//     {
+//         return -1;
+//     }
+
+//     MD5_CTX md5Context;
+//     MD5_Init(&md5Context);
+
+//     char buf[1024 * 16];
+//     while (file.good()) {
+//         file.read(buf, sizeof(buf));
+//         MD5_Update(&md5Context, buf, file.gcount());
+//     }
+
+//     unsigned char result[MD5_DIGEST_LENGTH];
+//     MD5_Final(result, &md5Context);
+
+//     char hex[35];
+//     memset(hex, 0, sizeof(hex));
+//     for (int i = 0; i < MD5_DIGEST_LENGTH; ++i)
+//     {
+//         sprintf(hex + i * 2, "%02x", result[i]);
+//     }
+//     hex[32] = '\0';
+//     md5_value = string(hex);
+
+//     return 0;
+// }
+
+// int main(int argc, char* argv[])
+// {
+//     string file_name = "./t.txt";
+//     string md5value;
+//     int ret = get_file_md5(file_name, md5value);
+//     if (ret < 0){
+// 	  printf("get file md5 failed. file=%s\n", file_name.c_str());
+// 	  return -1;
+// 	}
+// 	printf("%d\n", md5value.size());
+//     printf("the md5value=%s\n", md5value.c_str());
+// }
+
+
+// #include<stdio.h>
+// #include<stdlib.h>
+// #include<string.h>
+// #include <time.h>
+ 
+ 
+ 
+// int main(void)
+// {
+ 
+// 	time_t t;
+// 	t = time(NULL);
+ 
+// 	int ii = time(&t);
+// 	printf("ii = %d\n", ii);
+// 	system("pause");
+// 	return 0;
+// 	/*
+// 	ii = 1516020076
+// 	请按任意键继续. . .
+// 	*/
+// }
+
+
+// #include <stdio.h>
+// #include <sys/timeb.h>
+// #include <sys/types.h>
+
+// long long getSystemTime()
+// {
+// 	struct timeb t;
+	
+// 	ftime(&t);
+	
+// 	return 1000*t.time + t.millitm;
+// }
+
+// int main()
+// {
+// 	long long start = getSystemTime();
+	
+// 	printf("start = %lld\n",start);
+	
+// 	return 0;
+// }
+
+// #include <string>
+// #include <iostream>
+// using namespace std;
+
+// int main(){
+// 	string s;
+// 	s.push_back(67);
+// 	cout<<s.length()<<endl;
+// }
+
+// #include <stdio.h>
+
+// int main(){
+//     char name[100];
+//     int idx;
+//     int first_bro_idx;
+//     int fa_idx;
+//     int son_idx;
+//     FILE *fp = fopen("./vfr.txt", "r");
+//     while(!feof(fp)){
+//         fscanf(fp, "%d %s %d %d %d", &idx, name, &fa_idx, &first_bro_idx, &son_idx);
+//         printf("%d %s %d %d %d\n", idx, name, fa_idx, first_bro_idx, son_idx);
+//     }
+// }
+
+
+#include <time.h> 
+#include <memory.h> 
+#include <stdio.h>
+
+int main()
+{
+    time_t t;
+    struct timespec ts;
+    memset(&ts, 0, sizeof(ts));
+    clock_gettime(CLOCK_REALTIME, &ts);
+    printf("%d----->%d\n", ts.tv_sec, ts.tv_nsec);
+    return 0;
+}

@@ -1,0 +1,92 @@
+package Msg;
+
+enum MsgType
+{
+  Join_Request  = 0x01;
+  Join_Response = 0x02;
+  UpdateStatus_Request = 0x03;
+  UpdateStateHash_Request = 0x04;
+  GetStateNode_Request = 0x05;
+  GetStateNode_Response = 0x06;
+  Common_Response = 0x07;
+  MasterNotifyCmd_Request = 0x08;
+  DataSync_Post = 0x09;
+}
+
+enum FileCMDType
+{
+    ADD_OP  = 0x01;
+    DEL_OP  = 0x02;
+    MOD_OP  = 0x03;
+    READ_OP = 0x04;
+}
+
+enum MsgResStatus{
+    MSG_RES_OK = 0x01;
+    MSG_RES_ERROR = 0x02;
+}
+
+message JoinRequest{
+    required string name = 1;
+    required string ip = 2;
+}
+
+message UpdateStatusRequest{
+    required string name = 1;
+    required int32 status = 2;
+}
+
+message UpdateStateHashRequest{
+    required string name = 1;
+    required string hash = 2;
+}
+
+message GetStateNodeRequest{
+    required string name = 1;
+}
+
+message GetStateNodeResponse{
+    optional string name = 1;
+    optional string ip = 2;
+    optional string hash = 3;
+}
+
+message MasterNotifyCmdRequest{
+    required FileCMDType operation = 1;
+    required string file_path = 2;
+    required string hash = 3;
+}
+
+message DataSyncPost{
+    
+}
+
+message Request 
+{
+    optional JoinRequest join = 1;
+    optional UpdateStatusRequest update_status = 2;
+    optional GetStateNodeRequest get_state_node = 3;
+    optional UpdateStateHashRequest state_hash = 4;
+}
+
+// message VFs
+
+
+message Response 
+{
+  required bool status = 1;
+  optional string info = 2;
+//   required bool last_block = 3;
+//   required fixed32 block_index = 4;
+  optional GetStateNodeResponse state_node = 3;
+}
+
+
+message Message
+{
+   required MsgType type = 1;
+   optional Request request = 2;
+   optional Response response = 3;
+//    optional Command  command = 5;
+//    optional Indication indication = 6;
+}
