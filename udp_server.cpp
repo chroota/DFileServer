@@ -15,7 +15,7 @@ int UdpServer::createSock(int port){
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = INADDR_ANY;
 
-    int ret =bind(sockfd,(struct sockaddr*)&addr,sizeof(addr));
+    int ret = bind(sockfd,(struct sockaddr*)&addr,sizeof(addr));
     if(ret < 0)
     {
         printf("bind error\n");
@@ -24,13 +24,14 @@ int UdpServer::createSock(int port){
     return sockfd;
 }
 
-bool UdpServer::start(int port, bool isResponse){
+bool UdpServer::start(int port){
     int sockfd = createSock(port);
     sockaddr_in client_addr;
     socklen_t len = sizeof(client_addr);
 
     char recvbuf[MAXBUFSIZE];
     char sendbuf[MAXBUFSIZE];
+    bool isResponse = true;
 
     while(true){
         memset(sendbuf, 0, MAXBUFSIZE);
@@ -38,9 +39,10 @@ bool UdpServer::start(int port, bool isResponse){
         int send_len = 0;
         recvfrom(sockfd, recvbuf, sizeof(recvbuf), 0, (struct sockaddr*)&client_addr, &len);
         //printf("%d\n", strlen(recvbuf));
-        handle(recvbuf, strlen(recvbuf), sendbuf, send_len);
+        handle(recvbuf, strlen(recvbuf), sendbuf, send_len, isResponse);
+        if(isResponse){
+            sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&client_addr, len);
+        }
         // sprintf(recvbuf, "recieve success");
-        if (!isResponse) continue;
-        sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&client_addr, len);
     }
 }

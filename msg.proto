@@ -10,15 +10,23 @@ enum MsgType
   GetStateNode_Response = 0x06;
   Common_Response = 0x07;
   MasterNotifyCmd_Request = 0x08;
-  DataSync_Post = 0x09;
+  NewFile_Request = 0x09;
+  NewFile_Response = 0x0a;
+  File_Post = 0x0b;
+}
+
+enum FileType{
+    FT_FILE = 0x01;
+    FT_DIR = 0x02;
 }
 
 enum FileCMDType
 {
-    ADD_OP  = 0x01;
-    DEL_OP  = 0x02;
-    MOD_OP  = 0x03;
-    READ_OP = 0x04;
+    NEW_OP  = 0x01;
+    RM_OP  = 0x02;
+    MV_OP  = 0x03;
+    GET_OP = 0x04;
+    LS_OP = 0x05;
 }
 
 enum MsgResStatus{
@@ -57,8 +65,26 @@ message MasterNotifyCmdRequest{
     required string hash = 3;
 }
 
-message DataSyncPost{
-    
+message NewFileRequest{
+    required string name = 1;
+    required FileType type = 2;
+    required int32 total_pack_size = 3;
+    required int32 total_file_size = 4;
+}
+
+message NewFileResponse{
+    optional int32 post_session_id = 1;
+}
+
+message FilePost{
+    required string name = 1;
+    required int64 post_session_id = 2;
+    required int32 pack_idx = 3;
+    required int32 file_idx = 4;
+    required bytes data = 5;
+    required int32 data_size = 6;
+    // required int32 total_size = 5;
+    // required FileType type = 2;
 }
 
 message Request 
@@ -67,6 +93,7 @@ message Request
     optional UpdateStatusRequest update_status = 2;
     optional GetStateNodeRequest get_state_node = 3;
     optional UpdateStateHashRequest state_hash = 4;
+    optional NewFileRequest file = 5;
 }
 
 // message VFs
@@ -76,9 +103,8 @@ message Response
 {
   required bool status = 1;
   optional string info = 2;
-//   required bool last_block = 3;
-//   required fixed32 block_index = 4;
   optional GetStateNodeResponse state_node = 3;
+  optional NewFileResponse new_file_response = 4;
 }
 
 
@@ -87,6 +113,7 @@ message Message
    required MsgType type = 1;
    optional Request request = 2;
    optional Response response = 3;
+   optional FilePost file_post = 4;
 //    optional Command  command = 5;
 //    optional Indication indication = 6;
 }

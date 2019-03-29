@@ -3,46 +3,87 @@
 #include <thread>
 #include <mutex>
 #include <iostream>
+#include <chrono>
+#include <fstream>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #include "common.hpp"
 #include "defines.hpp"
 #include "msg.pb.h"
-#include <chrono>
 #include "node_server.hpp"
 #include "vvfs.hpp"
 
 using namespace std;
+
+struct FileSaver{
+private:
+    //FILE *fp;
+    string savePath;
+    Msg::FileType type;
+    int totalFileSize;
+    int totalPackSize;
+    ofstream *pOutput;
+    int recvChunkCount = 0;
+    vector<int> *pRecvFlag;
+public:
+    FileSaver(){};
+    FileSaver(const string &savePath, Msg::FileType type, int totalFileSize, int totalPackSize){
+        this->type = type;
+        this->totalFileSize = totalFileSize;
+        this->totalPackSize = totalPackSize;
+        this->savePath = savePath;
+    };
+    ~FileSaver(){
+        delete pOutput;
+        delete pRecvFlag;
+    };
+
+    bool open(string &err);
+
+    bool writeChunk(const string &data, int fileIdx, int packIdx, string &err);
+
+    bool isComplete(){
+        return recvChunkCount == totalPackSize;
+    }
+};
+
+// udp data server
+class UdpFileServer:UdpServer{
+    public:
+        UdpFileServer(Vvfs *pVvfs){
+            this->pVvfs = pVvfs;
+            //pVvfs->vfrsTest();
+            //cout<<"vfrs test"<<endl;
+        };
+        ~UdpFileServer(){};
+        // null function
+        bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse);
+        bool createNewFile(const string &name, Msg::FileType type, int totalFileSize, int totalPackSize, char sendbuf[], int &sendLen);
+        bool recvChunk(const string &name, int sessionId, int fileIdx, int packIdx, const string & data);
+        bool listen(int port);
+        bool test();
+    private:
+        // map<string, vector<int>> fileRecvStatus;
+        map<string, FileSaver> savers;
+        map<string, int> sessions;
+        Logger logger;
+        Vvfs *pVvfs;
+
+        int getSessionId(){
+            srand((unsigned int)(time(NULL)));
+            return rand()/10000;
+        }
+};
+
 
 struct Master{
     string host;
     int port;
 };
 
-
-// udp data server
-class UdpDataServer:UdpServer{
-    public:
-        bool start();
-        bool handle(char recvbuf[], int recv_len);
-    private:
-        map<string, vector<int>> fileRecvStatus;
-};
-
 class NodeSync
 {
-public:
-    enum sync_status{
-        sync_state,
-        sync_file,
-        sync_ok
-    };
-
-    NodeSync(){};
-    ~NodeSync(){};
-
-    // bool join();
-    void start();
-
 private:
     void syncStateFn();
     void keepAliveFn();
@@ -55,7 +96,8 @@ private:
     bool getStateNode();
     void checkFileSync();
     bool handle(char recvbuf[], int recv_len, char sendbuf[], int &send_len);
-    bool buildMyFs();
+    bool createVFS();
+    bool createFileServer();
 
     string state_hash;
     Logger logger;
@@ -69,5 +111,22 @@ private:
     string myName;
     string myStateHash;
     // NodeServer server;
-    Vvfs vvfs;
+    Vvfs *pVvfs;
+    UdpFileServer *pFileServer;
+
+public:
+    enum sync_status{
+        sync_state,
+        sync_file,
+        sync_ok
+    };
+
+    NodeSync(){};
+    ~NodeSync(){
+        if(pFileServer) delete pFileServer;
+        if(pVvfs) delete pVvfs;
+    };
+
+    // bool join();
+    void start();
 };

@@ -2,7 +2,14 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <string>
+#include <fstream>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "msg.pb.h"
+#include "defines.hpp"
+#include "logger.hpp"
+#include "common.hpp"
 
 
 #define NEW_FILE "new"
@@ -16,7 +23,10 @@ using namespace std;
 class VvfsTp
 {
 private:
-
+    Logger logger;
+    string host;
+    int port;
+    
 public:
     VvfsTp(){};
     ~VvfsTp(){};
@@ -34,4 +44,6 @@ public:
     }
 
     void run(int argc, char *argv[]);
+    bool newFile(const string & localPath, const string & rmotePath, string & err);
+    bool init();
 };

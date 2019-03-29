@@ -15,7 +15,6 @@ long long getSystemTime()
 	return 1000*t.time + t.millitm;
 }
 
-
 void ssplit(const string& s, vector<string>& sv, const char flag) {
     sv.clear();
     istringstream iss(s);
@@ -52,7 +51,7 @@ string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH){
 
 
 // udp server
-bool urequest(const char * host, int port,const char sendbuf[], int send_len, char recvbuf[], int *recv_len)
+bool urequest(const char * host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
 {
 	int sockfd = socket(AF_INET,SOCK_DGRAM,0);
     struct sockaddr_in addr;
@@ -60,15 +59,32 @@ bool urequest(const char * host, int port,const char sendbuf[], int send_len, ch
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = inet_addr(host);
     socklen_t len = sizeof(addr);
-    sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len);
-    *recv_len = recvfrom(sockfd, recvbuf, MAXBUFSIZE,0,(struct sockaddr*)&addr,&len);
+    if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
+        return false;
+    }
+    recv_len = recvfrom(sockfd, recvbuf, MAXBUFSIZE,0,(struct sockaddr*)&addr,&len);
 	return true;
 }
 
 
-bool urequest(const string  & host, int port,const char sendbuf[], int send_len, char recvbuf[], int *recv_len)
+bool urequest(const string  & host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
 {
     return urequest(host.c_str(), port, sendbuf, send_len, recvbuf, recv_len);
+}
+
+bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len)
+{
+    int sockfd = socket(AF_INET,SOCK_DGRAM,0);
+    struct sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port);
+    addr.sin_addr.s_addr = inet_addr(host);
+    socklen_t len = sizeof(addr);
+    // sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len);
+    if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
+        return false;
+    }
+    return true;
 }
 
 
@@ -184,6 +200,44 @@ bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * 
     return true;
 }
 
+
+// bool NewFileMsgResInst(Msg::Message & msg, Msg::MsgResStatus status, int postessionId, const char * info){
+    
+// }
+
+
+bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize){
+    msg.set_type(Msg::NewFile_Request);
+    msg.mutable_request()->mutable_file()->set_name(name);
+    msg.mutable_request()->mutable_file()->set_type(type);
+    msg.mutable_request()->mutable_file()->set_total_file_size(totalFileSize);
+    msg.mutable_request()->mutable_file()->set_total_pack_size(totalPackSize);
+    return true;
+}
+
+
+//
+bool NewFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, int postSessionId, const char * info){
+    msg.set_type(Msg::NewFile_Response);
+    msg.mutable_response()->set_info(info);
+    msg.mutable_response()->set_status(status);
+    msg.mutable_response()->mutable_new_file_response()->set_post_session_id(postSessionId);
+    return true;
+}
+
+
+// file transfer
+bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionid)
+{
+    msg.set_type(Msg::File_Post);
+    msg.mutable_file_post()->set_name(name);
+    msg.mutable_file_post()->set_data(buf);
+    msg.mutable_file_post()->set_file_idx(fileIndx);
+    msg.mutable_file_post()->set_pack_idx(packIndx);
+    msg.mutable_file_post()->set_data_size(dataSize);
+    msg.mutable_file_post()->set_post_session_id(postSesionid);
+    return true;
+}
 
 
 /*

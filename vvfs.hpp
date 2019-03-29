@@ -19,8 +19,9 @@
 using  namespace std;
 
 enum FileType{
-    VFT_FILE = 0,
-    VFT_DIR = 1
+    VFT_TXT = 0,
+    VFT_BIN = 1,
+    VFT_DIR = 2
 };
 
 // work mode
@@ -53,14 +54,14 @@ struct VFRelation{
 class VFile
 {
 private:
-    FileType _type = VFT_FILE;
+    FileType _type = VFT_TXT;
     string _name = "";
     string _disk_path = "";
     // string _disk_name = "";   // todo diskname
     off_t _size = 0;       // for dir: number of chidren; for file: size of file
     string _hash = "";       // todo
     struct timespec _mtime;
-    bool active = 0;        // 1:active 0:dead
+    bool status = 0;        // 1:active 0:dead
 public:
     // int idx;
     // int fa_idx = -1;        //father idx
@@ -76,7 +77,6 @@ public:
         {
             //todo hash compute
             _hash = Hash(type, path, size, mtime, fa_idx, idx, next_bro_idx, first_son_idx, last_son_idx);
-            active = 1;
         };    
     
     
@@ -92,6 +92,11 @@ public:
 
     FileType getType(){
         return _type;
+    }
+
+    bool active(){
+        status = 1;
+        return true;
     }
 
     bool setType(FileType type){
@@ -122,7 +127,7 @@ public:
 
     //file destory 
     bool destory(){
-        active = 0;
+        status = 0;
         return true;
     }
 
@@ -138,18 +143,18 @@ public:
 class Vvfs
 {
 private:
-    string vfsPath;
     int num;   //file nums
     vector<VFile> vFiles;
     // map<string, int> fileNameIdxMap;
     string vFRConfigFile = "";
-    map<string, VFRelation> vfrs;
+    map<string, VFRelation> vRelations;
     string hash = "";
     Logger logger;
     MD5pkg mpkg;
 public:
     Vvfs(){};
     ~Vvfs(){};
+    string vfsPath;
     Vvfs(const string & path){
         initConfig();
         this->vfsPath = path;
@@ -162,7 +167,6 @@ public:
     int allocIdx(){
         return vFiles.size();
     }
-
     bool buildVFS();
     bool refreshVFS();
     bool buildVFSByScanDir();
@@ -170,12 +174,14 @@ public:
     // bool buildVFs();
     bool updateVF(const string &name);
     bool initHash();
-    bool watchVFs();
+    bool watchVFS();
     bool buildVFR();   //build vfs relation
     bool initConfig();
     bool mkVDir(const string &name, string &err);   //create dir
-    bool newVF(const string &name, string &err, FileType type=VFT_FILE); //create file
+    bool newVF(const string &name, string &err, FileType type=VFT_TXT); //create file
     bool rmVF(const string &name, string &err);
     bool mvVF(const string &srcPath, const string &dstPath, string &err);
     bool lsVF(const string &name, string & fileList, string &err);
+    bool activeVF(const string &name, string &err);
+    bool createRootVF();
 };

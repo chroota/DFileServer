@@ -39,8 +39,9 @@ void ssplit(const string& s, vector<string>& sv, const char flag = ' ');
 string getBufMD5(const void * buf, int len);
 string getMD5string(unsigned char buf[], int len);
 
-bool urequest(const char * host, int port, const char sendbuf[], int send_len, char recvbuf[], int * recv_len);
-bool urequest(const string & host, int port, const char sendbuf[], int send_len, char recvbuf[], int * recv_len);
+bool urequest(const char * host, int port, const char sendbuf[], int send_len, char recvbuf[], int & recv_len);
+bool urequest(const string & host, int port, const char sendbuf[], int send_len, char recvbuf[], int & recv_len);
+bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len);
 
 // msg package
 Msg::Message JoinMsgReqInst(const char * name, const char * ip);
@@ -57,8 +58,16 @@ bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * 
 bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & ip, const string & hash);
 bool GetStateNodeMsgResErrorInst(Msg::Message & msg, const char * info);
 Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info);
-
 // common response
 bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info);
 
+
+bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize);
+
+// create new file, allocate a session id for VvfsTP client
+bool NewFileMsgResInst(Msg::Message & msg, Msg::MsgResStatus status, int postessionId, const char * info);
+// Msg::Message NewFileMsgResInst(Msg::MsgResStatus status, int postessionId, const char * info);
 // Msg::Message GetStateNodeMsgInst();
+
+//file post msg
+bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionid);

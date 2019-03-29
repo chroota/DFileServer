@@ -1,3 +1,2 @@
-break /home/jx/FileServer/vvfs.cpp:51
-break /home/jx/FileServer/vvfs.cpp:54
+break /home/jx/FileServer/node_sync.cpp:228
 

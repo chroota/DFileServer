@@ -202,6 +202,7 @@
 // }
 
 
+/*
 #include <time.h> 
 #include <memory.h> 
 #include <stdio.h>
@@ -214,4 +215,159 @@ int main()
     clock_gettime(CLOCK_REALTIME, &ts);
     printf("%d----->%d\n", ts.tv_sec, ts.tv_nsec);
     return 0;
+}
+*/
+
+//例子1：以二进制模式打开并写入文件
+// #include <stdio.h>
+// #include <iostream>
+// #include <fstream>
+// #include <stdlib.h>
+// #include <time.h>
+// using namespace std;
+
+
+// void copyFile(const string & srcPath, const string &dstPath){
+//     // ifstream input(srcPath.c_str(), ios::binary);
+//     ofstream output(dstPath.c_str(), ios::binary);
+//     int num = 10;
+//     srand(time(NULL));
+//     while(num-- >= 0){
+//         //cout<<rand()%255<<" ";
+//         char v = rand()%255;
+//         cout<<(short)v<<" ";
+//         output.write(&v, 1);
+//     }
+//     cout<<" "<<endl;
+//     output.close();
+//     //return ;
+//     ifstream input(dstPath.c_str(), ios::binary);
+//     char buf[1];
+//     while(!input.eof()){
+//         input.read(buf, 2);
+//         cout<<input.tellg()<<endl;
+//         // cout<<(short)*buf<<" "<<;
+//         // buf[9] = 0;
+//         // cout<<buf<<" ";
+//     }
+//     cout<<" "<<endl;
+
+//     // while(input.){
+
+//     // }
+// }
+
+// int main()
+// {
+//     // int m=97;
+//     // char s[] = "中国\n";
+//     // FILE *fp = fopen("testBin.txt","w");   //二进制模式
+//     // if(NULL == fp )
+//     // {
+//     //     return -1;
+//     // }
+//     // int successCont=fwrite(&m,sizeof(int),1,fp);
+//     // if(successCont!=1)
+//     //     cout<<"error"<<std::endl;
+//     // fwrite(s,sizeof(char),sizeof(s),fp);
+//     // fprintf(fp,"%d",m);   //格式化输出
+//     // fclose(fp);
+//     copyFile("./testBin.txt", "dstBin.txt");
+//     return 1;
+
+// }
+
+
+
+
+
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+namespace n_class {
+	class Vvfs
+	{
+	public:
+		Vvfs() {};
+		~Vvfs() {};
+
+		void mTest() {
+			cout << m.size() << endl;
+		}
+		map<string, int> m;
+	private:
+
+	};
+
+	class UdpServer
+	{
+	public:
+		UdpServer() {};
+		~UdpServer() {};
+		virtual void h() = 0;
+	private:
+
+	};
+
+	class FileServer:UdpServer
+	{
+	public:
+		FileServer(Vvfs *pVvfs) {
+			this->pVvfs = pVvfs;
+		};
+		~FileServer() {};
+		void h() {};
+		void listen() {
+			pVvfs->mTest();
+		};
+	private:
+		Vvfs *pVvfs;
+	};
+
+	class NodeSync
+	{
+	public:
+		NodeSync() {};
+		~NodeSync() {
+			if(pFileServer) delete pFileServer;
+        	if(pVvfs) delete pVvfs;
+		};
+		void createVFS() {
+			pVvfs = new Vvfs();
+		};
+		void createFileServer() {
+			pFileServer = new FileServer(pVvfs);
+		}
+
+		void start() {
+			createVFS();
+			createFileServer();
+			pFileServer->listen();
+		}
+	private:
+		Vvfs *pVvfs;
+		FileServer *pFileServer;
+	};
+
+	void test_main() {
+		NodeSync node;
+		node.start();
+		//node.createVFS();
+		//node.createFileServer();
+	}
+}
+
+
+int i = 0;
+int func(){
+	cout<<"func"<<endl;
+	return i++;
+}
+
+int main(){
+   // n_class::test_main();
+//    cout<<"123"<<endl;
+	cout<<i<<endl;
 }

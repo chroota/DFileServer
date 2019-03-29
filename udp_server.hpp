@@ -20,7 +20,7 @@ private:
 public:
     UdpServer();
     ~UdpServer();
-    bool start(int port, bool isResponse = true);
-    virtual bool handle(char recvbuf[], int recv_len, char sendbuf[], int &send_len)=0;
-    virtual bool handle(char recvbuf[], int recv_len)=0;
+    bool start(int port);
+    virtual bool handle(char recvbuf[], int recv_len, char sendbuf[], int &send_len, bool &isResponse)=0;
+    // virtual bool handle(char recvbuf[], int recv_len)=0;
 };
