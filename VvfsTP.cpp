@@ -99,7 +99,6 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
     while(!ifs.eof()){
         while(true){
             fileIndex = ifs.tellg();
-            
             try
             {
                 ifs.read(databuf, TRANS_CHUNK_SIZE);
@@ -110,14 +109,19 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
             }
             // cout<<"read data:"<<databuf<<endl;
 
-            FileChunkPostMsgInst(chunkPostMsg, localPath, databuf, fileIndex, packIdx,TRANS_CHUNK_SIZE, postSessionId);
+            FileChunkPostMsgInst(sendMsg, localPath, databuf, fileIndex, packIdx, TRANS_CHUNK_SIZE, postSessionId);
             // break;
             // msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
-            // sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+            if(strlen(sendbuf) >= MAXBUFSIZE){
+                logger.log("size of sendbuf larger than MAXBUFSIZE!");
+                return false;
+            }
+            sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
             // chunkPostMsg.SerializeToArray(chunkMsgBuf, MAXBUFSIZE);
-            bool serSuccess = chunkPostMsg.SerializePartialToArray(chunkMsgBuf, MAXBUFSIZE);
-            cout << serSuccess << endl;
-            cout << "send len:"<< strlen(chunkMsgBuf) << " " << "type:" << chunkPostMsg.type() << "content:"<< chunkPostMsg.file_post().data() << endl;
+            // bool serSuccess = chunkPostMsg.SerializePartialToArray(chunkMsgBuf, MAXBUFSIZE);
+            // cout << serSuccess << endl;
+            // cout << "send len:"<< strlen(chunkMsgBuf) << " " << "type:" << chunkPostMsg.type() << endl;
+            cout << "send len:"<< strlen(sendbuf) << " " << "type:" << sendMsg.type() << endl;
             return false;
             // urequestNoResponse(host.c_str(), port, sendbuf, strlen(sendbuf));
             urequest(host.c_str(), port, chunkMsgBuf, strlen(chunkMsgBuf), recvBuf, recvLen);

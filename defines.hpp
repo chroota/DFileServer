@@ -28,8 +28,8 @@
 //max file nums of writing of filesaver
 #define MAX_OPEN_FILES 30
 
-//chunk buf size for transfer
-#define TRANS_CHUNK_SIZE 256
+//chunk buf size for transfer, must less than MAXBUFSIZE
+#define TRANS_CHUNK_SIZE 100
 
 
 /*
