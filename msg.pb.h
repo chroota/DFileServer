@@ -1816,12 +1816,12 @@ class Response final :
   ::Msg::NewFileResponse* mutable_new_file_response();
   void set_allocated_new_file_response(::Msg::NewFileResponse* new_file_response);
 
-  // required bool status = 1;
+  // required .Msg.MsgResStatus status = 1;
   bool has_status() const;
   void clear_status();
   static const int kStatusFieldNumber = 1;
-  bool status() const;
-  void set_status(bool value);
+  ::Msg::MsgResStatus status() const;
+  void set_status(::Msg::MsgResStatus value);
 
   // @@protoc_insertion_point(class_scope:Msg.Response)
  private:
@@ -1833,7 +1833,7 @@ class Response final :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr info_;
   ::Msg::GetStateNodeResponse* state_node_;
   ::Msg::NewFileResponse* new_file_response_;
-  bool status_;
+  int status_;
   friend struct ::TableStruct_msg_2eproto;
 };
 // -------------------------------------------------------------------
@@ -3278,19 +3278,20 @@ inline void Request::set_allocated_file(::Msg::NewFileRequest* file) {
 
 // Response
 
-// required bool status = 1;
+// required .Msg.MsgResStatus status = 1;
 inline bool Response::has_status() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void Response::clear_status() {
-  status_ = false;
+  status_ = 1;
   _has_bits_[0] &= ~0x00000008u;
 }
-inline bool Response::status() const {
+inline ::Msg::MsgResStatus Response::status() const {
   // @@protoc_insertion_point(field_get:Msg.Response.status)
-  return status_;
+  return static_cast< ::Msg::MsgResStatus >(status_);
 }
-inline void Response::set_status(bool value) {
+inline void Response::set_status(::Msg::MsgResStatus value) {
+  assert(::Msg::MsgResStatus_IsValid(value));
   _has_bits_[0] |= 0x00000008u;
   status_ = value;
   // @@protoc_insertion_point(field_set:Msg.Response.status)

@@ -467,30 +467,30 @@ const char descriptor_table_protodef_msg_2eproto[] =
   "usRequest\0220\n\016get_state_node\030\003 \001(\0132\030.Msg."
   "GetStateNodeRequest\022/\n\nstate_hash\030\004 \001(\0132"
   "\033.Msg.UpdateStateHashRequest\022!\n\004file\030\005 \001"
-  "(\0132\023.Msg.NewFileRequest\"\210\001\n\010Response\022\016\n\006"
-  "status\030\001 \002(\010\022\014\n\004info\030\002 \001(\t\022-\n\nstate_node"
-  "\030\003 \001(\0132\031.Msg.GetStateNodeResponse\022/\n\021new"
-  "_file_response\030\004 \001(\0132\024.Msg.NewFileRespon"
-  "se\"\207\001\n\007Message\022\032\n\004type\030\001 \002(\0162\014.Msg.MsgTy"
-  "pe\022\035\n\007request\030\002 \001(\0132\014.Msg.Request\022\037\n\010res"
-  "ponse\030\003 \001(\0132\r.Msg.Response\022 \n\tfile_post\030"
-  "\004 \001(\0132\r.Msg.FilePost*\206\002\n\007MsgType\022\020\n\014Join"
-  "_Request\020\001\022\021\n\rJoin_Response\020\002\022\030\n\024UpdateS"
-  "tatus_Request\020\003\022\033\n\027UpdateStateHash_Reque"
-  "st\020\004\022\030\n\024GetStateNode_Request\020\005\022\031\n\025GetSta"
-  "teNode_Response\020\006\022\023\n\017Common_Response\020\007\022\033"
-  "\n\027MasterNotifyCmd_Request\020\010\022\023\n\017NewFile_R"
-  "equest\020\t\022\024\n\020NewFile_Response\020\n\022\r\n\tFile_P"
-  "ost\020\013*#\n\010FileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR"
-  "\020\002*F\n\013FileCMDType\022\n\n\006NEW_OP\020\001\022\t\n\005RM_OP\020\002"
-  "\022\t\n\005MV_OP\020\003\022\n\n\006GET_OP\020\004\022\t\n\005LS_OP\020\005*1\n\014Ms"
-  "gResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_RES_ER"
-  "ROR\020\002"
+  "(\0132\023.Msg.NewFileRequest\"\233\001\n\010Response\022!\n\006"
+  "status\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n\004info\030"
+  "\002 \001(\t\022-\n\nstate_node\030\003 \001(\0132\031.Msg.GetState"
+  "NodeResponse\022/\n\021new_file_response\030\004 \001(\0132"
+  "\024.Msg.NewFileResponse\"\207\001\n\007Message\022\032\n\004typ"
+  "e\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007request\030\002 \001(\0132\014"
+  ".Msg.Request\022\037\n\010response\030\003 \001(\0132\r.Msg.Res"
+  "ponse\022 \n\tfile_post\030\004 \001(\0132\r.Msg.FilePost*"
+  "\206\002\n\007MsgType\022\020\n\014Join_Request\020\001\022\021\n\rJoin_Re"
+  "sponse\020\002\022\030\n\024UpdateStatus_Request\020\003\022\033\n\027Up"
+  "dateStateHash_Request\020\004\022\030\n\024GetStateNode_"
+  "Request\020\005\022\031\n\025GetStateNode_Response\020\006\022\023\n\017"
+  "Common_Response\020\007\022\033\n\027MasterNotifyCmd_Req"
+  "uest\020\010\022\023\n\017NewFile_Request\020\t\022\024\n\020NewFile_R"
+  "esponse\020\n\022\r\n\tFile_Post\020\013*#\n\010FileType\022\013\n\007"
+  "FT_FILE\020\001\022\n\n\006FT_DIR\020\002*F\n\013FileCMDType\022\n\n\006"
+  "NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003\022\n\n\006GET_OP"
+  "\020\004\022\t\n\005LS_OP\020\005*1\n\014MsgResStatus\022\016\n\nMSG_RES"
+  "_OK\020\001\022\021\n\rMSG_RES_ERROR\020\002"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {
   false, InitDefaults_msg_2eproto, 
   descriptor_table_protodef_msg_2eproto,
-  "msg.proto", &assign_descriptors_table_msg_2eproto, 1565,
+  "msg.proto", &assign_descriptors_table_msg_2eproto, 1584,
 };
 
 void AddDescriptors_msg_2eproto() {
@@ -4813,8 +4813,9 @@ void Response::SharedCtor() {
       &scc_info_Response_msg_2eproto.base);
   info_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&state_node_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&status_) -
-      reinterpret_cast<char*>(&state_node_)) + sizeof(status_));
+      reinterpret_cast<char*>(&new_file_response_) -
+      reinterpret_cast<char*>(&state_node_)) + sizeof(new_file_response_));
+  status_ = 1;
 }
 
 Response::~Response() {
@@ -4844,7 +4845,7 @@ void Response::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       info_.ClearNonDefaultToEmptyNoArena();
     }
@@ -4856,8 +4857,8 @@ void Response::Clear() {
       GOOGLE_DCHECK(new_file_response_ != nullptr);
       new_file_response_->Clear();
     }
+    status_ = 1;
   }
-  status_ = false;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -4870,11 +4871,16 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
     switch (tag >> 3) {
-      // required bool status = 1;
+      // required .Msg.MsgResStatus status = 1;
       case 1: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 8) goto handle_unusual;
-        set_status(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        if (!::Msg::MsgResStatus_IsValid(val)) {
+          ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          break;
+        }
+        set_status(static_cast<::Msg::MsgResStatus>(val));
         break;
       }
       // optional string info = 2;
@@ -4924,13 +4930,19 @@ bool Response::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bool status = 1;
+      // required .Msg.MsgResStatus status = 1;
       case 1: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
-          HasBitSetters::set_has_status(this);
+          int value = 0;
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &status_)));
+                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Msg::MsgResStatus_IsValid(value)) {
+            set_status(static_cast< ::Msg::MsgResStatus >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(
+                1, static_cast<::PROTOBUF_NAMESPACE_ID::uint64>(value));
+          }
         } else {
           goto handle_unusual;
         }
@@ -5002,9 +5014,10 @@ void Response::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required bool status = 1;
+  // required .Msg.MsgResStatus status = 1;
   if (cached_has_bits & 0x00000008u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(1, this->status(), output);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
+      1, this->status(), output);
   }
 
   // optional string info = 2;
@@ -5043,9 +5056,10 @@ void Response::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required bool status = 1;
+  // required .Msg.MsgResStatus status = 1;
   if (cached_has_bits & 0x00000008u) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->status(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->status(), target);
   }
 
   // optional string info = 2;
@@ -5090,9 +5104,10 @@ size_t Response::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  // required bool status = 1;
+  // required .Msg.MsgResStatus status = 1;
   if (has_status()) {
-    total_size += 1 + 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->status());
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused

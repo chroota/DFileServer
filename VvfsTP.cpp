@@ -66,35 +66,73 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
         logger.log("new file send fail");
         return false;
     }
-    logger.log("create remote file success: "+ remotePath);
     recvMsg.ParseFromArray(recvBuf, recvLen);
-
-    cout<<"debug"<<endl;
-    return false;
+    // cout<<recvMsg.response().status()<<"  "<< Msg::MSG_RES_ERROR <<endl;
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR){
         err = recvMsg.response().info();
+        logger.log(err);
         return false;
     }
 
+    //logger.log("create remote file success: "+ remotePath + " postSessionId:");
     int postSessionId = recvMsg.response().new_file_response().post_session_id();
+    // cout<<postSessionId<<endl;
 
-    ifstream ifs(localPath, ios::binary);
-
-    if(!ifs.fail()){
-        logger.log("input stream error");
+    ifstream ifs(localPath);
+    if(ifs.fail()){
+        logger.log(strerror(errno));
+        // cout<<strerror(errno)<<endl;
+        return false;
     }
 
-    Msg::Message msg;
+    sendMsg.Clear();
+    recvMsg.Clear();
+    // Msg::Message msg;
     char databuf[TRANS_CHUNK_SIZE];
     int packIdx = 0, fileIndex = 0;
 
+    // Msg::Message sendChunkMsg;
+    memset(sendbuf, 0, sizeof(sendbuf));
+    Msg::Message chunkPostMsg;
+    char chunkMsgBuf[MAXBUFSIZE];
+    // int ok = 0;
     while(!ifs.eof()){
-        fileIndex = ifs.tellg();
-        ifs.read(databuf, TRANS_CHUNK_SIZE);
-        FileChunkPostMsgInst(msg, localPath, databuf, fileIndex, packIdx,TRANS_CHUNK_SIZE, postSessionId);
-        msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
-        urequestNoResponse(host.c_str(), port, sendbuf, strlen(sendbuf));
+        while(true){
+            fileIndex = ifs.tellg();
+            
+            try
+            {
+                ifs.read(databuf, TRANS_CHUNK_SIZE);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            // cout<<"read data:"<<databuf<<endl;
+
+            FileChunkPostMsgInst(chunkPostMsg, localPath, databuf, fileIndex, packIdx,TRANS_CHUNK_SIZE, postSessionId);
+            // break;
+            // msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+            // sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+            // chunkPostMsg.SerializeToArray(chunkMsgBuf, MAXBUFSIZE);
+            bool serSuccess = chunkPostMsg.SerializePartialToArray(chunkMsgBuf, MAXBUFSIZE);
+            cout << serSuccess << endl;
+            cout << "send len:"<< strlen(chunkMsgBuf) << " " << "type:" << chunkPostMsg.type() << "content:"<< chunkPostMsg.file_post().data() << endl;
+            return false;
+            // urequestNoResponse(host.c_str(), port, sendbuf, strlen(sendbuf));
+            urequest(host.c_str(), port, chunkMsgBuf, strlen(chunkMsgBuf), recvBuf, recvLen);
+            recvMsg.ParseFromArray(recvBuf, recvLen);
+            if (recvMsg.response().status() == Msg::MSG_RES_OK) {
+                break;
+            }
+        }
     }
+
+    // wait for all 
+    // while(true){
+
+    // }
+    
 
     return true;
 }

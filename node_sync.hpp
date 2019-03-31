@@ -23,9 +23,9 @@ private:
     Msg::FileType type;
     int totalFileSize;
     int totalPackSize;
-    ofstream *pOutput;
+    ofstream *pOutput = nullptr;
     int recvChunkCount = 0;
-    vector<int> *pRecvFlag;
+    vector<int> *pRecvFlag = nullptr;
 public:
     FileSaver(){};
     FileSaver(const string &savePath, Msg::FileType type, int totalFileSize, int totalPackSize){
@@ -33,10 +33,15 @@ public:
         this->totalFileSize = totalFileSize;
         this->totalPackSize = totalPackSize;
         this->savePath = savePath;
+        // cout<<"saver init success"<<endl;
     };
     ~FileSaver(){
-        delete pOutput;
-        delete pRecvFlag;
+        if(pOutput){
+            delete pOutput;
+        }
+        if(pRecvFlag){
+            delete pRecvFlag;
+        }
     };
 
     bool open(string &err);
@@ -64,7 +69,7 @@ class UdpFileServer:UdpServer{
         bool listen(int port);
         bool test();
     private:
-        // map<string, vector<int>> fileRecvStatus;
+        // savers
         map<string, FileSaver> savers;
         map<string, int> sessions;
         Logger logger;
@@ -111,8 +116,8 @@ private:
     string myName;
     string myStateHash;
     // NodeServer server;
-    Vvfs *pVvfs;
-    UdpFileServer *pFileServer;
+    Vvfs *pVvfs = nullptr;
+    UdpFileServer *pFileServer = nullptr;
 
 public:
     enum sync_status{

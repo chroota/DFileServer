@@ -30,7 +30,12 @@ bool Vvfs::createRootVF(){
     VFRelation rootVfr(rootIdx, -1, -1, -1, -1, -1);
     vRelations[rootPath] = rootVfr;
     VFile rootVf("root", VFT_DIR, rootPath, 0, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
-    vFiles[rootIdx] = rootVf;
+    if(vFiles.size() == 0){
+        vFiles.push_back(rootVf);
+    }else{
+        vFiles[rootIdx] = rootVf;
+    }
+    // cout<<"success craete root vf"<<endl;
     return true;
 }
 
@@ -43,7 +48,6 @@ bool Vvfs::buildVFS()
         fp = fopen(vFRConfigFile.c_str(), "w");
         char count = '0';
         fputc(count, fp);
-        // fwrite(fp, 1, 1, &count);
         if(!fp) {
             logger.log(" cann't ceate a new vfr config file!!");
             return false;
@@ -150,7 +154,7 @@ bool Vvfs::newVF(const string &name, string &err, FileType type){
 
     newVfr.fa_idx = dirVfr.idx;
     dirVf.incSize();
-
+    cout<<dirVf.getSize()<<endl;
     //todo recursive create
     err ="";
     return true;

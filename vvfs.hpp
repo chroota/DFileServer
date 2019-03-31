@@ -111,6 +111,10 @@ public:
         return true;
     }
 
+    off_t getSize(){
+        return _size;
+    }
+
     // size increment 1
     off_t incSize(){
         //todo atomic

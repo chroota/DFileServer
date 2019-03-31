@@ -12,7 +12,7 @@ enum MsgType
   MasterNotifyCmd_Request = 0x08;
   NewFile_Request = 0x09;
   NewFile_Response = 0x0a;
-  File_Post = 0x0b;
+  File_Post = 0x0a;
 }
 
 enum FileType{
@@ -101,7 +101,7 @@ message Request
 
 message Response 
 {
-  required bool status = 1;
+  required MsgResStatus status = 1;
   optional string info = 2;
   optional GetStateNodeResponse state_node = 3;
   optional NewFileResponse new_file_response = 4;

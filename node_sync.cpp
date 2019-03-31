@@ -49,8 +49,9 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
     }
 
     Msg::Message recvMsg;
-    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-
+    recvMsg.ParseFromArray(recvbuf, recvLen);
+    cout<< "recv len:"<< recvLen << " " <<"type: "<<recvMsg.type()<<endl;
+    // return false;
     if(recvMsg.type() == Msg::NewFile_Request){
         cout<<"create file"<<endl;
         return createNewFile(
@@ -88,6 +89,8 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
         err = "exceeding max open file nums";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
         return false;
     }
 
@@ -95,25 +98,30 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
     if(name[0] != '/'){
         err = "error name path";
         logger.log(err);
+        // cout<<Msg::MSG_RES_ERROR<<endl;
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
         return false;
     }
 
     if(!pVvfs->newVF(name, err)){
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
         return false;
     }
 
-    string savePath = pVvfs->vfsPath + name.substr(1);
-    cout<<"save path"<<savePath<<endl;
+    string savePath = pVvfs->vfsPath + "/" + name.substr(1);
+    cout<<"save path:"<<savePath<<endl;
     savers[name] = FileSaver(savePath, type, totalFileSize, totalPackSize);
     int sessionId = getSessionId();
+    // cout<<sessionId<<endl;
     cout<<"DEBUG:allocate session id:"<<sessionId<<endl;
     sessions[name] = sessionId;
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, sessionId, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    // msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
     sendLen = strlen(sendbuf);
     return true;
 }
