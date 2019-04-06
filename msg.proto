@@ -12,7 +12,9 @@ enum MsgType
   MasterNotifyCmd_Request = 0x08;
   NewFile_Request = 0x09;
   NewFile_Response = 0x0a;
-  File_Post = 0x0a;
+  File_Post = 0x0b;
+  End_File_Post_Request = 0x0c;
+  End_File_Post_Response = 0x0d;
 }
 
 enum FileType{
@@ -87,7 +89,17 @@ message FilePost{
     // required FileType type = 2;
 }
 
-message Request 
+
+message EndFilePostRequest{
+    required string name = 1;
+}
+
+message EndFilePostResponse{
+    required bool ok = 1;
+    optional int32 lost_pack_idx = 2;
+}
+
+message Request
 {
     optional JoinRequest join = 1;
     optional UpdateStatusRequest update_status = 2;

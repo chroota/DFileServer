@@ -1,15 +1,5 @@
 #include "master_sync.hpp"
 
-MasterSync::MasterSync()
-{
-    
-}
-
-MasterSync::~MasterSync()
-{
-
-}
-
 bool MasterSync::listen(int port)
 {
     initConfig();

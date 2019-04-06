@@ -117,17 +117,19 @@ bool Vvfs::mkVDir(const string & name, string & err)
 }
 
 bool Vvfs::newVF(const string &name, string &err, FileType type){
-    cout<<vRelations.size()<<endl;
-    cout<< "newVF:" <<name<<endl;
+    // cout<<vRelations.size()<<endl;
+    // cout<< "newVF:" <<name<<endl;
     if (name.size() == 0 || name == " ") {
         err = "file name error!";
         logger.log(err);
         return false;
     }
 
+    // if file exists, use origin relations
     if (vRelations.count(name) != 0) {
         err = "file:"+name+" exists!";
-        return false;
+        logger.log(err);
+        return true;
     }
 
     int spIdx = name.find_last_of("/");
@@ -154,7 +156,6 @@ bool Vvfs::newVF(const string &name, string &err, FileType type){
 
     newVfr.fa_idx = dirVfr.idx;
     dirVf.incSize();
-    cout<<dirVf.getSize()<<endl;
     //todo recursive create
     err ="";
     return true;

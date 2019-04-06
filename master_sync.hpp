@@ -10,8 +10,6 @@
 #include "msg.pb.h"
 #include <sstream>
 #include "defines.hpp"
-// sync master
-// manage information for multiple nodes
 
 using namespace std;
 
@@ -27,8 +25,8 @@ private:
     long long state_timestamp;
 
 public:
-    MasterSync();
-    ~MasterSync();
+    MasterSync(){};
+    ~MasterSync(){};
 
     bool initConfig();
 

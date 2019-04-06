@@ -26,6 +26,8 @@ private:
     ofstream *pOutput = nullptr;
     int recvChunkCount = 0;
     vector<int> *pRecvFlag = nullptr;
+    // int x;
+    Logger logger;
 public:
     FileSaver(){};
     FileSaver(const string &savePath, Msg::FileType type, int totalFileSize, int totalPackSize){
@@ -36,10 +38,12 @@ public:
         // cout<<"saver init success"<<endl;
     };
     ~FileSaver(){
-        if(pOutput){
+        if(pOutput)
+        {
             delete pOutput;
         }
-        if(pRecvFlag){
+        if(pRecvFlag)
+        {
             delete pRecvFlag;
         }
     };
@@ -48,37 +52,45 @@ public:
 
     bool writeChunk(const string &data, int fileIdx, int packIdx, string &err);
 
-    bool isComplete(){
-        return recvChunkCount == totalPackSize;
-    }
+    bool isComplete();
+    // Logger logger;
 };
 
 // udp data server
 class UdpFileServer:UdpServer{
-    public:
-        UdpFileServer(Vvfs *pVvfs){
-            this->pVvfs = pVvfs;
-            //pVvfs->vfrsTest();
-            //cout<<"vfrs test"<<endl;
-        };
-        ~UdpFileServer(){};
-        // null function
-        bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse);
-        bool createNewFile(const string &name, Msg::FileType type, int totalFileSize, int totalPackSize, char sendbuf[], int &sendLen);
-        bool recvChunk(const string &name, int sessionId, int fileIdx, int packIdx, const string & data);
-        bool listen(int port);
-        bool test();
     private:
         // savers
-        map<string, FileSaver> savers;
+        map<string, FileSaver *> savers;
         map<string, int> sessions;
         Logger logger;
-        Vvfs *pVvfs;
+        Vvfs *pVvfs = nullptr;
 
         int getSessionId(){
+            //todo check allocated
             srand((unsigned int)(time(NULL)));
             return rand()/10000;
         }
+    public:
+        // null function
+        bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse);
+        bool createNewFile(const string &name, Msg::FileType type, int totalFileSize, int totalPackSize, char sendbuf[], int &sendLen);
+        bool recvChunk(const string &name, int sessionId, int fileIdx, int packIdx, const string & data, char sendbuf[], int &sendLen);
+        bool listen(int port);
+        bool test();
+
+        UdpFileServer(Vvfs *pVvfs){
+            this->pVvfs = pVvfs;
+        };
+        ~UdpFileServer(){
+            if(pVvfs) delete pVvfs;
+            map<string, FileSaver *>::iterator it;
+
+            while(it != savers.end())
+            {
+                if (it->second) delete it->second;
+                it++;         
+            }
+        };
 };
 
 

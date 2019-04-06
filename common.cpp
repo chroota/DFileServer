@@ -50,7 +50,7 @@ string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH){
 }
 
 
-// udp server
+// udp client
 bool urequest(const char * host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
 {
 	int sockfd = socket(AF_INET,SOCK_DGRAM,0);
@@ -59,6 +59,8 @@ bool urequest(const char * host, int port,const char sendbuf[], int send_len, ch
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = inet_addr(host);
     socklen_t len = sizeof(addr);
+
+    //todo resend & time limit to send
     if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
         return false;
     }
@@ -229,8 +231,6 @@ bool NewFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, int postSess
 // file transfer
 bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionid)
 {
-    cout<<buf<<endl;
-    cout<<dataSize<<endl;
     msg.set_type(Msg::File_Post);
     msg.mutable_file_post()->set_name(name);
     msg.mutable_file_post()->set_data(buf, dataSize);

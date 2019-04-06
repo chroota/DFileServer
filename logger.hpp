@@ -1,17 +1,30 @@
 #pragma once
 #include <iostream>
 #include <string>
-using std::string;
+#include <string.h>
+#include "defines.hpp"
+#include <stdarg.h>
+#include <sstream>
+#include <fstream>
+using namespace std;
 
-enum Lverbosity : size_t { L0 = 0, L1 = 1, L2 = 2, L3 = 3, L4 = 4, LDEBUG = 10};
+
+enum verbosity : size_t { L0 = 0, L1 = 1, L2 = 2, L3 = 3, L4 = 4, LDEBUG = 5};
 
 class Logger
 {
 private:
-
+    ofstream *pOutput = nullptr;
 public:
     Logger(){};
-    ~Logger(){};
-
-    void log(string info, Lverbosity level = L0);
+    ~Logger(){
+        if(pOutput) delete pOutput;
+    };
+    void log(string info, verbosity level = L0);
+    void log(verbosity verbose, const char* fmt, ...);
+    void debug(const string & info);
+    void fatal(const string & info);
+    void debugAction(const string & action);
+    string getTimeFmtString();
+    bool saveLog(const string & info);
 };

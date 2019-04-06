@@ -55,7 +55,8 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
 
     // create new file message
     int totalPackSize = statBuf.st_size / TRANS_CHUNK_SIZE;
-    if(statBuf.st_size % TRANS_CHUNK_SIZE !=0) totalPackSize++;
+    int lastBufSize = statBuf.st_size % TRANS_CHUNK_SIZE;
+    if(lastBufSize !=0) totalPackSize++;
 
     Msg::Message sendMsg, recvMsg;
     NewFileMsgReqInst(sendMsg, remotePath, Msg::FT_FILE, totalPackSize, statBuf.st_size);
@@ -67,7 +68,6 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
         return false;
     }
     recvMsg.ParseFromArray(recvBuf, recvLen);
-    // cout<<recvMsg.response().status()<<"  "<< Msg::MSG_RES_ERROR <<endl;
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR){
         err = recvMsg.response().info();
         logger.log(err);
@@ -81,62 +81,58 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
     ifstream ifs(localPath);
     if(ifs.fail()){
         logger.log(strerror(errno));
-        // cout<<strerror(errno)<<endl;
         return false;
     }
 
     sendMsg.Clear();
-    recvMsg.Clear();
-    // Msg::Message msg;
     char databuf[TRANS_CHUNK_SIZE];
-    int packIdx = 0, fileIndex = 0;
+    int packIdx = 0, fileIdx = 0;
 
-    // Msg::Message sendChunkMsg;
     memset(sendbuf, 0, sizeof(sendbuf));
-    Msg::Message chunkPostMsg;
-    char chunkMsgBuf[MAXBUFSIZE];
-    // int ok = 0;
+    //vector<int> packFileIdxMap(totalPackSize);
+
+    // send file data
+    // todo design of high performance
+    int readedSize;
     while(!ifs.eof()){
-        while(true){
-            fileIndex = ifs.tellg();
-            try
-            {
-                ifs.read(databuf, TRANS_CHUNK_SIZE);
-            }
-            catch(const std::exception& e)
-            {
-                std::cerr << e.what() << '\n';
-            }
-            // cout<<"read data:"<<databuf<<endl;
-
-            FileChunkPostMsgInst(sendMsg, localPath, databuf, fileIndex, packIdx, TRANS_CHUNK_SIZE, postSessionId);
-            // break;
-            // msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
-            if(strlen(sendbuf) >= MAXBUFSIZE){
-                logger.log("size of sendbuf larger than MAXBUFSIZE!");
-                return false;
-            }
-            sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
-            // chunkPostMsg.SerializeToArray(chunkMsgBuf, MAXBUFSIZE);
-            // bool serSuccess = chunkPostMsg.SerializePartialToArray(chunkMsgBuf, MAXBUFSIZE);
-            // cout << serSuccess << endl;
-            // cout << "send len:"<< strlen(chunkMsgBuf) << " " << "type:" << chunkPostMsg.type() << endl;
-            cout << "send len:"<< strlen(sendbuf) << " " << "type:" << sendMsg.type() << endl;
-            return false;
-            // urequestNoResponse(host.c_str(), port, sendbuf, strlen(sendbuf));
-            urequest(host.c_str(), port, chunkMsgBuf, strlen(chunkMsgBuf), recvBuf, recvLen);
-            recvMsg.ParseFromArray(recvBuf, recvLen);
-            if (recvMsg.response().status() == Msg::MSG_RES_OK) {
-                break;
-            }
+        memset(databuf, 0, TRANS_CHUNK_SIZE);
+        fileIdx = ifs.tellg();
+        try
+        {
+            ifs.read(databuf, TRANS_CHUNK_SIZE);
         }
+        catch(const std::exception& e)
+        {
+            // std::cerr << e.what() << '\n';
+            logger.fatal(e.what());
+        }
+
+        // packFileIdxMap
+        //packFileIdxMap[packIdx] = fileIdx;
+
+        if(ifs.eof()) readedSize = lastBufSize;
+        else readedSize = TRANS_CHUNK_SIZE;
+        
+
+        FileChunkPostMsgInst(sendMsg, remotePath, databuf, fileIdx, packIdx, readedSize, postSessionId);
+        if(strlen(sendbuf) >= MAXBUFSIZE){
+            logger.debug("size of sendbuf larger than MAXBUFSIZE!");
+            return false;
+        }
+        sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        // urequestNoResponse(host.c_str(), port, sendbuf, MAXBUFSIZE);
+
+        int sendCount = 0;
+        urequest(host.c_str(),port, sendbuf, MAXBUFSIZE, recvBuf, recvLen);
+        recvMsg.ParseFromArray(recvBuf, MAXBUFSIZE);
+
+        if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
+            logger.log(L4, "error send at packIdx:%d fileIdx:%d", packIdx, fileIdx);
+        }
+        logger.log(L0,"success at packIdx:%d fileIdx:%d", packIdx, fileIdx);
+        // cout<<sendMsg.file_post().data()<<endl;
+        packIdx++;
     }
-
-    // wait for all 
-    // while(true){
-
-    // }
-    
 
     return true;
 }

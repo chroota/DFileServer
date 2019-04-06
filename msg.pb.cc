@@ -63,6 +63,14 @@ class FilePostDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<FilePost> _instance;
 } _FilePost_default_instance_;
+class EndFilePostRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<EndFilePostRequest> _instance;
+} _EndFilePostRequest_default_instance_;
+class EndFilePostResponseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<EndFilePostResponse> _instance;
+} _EndFilePostResponse_default_instance_;
 class RequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Request> _instance;
@@ -202,6 +210,34 @@ static void InitDefaultsFilePost_msg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FilePost_msg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFilePost_msg_2eproto}, {}};
 
+static void InitDefaultsEndFilePostRequest_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_EndFilePostRequest_default_instance_;
+    new (ptr) ::Msg::EndFilePostRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::EndFilePostRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_EndFilePostRequest_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsEndFilePostRequest_msg_2eproto}, {}};
+
+static void InitDefaultsEndFilePostResponse_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_EndFilePostResponse_default_instance_;
+    new (ptr) ::Msg::EndFilePostResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::EndFilePostResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_EndFilePostResponse_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsEndFilePostResponse_msg_2eproto}, {}};
+
 static void InitDefaultsRequest_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -264,12 +300,14 @@ void InitDefaults_msg_2eproto() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_FilePost_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_EndFilePostRequest_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_EndFilePostResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Request_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Response_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Message_msg_2eproto.base);
 }
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_msg_2eproto[12];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_msg_2eproto[14];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_msg_2eproto[4];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_msg_2eproto = nullptr;
 
@@ -367,6 +405,22 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   4,
   1,
   5,
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostRequest, name_),
+  0,
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostResponse, ok_),
+  PROTOBUF_FIELD_OFFSET(::Msg::EndFilePostResponse, lost_pack_idx_),
+  0,
+  1,
   PROTOBUF_FIELD_OFFSET(::Msg::Request, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -419,9 +473,11 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 56, 65, sizeof(::Msg::NewFileRequest)},
   { 69, 75, sizeof(::Msg::NewFileResponse)},
   { 76, 87, sizeof(::Msg::FilePost)},
-  { 93, 103, sizeof(::Msg::Request)},
-  { 108, 117, sizeof(::Msg::Response)},
-  { 121, 130, sizeof(::Msg::Message)},
+  { 93, 99, sizeof(::Msg::EndFilePostRequest)},
+  { 100, 107, sizeof(::Msg::EndFilePostResponse)},
+  { 109, 119, sizeof(::Msg::Request)},
+  { 124, 133, sizeof(::Msg::Response)},
+  { 137, 146, sizeof(::Msg::Message)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -434,6 +490,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_FilePost_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_EndFilePostRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_EndFilePostResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_Request_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_Response_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_Message_default_instance_),
@@ -442,7 +500,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 static ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptorsTable assign_descriptors_table_msg_2eproto = {
   {}, AddDescriptors_msg_2eproto, "msg.proto", schemas,
   file_default_instances, TableStruct_msg_2eproto::offsets,
-  file_level_metadata_msg_2eproto, 12, file_level_enum_descriptors_msg_2eproto, file_level_service_descriptors_msg_2eproto,
+  file_level_metadata_msg_2eproto, 14, file_level_enum_descriptors_msg_2eproto, file_level_service_descriptors_msg_2eproto,
 };
 
 const char descriptor_table_protodef_msg_2eproto[] =
@@ -461,36 +519,40 @@ const char descriptor_table_protodef_msg_2eproto[] =
   "ileResponse\022\027\n\017post_session_id\030\001 \001(\005\"v\n\010"
   "FilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017post_session_i"
   "d\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020\n\010file_idx\030\004 "
-  "\002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size\030\006 \002(\005\"\340\001\n"
-  "\007Request\022\036\n\004join\030\001 \001(\0132\020.Msg.JoinRequest"
-  "\022/\n\rupdate_status\030\002 \001(\0132\030.Msg.UpdateStat"
-  "usRequest\0220\n\016get_state_node\030\003 \001(\0132\030.Msg."
-  "GetStateNodeRequest\022/\n\nstate_hash\030\004 \001(\0132"
-  "\033.Msg.UpdateStateHashRequest\022!\n\004file\030\005 \001"
-  "(\0132\023.Msg.NewFileRequest\"\233\001\n\010Response\022!\n\006"
-  "status\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n\004info\030"
-  "\002 \001(\t\022-\n\nstate_node\030\003 \001(\0132\031.Msg.GetState"
-  "NodeResponse\022/\n\021new_file_response\030\004 \001(\0132"
-  "\024.Msg.NewFileResponse\"\207\001\n\007Message\022\032\n\004typ"
-  "e\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007request\030\002 \001(\0132\014"
-  ".Msg.Request\022\037\n\010response\030\003 \001(\0132\r.Msg.Res"
-  "ponse\022 \n\tfile_post\030\004 \001(\0132\r.Msg.FilePost*"
-  "\206\002\n\007MsgType\022\020\n\014Join_Request\020\001\022\021\n\rJoin_Re"
-  "sponse\020\002\022\030\n\024UpdateStatus_Request\020\003\022\033\n\027Up"
-  "dateStateHash_Request\020\004\022\030\n\024GetStateNode_"
-  "Request\020\005\022\031\n\025GetStateNode_Response\020\006\022\023\n\017"
-  "Common_Response\020\007\022\033\n\027MasterNotifyCmd_Req"
-  "uest\020\010\022\023\n\017NewFile_Request\020\t\022\024\n\020NewFile_R"
-  "esponse\020\n\022\r\n\tFile_Post\020\013*#\n\010FileType\022\013\n\007"
-  "FT_FILE\020\001\022\n\n\006FT_DIR\020\002*F\n\013FileCMDType\022\n\n\006"
-  "NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003\022\n\n\006GET_OP"
-  "\020\004\022\t\n\005LS_OP\020\005*1\n\014MsgResStatus\022\016\n\nMSG_RES"
-  "_OK\020\001\022\021\n\rMSG_RES_ERROR\020\002"
+  "\002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size\030\006 \002(\005\"\"\n\022"
+  "EndFilePostRequest\022\014\n\004name\030\001 \002(\t\"8\n\023EndF"
+  "ilePostResponse\022\n\n\002ok\030\001 \002(\010\022\025\n\rlost_pack"
+  "_idx\030\002 \001(\005\"\340\001\n\007Request\022\036\n\004join\030\001 \001(\0132\020.M"
+  "sg.JoinRequest\022/\n\rupdate_status\030\002 \001(\0132\030."
+  "Msg.UpdateStatusRequest\0220\n\016get_state_nod"
+  "e\030\003 \001(\0132\030.Msg.GetStateNodeRequest\022/\n\nsta"
+  "te_hash\030\004 \001(\0132\033.Msg.UpdateStateHashReque"
+  "st\022!\n\004file\030\005 \001(\0132\023.Msg.NewFileRequest\"\233\001"
+  "\n\010Response\022!\n\006status\030\001 \002(\0162\021.Msg.MsgResS"
+  "tatus\022\014\n\004info\030\002 \001(\t\022-\n\nstate_node\030\003 \001(\0132"
+  "\031.Msg.GetStateNodeResponse\022/\n\021new_file_r"
+  "esponse\030\004 \001(\0132\024.Msg.NewFileResponse\"\207\001\n\007"
+  "Message\022\032\n\004type\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007r"
+  "equest\030\002 \001(\0132\014.Msg.Request\022\037\n\010response\030\003"
+  " \001(\0132\r.Msg.Response\022 \n\tfile_post\030\004 \001(\0132\r"
+  ".Msg.FilePost*\275\002\n\007MsgType\022\020\n\014Join_Reques"
+  "t\020\001\022\021\n\rJoin_Response\020\002\022\030\n\024UpdateStatus_R"
+  "equest\020\003\022\033\n\027UpdateStateHash_Request\020\004\022\030\n"
+  "\024GetStateNode_Request\020\005\022\031\n\025GetStateNode_"
+  "Response\020\006\022\023\n\017Common_Response\020\007\022\033\n\027Maste"
+  "rNotifyCmd_Request\020\010\022\023\n\017NewFile_Request\020"
+  "\t\022\024\n\020NewFile_Response\020\n\022\r\n\tFile_Post\020\013\022\031"
+  "\n\025End_File_Post_Request\020\014\022\032\n\026End_File_Po"
+  "st_Response\020\r*#\n\010FileType\022\013\n\007FT_FILE\020\001\022\n"
+  "\n\006FT_DIR\020\002*F\n\013FileCMDType\022\n\n\006NEW_OP\020\001\022\t\n"
+  "\005RM_OP\020\002\022\t\n\005MV_OP\020\003\022\n\n\006GET_OP\020\004\022\t\n\005LS_OP"
+  "\020\005*1\n\014MsgResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMS"
+  "G_RES_ERROR\020\002"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {
   false, InitDefaults_msg_2eproto, 
   descriptor_table_protodef_msg_2eproto,
-  "msg.proto", &assign_descriptors_table_msg_2eproto, 1584,
+  "msg.proto", &assign_descriptors_table_msg_2eproto, 1733,
 };
 
 void AddDescriptors_msg_2eproto() {
@@ -520,6 +582,8 @@ bool MsgType_IsValid(int value) {
     case 9:
     case 10:
     case 11:
+    case 12:
+    case 13:
       return true;
     default:
       return false;
@@ -4183,6 +4247,611 @@ void FilePost::InternalSwap(FilePost* other) {
 
 // ===================================================================
 
+void EndFilePostRequest::InitAsDefaultInstance() {
+}
+class EndFilePostRequest::HasBitSetters {
+ public:
+  static void set_has_name(EndFilePostRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int EndFilePostRequest::kNameFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+EndFilePostRequest::EndFilePostRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.EndFilePostRequest)
+}
+EndFilePostRequest::EndFilePostRequest(const EndFilePostRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name()) {
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Msg.EndFilePostRequest)
+}
+
+void EndFilePostRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_EndFilePostRequest_msg_2eproto.base);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+EndFilePostRequest::~EndFilePostRequest() {
+  // @@protoc_insertion_point(destructor:Msg.EndFilePostRequest)
+  SharedDtor();
+}
+
+void EndFilePostRequest::SharedDtor() {
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void EndFilePostRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const EndFilePostRequest& EndFilePostRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_EndFilePostRequest_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void EndFilePostRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.EndFilePostRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    name_.ClearNonDefaultToEmptyNoArena();
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* EndFilePostRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.EndFilePostRequest.name");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool EndFilePostRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.EndFilePostRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.EndFilePostRequest.name");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.EndFilePostRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.EndFilePostRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void EndFilePostRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.EndFilePostRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.EndFilePostRequest.name");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.EndFilePostRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* EndFilePostRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.EndFilePostRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.EndFilePostRequest.name");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.EndFilePostRequest)
+  return target;
+}
+
+size_t EndFilePostRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.EndFilePostRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required string name = 1;
+  if (has_name()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void EndFilePostRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.EndFilePostRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const EndFilePostRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<EndFilePostRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.EndFilePostRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.EndFilePostRequest)
+    MergeFrom(*source);
+  }
+}
+
+void EndFilePostRequest::MergeFrom(const EndFilePostRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.EndFilePostRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_name()) {
+    _has_bits_[0] |= 0x00000001u;
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+}
+
+void EndFilePostRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.EndFilePostRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void EndFilePostRequest::CopyFrom(const EndFilePostRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.EndFilePostRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool EndFilePostRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void EndFilePostRequest::Swap(EndFilePostRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void EndFilePostRequest::InternalSwap(EndFilePostRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata EndFilePostRequest::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void EndFilePostResponse::InitAsDefaultInstance() {
+}
+class EndFilePostResponse::HasBitSetters {
+ public:
+  static void set_has_ok(EndFilePostResponse* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_lost_pack_idx(EndFilePostResponse* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int EndFilePostResponse::kOkFieldNumber;
+const int EndFilePostResponse::kLostPackIdxFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+EndFilePostResponse::EndFilePostResponse()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.EndFilePostResponse)
+}
+EndFilePostResponse::EndFilePostResponse(const EndFilePostResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&ok_, &from.ok_,
+    static_cast<size_t>(reinterpret_cast<char*>(&lost_pack_idx_) -
+    reinterpret_cast<char*>(&ok_)) + sizeof(lost_pack_idx_));
+  // @@protoc_insertion_point(copy_constructor:Msg.EndFilePostResponse)
+}
+
+void EndFilePostResponse::SharedCtor() {
+  ::memset(&ok_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&lost_pack_idx_) -
+      reinterpret_cast<char*>(&ok_)) + sizeof(lost_pack_idx_));
+}
+
+EndFilePostResponse::~EndFilePostResponse() {
+  // @@protoc_insertion_point(destructor:Msg.EndFilePostResponse)
+  SharedDtor();
+}
+
+void EndFilePostResponse::SharedDtor() {
+}
+
+void EndFilePostResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const EndFilePostResponse& EndFilePostResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_EndFilePostResponse_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void EndFilePostResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.EndFilePostResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    ::memset(&ok_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&lost_pack_idx_) -
+        reinterpret_cast<char*>(&ok_)) + sizeof(lost_pack_idx_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* EndFilePostResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required bool ok = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 8) goto handle_unusual;
+        set_ok(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional int32 lost_pack_idx = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 16) goto handle_unusual;
+        set_lost_pack_idx(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool EndFilePostResponse::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.EndFilePostResponse)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required bool ok = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
+          HasBitSetters::set_has_ok(this);
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &ok_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 lost_pack_idx = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
+          HasBitSetters::set_has_lost_pack_idx(this);
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, &lost_pack_idx_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.EndFilePostResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.EndFilePostResponse)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void EndFilePostResponse::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.EndFilePostResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required bool ok = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(1, this->ok(), output);
+  }
+
+  // optional int32 lost_pack_idx = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->lost_pack_idx(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.EndFilePostResponse)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* EndFilePostResponse::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.EndFilePostResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required bool ok = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->ok(), target);
+  }
+
+  // optional int32 lost_pack_idx = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->lost_pack_idx(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.EndFilePostResponse)
+  return target;
+}
+
+size_t EndFilePostResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.EndFilePostResponse)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required bool ok = 1;
+  if (has_ok()) {
+    total_size += 1 + 1;
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional int32 lost_pack_idx = 2;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000002u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->lost_pack_idx());
+  }
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void EndFilePostResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.EndFilePostResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const EndFilePostResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<EndFilePostResponse>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.EndFilePostResponse)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.EndFilePostResponse)
+    MergeFrom(*source);
+  }
+}
+
+void EndFilePostResponse::MergeFrom(const EndFilePostResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.EndFilePostResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      ok_ = from.ok_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      lost_pack_idx_ = from.lost_pack_idx_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void EndFilePostResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.EndFilePostResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void EndFilePostResponse::CopyFrom(const EndFilePostResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.EndFilePostResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool EndFilePostResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void EndFilePostResponse::Swap(EndFilePostResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void EndFilePostResponse::InternalSwap(EndFilePostResponse* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(ok_, other->ok_);
+  swap(lost_pack_idx_, other->lost_pack_idx_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata EndFilePostResponse::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void Request::InitAsDefaultInstance() {
   ::Msg::_Request_default_instance_._instance.get_mutable()->join_ = const_cast< ::Msg::JoinRequest*>(
       ::Msg::JoinRequest::internal_default_instance());
@@ -5739,6 +6408,12 @@ template<> PROTOBUF_NOINLINE ::Msg::NewFileResponse* Arena::CreateMaybeMessage< 
 }
 template<> PROTOBUF_NOINLINE ::Msg::FilePost* Arena::CreateMaybeMessage< ::Msg::FilePost >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::FilePost >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::EndFilePostRequest* Arena::CreateMaybeMessage< ::Msg::EndFilePostRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::EndFilePostRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::EndFilePostResponse* Arena::CreateMaybeMessage< ::Msg::EndFilePostResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::EndFilePostResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Msg::Request* Arena::CreateMaybeMessage< ::Msg::Request >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::Request >(arena);

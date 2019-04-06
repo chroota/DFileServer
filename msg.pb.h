@@ -47,7 +47,7 @@ struct TableStruct_msg_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,6 +55,12 @@ struct TableStruct_msg_2eproto {
 };
 void AddDescriptors_msg_2eproto();
 namespace Msg {
+class EndFilePostRequest;
+class EndFilePostRequestDefaultTypeInternal;
+extern EndFilePostRequestDefaultTypeInternal _EndFilePostRequest_default_instance_;
+class EndFilePostResponse;
+class EndFilePostResponseDefaultTypeInternal;
+extern EndFilePostResponseDefaultTypeInternal _EndFilePostResponse_default_instance_;
 class FilePost;
 class FilePostDefaultTypeInternal;
 extern FilePostDefaultTypeInternal _FilePost_default_instance_;
@@ -93,6 +99,8 @@ class UpdateStatusRequestDefaultTypeInternal;
 extern UpdateStatusRequestDefaultTypeInternal _UpdateStatusRequest_default_instance_;
 }  // namespace Msg
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Msg::EndFilePostRequest* Arena::CreateMaybeMessage<::Msg::EndFilePostRequest>(Arena*);
+template<> ::Msg::EndFilePostResponse* Arena::CreateMaybeMessage<::Msg::EndFilePostResponse>(Arena*);
 template<> ::Msg::FilePost* Arena::CreateMaybeMessage<::Msg::FilePost>(Arena*);
 template<> ::Msg::GetStateNodeRequest* Arena::CreateMaybeMessage<::Msg::GetStateNodeRequest>(Arena*);
 template<> ::Msg::GetStateNodeResponse* Arena::CreateMaybeMessage<::Msg::GetStateNodeResponse>(Arena*);
@@ -119,11 +127,13 @@ enum MsgType {
   MasterNotifyCmd_Request = 8,
   NewFile_Request = 9,
   NewFile_Response = 10,
-  File_Post = 11
+  File_Post = 11,
+  End_File_Post_Request = 12,
+  End_File_Post_Response = 13
 };
 bool MsgType_IsValid(int value);
 constexpr MsgType MsgType_MIN = Join_Request;
-constexpr MsgType MsgType_MAX = File_Post;
+constexpr MsgType MsgType_MAX = End_File_Post_Response;
 constexpr int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgType_descriptor();
@@ -1518,6 +1528,264 @@ class FilePost final :
 };
 // -------------------------------------------------------------------
 
+class EndFilePostRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.EndFilePostRequest) */ {
+ public:
+  EndFilePostRequest();
+  virtual ~EndFilePostRequest();
+
+  EndFilePostRequest(const EndFilePostRequest& from);
+  EndFilePostRequest(EndFilePostRequest&& from) noexcept
+    : EndFilePostRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline EndFilePostRequest& operator=(const EndFilePostRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline EndFilePostRequest& operator=(EndFilePostRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const EndFilePostRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const EndFilePostRequest* internal_default_instance() {
+    return reinterpret_cast<const EndFilePostRequest*>(
+               &_EndFilePostRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  void Swap(EndFilePostRequest* other);
+  friend void swap(EndFilePostRequest& a, EndFilePostRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline EndFilePostRequest* New() const final {
+    return CreateMaybeMessage<EndFilePostRequest>(nullptr);
+  }
+
+  EndFilePostRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<EndFilePostRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const EndFilePostRequest& from);
+  void MergeFrom(const EndFilePostRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(EndFilePostRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Msg.EndFilePostRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  bool has_name() const;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const std::string& name() const;
+  void set_name(const std::string& value);
+  void set_name(std::string&& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  std::string* mutable_name();
+  std::string* release_name();
+  void set_allocated_name(std::string* name);
+
+  // @@protoc_insertion_point(class_scope:Msg.EndFilePostRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  friend struct ::TableStruct_msg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class EndFilePostResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.EndFilePostResponse) */ {
+ public:
+  EndFilePostResponse();
+  virtual ~EndFilePostResponse();
+
+  EndFilePostResponse(const EndFilePostResponse& from);
+  EndFilePostResponse(EndFilePostResponse&& from) noexcept
+    : EndFilePostResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline EndFilePostResponse& operator=(const EndFilePostResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline EndFilePostResponse& operator=(EndFilePostResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const EndFilePostResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const EndFilePostResponse* internal_default_instance() {
+    return reinterpret_cast<const EndFilePostResponse*>(
+               &_EndFilePostResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  void Swap(EndFilePostResponse* other);
+  friend void swap(EndFilePostResponse& a, EndFilePostResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline EndFilePostResponse* New() const final {
+    return CreateMaybeMessage<EndFilePostResponse>(nullptr);
+  }
+
+  EndFilePostResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<EndFilePostResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const EndFilePostResponse& from);
+  void MergeFrom(const EndFilePostResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(EndFilePostResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Msg.EndFilePostResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool ok = 1;
+  bool has_ok() const;
+  void clear_ok();
+  static const int kOkFieldNumber = 1;
+  bool ok() const;
+  void set_ok(bool value);
+
+  // optional int32 lost_pack_idx = 2;
+  bool has_lost_pack_idx() const;
+  void clear_lost_pack_idx();
+  static const int kLostPackIdxFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 lost_pack_idx() const;
+  void set_lost_pack_idx(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:Msg.EndFilePostResponse)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  bool ok_;
+  ::PROTOBUF_NAMESPACE_ID::int32 lost_pack_idx_;
+  friend struct ::TableStruct_msg_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Request final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.Request) */ {
  public:
@@ -1561,7 +1829,7 @@ class Request final :
                &_Request_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    11;
 
   void Swap(Request* other);
   friend void swap(Request& a, Request& b) {
@@ -1725,7 +1993,7 @@ class Response final :
                &_Response_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    12;
 
   void Swap(Response* other);
   friend void swap(Response& a, Response& b) {
@@ -1881,7 +2149,7 @@ class Message final :
                &_Message_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   void Swap(Message* other);
   friend void swap(Message& a, Message& b) {
@@ -3027,6 +3295,108 @@ inline void FilePost::set_data_size(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // -------------------------------------------------------------------
 
+// EndFilePostRequest
+
+// required string name = 1;
+inline bool EndFilePostRequest::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void EndFilePostRequest::clear_name() {
+  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& EndFilePostRequest::name() const {
+  // @@protoc_insertion_point(field_get:Msg.EndFilePostRequest.name)
+  return name_.GetNoArena();
+}
+inline void EndFilePostRequest::set_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.EndFilePostRequest.name)
+}
+inline void EndFilePostRequest::set_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.EndFilePostRequest.name)
+}
+inline void EndFilePostRequest::set_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.EndFilePostRequest.name)
+}
+inline void EndFilePostRequest::set_name(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.EndFilePostRequest.name)
+}
+inline std::string* EndFilePostRequest::mutable_name() {
+  _has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_mutable:Msg.EndFilePostRequest.name)
+  return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* EndFilePostRequest::release_name() {
+  // @@protoc_insertion_point(field_release:Msg.EndFilePostRequest.name)
+  if (!has_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void EndFilePostRequest::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:Msg.EndFilePostRequest.name)
+}
+
+// -------------------------------------------------------------------
+
+// EndFilePostResponse
+
+// required bool ok = 1;
+inline bool EndFilePostResponse::has_ok() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void EndFilePostResponse::clear_ok() {
+  ok_ = false;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline bool EndFilePostResponse::ok() const {
+  // @@protoc_insertion_point(field_get:Msg.EndFilePostResponse.ok)
+  return ok_;
+}
+inline void EndFilePostResponse::set_ok(bool value) {
+  _has_bits_[0] |= 0x00000001u;
+  ok_ = value;
+  // @@protoc_insertion_point(field_set:Msg.EndFilePostResponse.ok)
+}
+
+// optional int32 lost_pack_idx = 2;
+inline bool EndFilePostResponse::has_lost_pack_idx() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void EndFilePostResponse::clear_lost_pack_idx() {
+  lost_pack_idx_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 EndFilePostResponse::lost_pack_idx() const {
+  // @@protoc_insertion_point(field_get:Msg.EndFilePostResponse.lost_pack_idx)
+  return lost_pack_idx_;
+}
+inline void EndFilePostResponse::set_lost_pack_idx(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  lost_pack_idx_ = value;
+  // @@protoc_insertion_point(field_set:Msg.EndFilePostResponse.lost_pack_idx)
+}
+
+// -------------------------------------------------------------------
+
 // Request
 
 // optional .Msg.JoinRequest join = 1;
@@ -3626,6 +3996,10 @@ inline void Message::set_allocated_file_post(::Msg::FilePost* file_post) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -30,7 +30,9 @@
 
 //chunk buf size for transfer, must less than MAXBUFSIZE
 #define TRANS_CHUNK_SIZE 100
-
+#define END_PACK_SLEEP_TIME 4
+#define RESEND_INTERVAL 4
+#define RESEND_COUNT_LIMIT 10
 
 /*
  * notify events
@@ -57,3 +59,18 @@ enum NODE_STATUS{
     NODE_STATUS_ALIVE,
     NODE_STATUS_DEAD
 };
+
+#ifndef LOG_DEBUG
+    #define LOG_DEBUG 0
+#else
+    #define LOG_DEBUG 1
+#endif
+
+#ifndef LOG_SAVE
+    #define LOG_SAVE 0
+#else
+    #define LOG_SAVE 1
+#endif
+
+
+#define MAX_LOG_INFO_BUF_SIZE 1024

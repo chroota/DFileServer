@@ -9,7 +9,7 @@ master_sync:
 	g++ ./common.cpp ./logger.cpp ./msg.pb.cc ./udp_server.cpp ./node.cpp ./master_sync.cpp -o master_sync -lprotobuf -lpthread -std=c++11
 	g++ testudp_client.cpp -o testudp_client
 node_sync:
-	g++ ./md5.cpp ./msg.pb.cc ./vvfs.cpp ./common.cpp ./logger.cpp ./udp_server.cpp ./node_sync.cpp -g -o node_sync -std=c++11 -lpthread -lprotobuf
+	g++ ./md5.cpp ./msg.pb.cc ./vvfs.cpp ./common.cpp ./logger.cpp ./udp_server.cpp ./node_sync.cpp -g -o node_sync -std=c++11 -lpthread -lprotobuf -DLOG_DEBUG
 
 VvfsTP:
 	g++ ./logger.cpp ./md5.cpp ./msg.pb.cc ./common.cpp ./VvfsTP.cpp -g -o VvfsTP -std=c++11 -lpthread -lprotobuf
