@@ -18,7 +18,10 @@ private:
 public:
     Logger(){};
     ~Logger(){
-        if(pOutput) delete pOutput;
+        if(pOutput) {
+            delete pOutput;
+            pOutput = nullptr;
+        }
     };
     void log(string info, verbosity level = L0);
     void log(verbosity verbose, const char* fmt, ...);

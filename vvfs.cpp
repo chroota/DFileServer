@@ -14,27 +14,44 @@ string VFile::Hash(FileType type, const string & path, off_t size,
     return getBufMD5(oss.str().c_str(), oss.str().length());
 }
 
-bool Vvfs::initHash()
+bool Vvfs::updateHashFromVFOpLogFile()
 {
+    ifstream ifs = ifstream(vFOpLogFile);
     int op;
     long long opTime;
     string path;
     string dstPath;
-    while(!pVFOpLogFileFstream->eof()){
-        *pVFOpLogFileFstream>>op;
-        if(op != Msg::NEW_OP || op != Msg::RM_OP || op != Msg::MV_OP) break;
+    while(!ifs.eof()){
+        ifs>>op;
+
+        if(ifs.fail()) {
+            // logger.fatal("op log file error");
+            break;
+        }
+
+        if(ifs.eof()) break;
+
         if(op == Msg::MV_OP)
         {
-            *pVFOpLogFileFstream >> path >> dstPath >> opTime;
+            ifs >> path >> dstPath >> opTime;
+            if(ifs.fail()){
+                logger.fatal("read op log fail");
+                break;
+            }
             updateHashByMvFileOp(path, dstPath, opTime);
         }
         else
         {
-            *pVFOpLogFileFstream >> path >> opTime;
+            ifs >> path >> opTime;
+            if(ifs.fail()){
+                logger.fatal("read op log fail");
+                break;
+            }
             if(op == Msg::NEW_OP) updateHashByNewFileOp(path, opTime);
             else if(op == Msg::RM_OP) updateHashByRMFileOp(path, opTime);
         }
     }
+    ifs.close();
     return true;
 }
 
@@ -53,18 +70,24 @@ bool Vvfs::createRootVF(){
     return true;
 }
 
-bool Vvfs::buildVFS()
-{
-    pVFOpLogFileFstream = new fstream(vFOpLogFile, ios::in | ios::out | ios::app);
+bool Vvfs::openVFOpLogFile(){
+    pVFOpLogFileFstream = new ofstream(vFOpLogFile,ios::app);
     if(pVFOpLogFileFstream->fail()){
-        logger.fatal("op log file open fail!");
         return false;
     }
 
-    // *pVFOpLogFileFstream<<123<<endl;
+    return true;
+}
 
-    if(!initHash()) {
+bool Vvfs::buildVFS()
+{
+    if(!updateHashFromVFOpLogFile()) {
         logger.fatal("hash init fail");
+        return false;
+    }
+
+    if(!openVFOpLogFile()){
+        logger.fatal("op log file open fail!");
         return false;
     }
 
@@ -232,6 +255,16 @@ bool Vvfs::rmVF(const string &name, string &err){
     vRelations.erase(name);
     vf.decSize();
     err = "";
+
+    if(!updateHashByRMFileOp(name)){
+        logger.fatal("rm hash update error");
+    }
+
+    if(!writeRMFileOpLog(name)){
+        logger.fatal("rm log write error");
+    }
+    // logger.debug("rm file:"+name+"ok");
+    logger.log(LDEBUG, "rm op ok, path:%s, new hash:%s", name, hash);
     return true;
 }
 
@@ -261,7 +294,7 @@ bool Vvfs::activeVF(const string &name, string & err){
 }
 
 
-bool Vvfs::storeVFR(){
+bool Vvfs::storeVFRelations(){
     ofstream ofs(".vfr.tmp.txt");
 
     if(ofs.fail()){
@@ -293,12 +326,20 @@ bool Vvfs::storeVFR(){
             << sep << pVF->getTvNsec()
             << sep << pVF->getSize()
             << sep << pVF->getHash()
-            <<endl;
+            << endl;
     }
     ofs<<oss.str();
     return true;
 }
 
+
+void Vvfs::storeVFRelationsBackend()
+{
+    while(true){
+        storeVFRelations();
+        this_thread::sleep_for(chrono::seconds(VFRELATIONS_BACKEND_INTERVAL));
+    }
+}
 
 bool Vvfs::updateHashByNewFileOp(const string &path)
 {
@@ -309,7 +350,8 @@ bool Vvfs::updateHashByNewFileOp(const string &path, long long opTime)
 {
     ostringstream oss;
     oss << "op:" << Msg::NEW_OP << "path:" << path << "time:" << opTime;
-    hash = hashpkg.update(oss.str().c_str(), oss.str().size()); 
+    hashpkg.update(oss.str().c_str(), oss.str().size());
+    hash = hashpkg.getMD5Hex();
     return true;
 }
 
@@ -324,6 +366,7 @@ bool Vvfs::updateHashByRMFileOp(const string &path, long long opTime)
     oss << Msg::RM_OP << path << opTime;
     hashpkg.update(oss.str().c_str(), oss.str().size());
     hash = hashpkg.getMD5Hex();
+    cout<<hash<<endl;
     return true;
 }
 
@@ -343,11 +386,20 @@ bool Vvfs::updateHashByMvFileOp(const string &srcPath, const string &dstPath, lo
 
 bool Vvfs::writeOpLog(Msg::FileOpType op, const string & pathString)
 {
-    // cout<<"fuck"<<endl;
-    // *pVFOpLogFileFstream << op << " " << pathString << " " << getSystemTime() <<endl;
-    // *pVFOpLogFileFstream << "fuck"<<endl;
-    (*pVFOpLogFileFstream)<<"789"<<456<<endl;
+    *pVFOpLogFileFstream << op << " " << pathString << " " << getSystemTime() <<endl;
     if(pVFOpLogFileFstream->fail()){
+        cout<<"write log error"<<endl;
+        return false;
+    }
+    return true;
+}
+
+bool Vvfs::writeMvFileOpLogTest(){
+    // pVFOpLogFileFstream->write("132");
+    (*pVFOpLogFileFstream)<<"4323"<<endl;
+
+    if(pVFOpLogFileFstream->fail()){
+        cout<<"fuck"<<endl;
         return false;
     }
     return true;

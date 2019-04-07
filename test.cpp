@@ -397,7 +397,7 @@ int main(){
 	// }
 
 	// ifstream ifs("./test_dir/remote/oplog.txt");
-	fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
+	fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out);
 	int op;
 	string path;
 	// ifs>>i;
@@ -405,8 +405,32 @@ int main(){
 	long long t;
 
 	while(!ifs.eof()){
-		ifs>>op>>path>>t;
-		if(!op) return false;
+		// ifs>>op>>path>>t;
+		ifs>>op;
+
+		cout<<ifs.eof()<<endl;
+		// if(ifs.)
+		
+		if(ifs.fail()){
+			cout<<"fuck error"<<endl;
+		}
+
 		cout<<op<<" "<<path<<" "<<t<<endl;
+		// if(!op) {
+		// 	break;
+		// }
 	}
+
+	return 1;
+	ifs.seekg(ifs.end-1);
+
+	//ifs.close();
+	//ifs = fstream("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
+	cout<<ifs.cur<<endl;
+	ifs.seekp(0, ios::beg);
+	// ifs.seekg(0, ios::beg);
+	// cout<<ifs.tellp()<<endl;
+	ifs<<"789test"<<endl;
+	ifs<<"12321test"<<endl;
+	ifs<<"12321test"<<endl;
 }

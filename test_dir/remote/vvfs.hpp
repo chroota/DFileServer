@@ -12,8 +12,6 @@
 #include "logger.hpp"
 #include "string.h"
 #include <sstream>
-#include <thread>
-#include <chrono>
 // #include <openssl/md5.h>
 #include "common.hpp"
 #include "md5pkg.hpp"
@@ -191,12 +189,9 @@ public:
     bool buildVFSByScanDir();
     bool buildVFsReserve();
     bool updateVF(const string &name);
-
-    /*
-     * store VFRelations
-    */
     bool storeVFRelations();
-    void storeVFRelationsBackend();
+    void storeVFSBackend();
+
 
     // 
     bool openVFOpLogFile();

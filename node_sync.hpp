@@ -41,10 +41,12 @@ public:
         if(pOutput)
         {
             delete pOutput;
+            pOutput = nullptr;
         }
         if(pRecvFlag)
         {
             delete pRecvFlag;
+            pRecvFlag = nullptr;
         }
     };
 
@@ -144,8 +146,14 @@ public:
 
     NodeSync(){};
     ~NodeSync(){
-        if(pFileServer) delete pFileServer;
-        if(pVvfs) delete pVvfs;
+        if(pFileServer) {
+            delete pFileServer;
+            pFileServer = nullptr;
+        }
+        if(pVvfs){
+            delete pVvfs;
+            pVvfs = nullptr;
+        }
     };
 
     // bool join();

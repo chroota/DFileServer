@@ -24,6 +24,6 @@ public:
     {
         unsigned char result[MD5_DIGEST_LENGTH];
         MD5Final(&md5Context, result);
-        getMD5string(result, MD5_DIGEST_LENGTH);
+        return getMD5string(result, MD5_DIGEST_LENGTH);
     }
 };

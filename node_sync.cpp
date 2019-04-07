@@ -323,9 +323,6 @@ void NodeSync::start(){
         logger.log("build VFS server failed");
         exit(-1);
     }
-
-    pVvfs->writeNewFileOpLog("/md5.cpp");
-    return;
     pFileServer->listen(8080);
     // thread UdpFileServer
 }
