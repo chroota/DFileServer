@@ -20,7 +20,7 @@ public:
     {
         MD5Update(&md5Context, (unsigned char *)data, len);
     }
-    string getMD5Hex(const void *data, size_t len)
+    string getMD5Hex()
     {
         unsigned char result[MD5_DIGEST_LENGTH];
         MD5Final(&md5Context, result);

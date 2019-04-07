@@ -15,6 +15,8 @@ enum MsgType
   File_Post = 0x0b;
   End_File_Post_Request = 0x0c;
   End_File_Post_Response = 0x0d;
+  Rm_File_Request = 0x0e;
+  FileOp_Request = 0x0f;
 }
 
 enum FileType{
@@ -22,50 +24,63 @@ enum FileType{
     FT_DIR = 0x02;
 }
 
-enum FileCMDType
+enum FileOpType
 {
     NEW_OP  = 0x01;
     RM_OP  = 0x02;
     MV_OP  = 0x03;
-    GET_OP = 0x04;
-    LS_OP = 0x05;
 }
 
-enum MsgResStatus{
+enum MsgResStatus
+{
     MSG_RES_OK = 0x01;
     MSG_RES_ERROR = 0x02;
 }
 
-message JoinRequest{
+message FileOp
+{
+    required FileOpType type = 1;
+    required string path = 2;
+    // if FileOpType == MV_OP
+    optional string dstPath = 3;
+    required string newHash = 4;
+}
+
+message JoinRequest
+{
     required string name = 1;
     required string ip = 2;
 }
 
-message UpdateStatusRequest{
+message UpdateStatusRequest
+{
     required string name = 1;
     required int32 status = 2;
 }
 
-message UpdateStateHashRequest{
+message UpdateStateHashRequest
+{
     required string name = 1;
     required string hash = 2;
 }
 
-message GetStateNodeRequest{
+message GetStateNodeRequest
+{
     required string name = 1;
 }
 
-message GetStateNodeResponse{
+message GetStateNodeResponse
+{
     optional string name = 1;
     optional string ip = 2;
     optional string hash = 3;
 }
 
-message MasterNotifyCmdRequest{
-    required FileCMDType operation = 1;
-    required string file_path = 2;
-    required string hash = 3;
-}
+// message MasterNotifyCmdRequest{
+//     // required FileCMDType operation = 1;
+//     required string file_path = 2;
+//     required string hash = 3;
+// }
 
 message NewFileRequest{
     required string name = 1;
@@ -76,6 +91,10 @@ message NewFileRequest{
 
 message NewFileResponse{
     optional int32 post_session_id = 1;
+}
+
+message RmFileRequest{
+    required string path = 1;
 }
 
 message FilePost{
@@ -106,11 +125,10 @@ message Request
     optional GetStateNodeRequest get_state_node = 3;
     optional UpdateStateHashRequest state_hash = 4;
     optional NewFileRequest file = 5;
+    optional RmFileRequest rm_op = 6;
 }
 
 // message VFs
-
-
 message Response 
 {
   required MsgResStatus status = 1;

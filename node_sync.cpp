@@ -6,7 +6,7 @@ bool FileSaver::open(string &err)
         pOutput = new ofstream(savePath, ios::trunc);
     }
     if(pOutput->fail()){
-        err = "can't create file";
+        err = "can't create file:" + savePath;
         logger.log(err);
         return false;
     }
@@ -78,27 +78,26 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
     if(recvMsg.type() == Msg::NewFile_Request){
         logger.debugAction("create file");
         return createNewFile(
-            recvMsg.request().file().name(),
-            recvMsg.request().file().type(),
-            recvMsg.request().file().total_file_size(),
-            recvMsg.request().file().total_pack_size(),
-            sendbuf, 
-            sendLen
+            recvMsg.request().file().name(),recvMsg.request().file().type(),
+            recvMsg.request().file().total_file_size(),recvMsg.request().file().total_pack_size(),
+            sendbuf, sendLen
         );
     }else if(recvMsg.type() == Msg::File_Post){
         logger.debugAction("file post");
         // todo async recieve
         // isResponse = false;
         recvChunk(
-            recvMsg.file_post().name(),
-            recvMsg.file_post().post_session_id(),
-            recvMsg.file_post().file_idx(),
-            recvMsg.file_post().pack_idx(),
-            recvMsg.file_post().data(),
-            sendbuf,
-            sendLen
+            recvMsg.file_post().name(),recvMsg.file_post().post_session_id(),
+            recvMsg.file_post().file_idx(),recvMsg.file_post().pack_idx(),
+            recvMsg.file_post().data(),sendbuf,sendLen
         );
-    }else{
+
+    }else if(recvMsg.type() == Msg::Rm_File_Request){
+        string rmPath = recvMsg.request().rm_op().path();
+        logger.debugAction("rmFile:" + rmPath);
+        rmFile(rmPath, sendbuf, sendLen);
+    }
+    else{
         logger.log("msg type not found for udp file server!");
     }
 
@@ -221,10 +220,31 @@ bool UdpFileServer::test(){
 }
 
 
+bool UdpFileServer::rmFile(const string &path, char sendbuf[], int &sendLen){
+    string err;
+    Msg::Message msg;
+    if(!pVvfs->rmVF(path, err)){
+        CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
+        msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
+    CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
+    msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+    sendLen = strlen(sendbuf);
+    return true;
+}
+
+
 
 bool NodeSync::createVFS()
 {
-    pVvfs = new Vvfs(syncDir);
+    pVvfs = new Vvfs();
+
+    if(!pVvfs->initConfig(syncDir)){
+        logger.fatal("Vvfs cofnig init fail");
+    }
+
     return pVvfs->buildVFS();
 }
 
@@ -303,6 +323,9 @@ void NodeSync::start(){
         logger.log("build VFS server failed");
         exit(-1);
     }
+
+    pVvfs->writeNewFileOpLog("/md5.cpp");
+    return;
     pFileServer->listen(8080);
     // thread UdpFileServer
 }

@@ -54,6 +54,7 @@ string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH){
 bool urequest(const char * host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
 {
 	int sockfd = socket(AF_INET,SOCK_DGRAM,0);
+    if(sockfd < 0) return false;
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
@@ -77,6 +78,7 @@ bool urequest(const string  & host, int port,const char sendbuf[], int send_len,
 bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len)
 {
     int sockfd = socket(AF_INET,SOCK_DGRAM,0);
+    if(sockfd < 0) return false;
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
@@ -238,6 +240,13 @@ bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], in
     msg.mutable_file_post()->set_pack_idx(packIndx);
     msg.mutable_file_post()->set_data_size(dataSize);
     msg.mutable_file_post()->set_post_session_id(postSesionid);
+    return true;
+}
+
+
+bool RMFileMsgReqInst(Msg::Message &msg, const string &path){
+    msg.set_type(Msg::Rm_File_Request);
+    msg.mutable_request()->mutable_rm_op()->set_path(path);
     return true;
 }
 

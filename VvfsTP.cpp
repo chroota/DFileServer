@@ -2,43 +2,33 @@
 
 void VvfsTp::run(int argc, char *argv[]){
     init();
-    if (argc < 2) {
-        help();
-    }
+    if (argc < 2) help();
 
     if (!strcmp(argv[1], NEW_FILE)) 
     {
         // cout<<NEW_FILE<<endl;
-        if (argc < 4) {
-            help();
-        }
+        if (argc < 4) help();
         string err;
-        newFile(argv[2], argv[3], err);
+        newVF(argv[2], argv[3], err);
     }else if(!strcmp(argv[1], RM_FILE))
     {
         // cout<<RM_FILE<<endl;
-        if(argc < 3){
-            help();
-        }
+        if(argc < 3) help();
+        rmVF(argv[2]);
+
     }else if(!strcmp(argv[1], MV_FILE))
     {
         // cout<<MV_FILE<<endl;
-        if(argc < 4){
-            help();
-        }
+        if(argc < 4) help();
     
     }else if(!strcmp(argv[1], GET_FILE))
     {
         // cout<<GET_FILE<<endl;
-        if(argc < 4){
-            help();
-        }
+        if(argc < 4) help();
         
     }else if(!strcmp(argv[1], LS_FILE))
     {
-        if(argc < 3){
-            help();
-        }
+        if(argc < 3) help();
         // cout<<LS_FILE<<endl;
     }else{
         help();
@@ -46,7 +36,7 @@ void VvfsTp::run(int argc, char *argv[]){
 }
 
 
-bool VvfsTp::newFile(const string & localPath, const string & remotePath, string & err){
+bool VvfsTp::newVF(const string & localPath, const string & remotePath, string & err){
     struct stat statBuf;
     if(stat(localPath.c_str(), &statBuf) == -1){
         logger.log("local path error");
@@ -123,7 +113,7 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
         // urequestNoResponse(host.c_str(), port, sendbuf, MAXBUFSIZE);
 
         int sendCount = 0;
-        urequest(host.c_str(),port, sendbuf, MAXBUFSIZE, recvBuf, recvLen);
+        urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvBuf, recvLen);
         recvMsg.ParseFromArray(recvBuf, MAXBUFSIZE);
 
         if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
@@ -134,6 +124,37 @@ bool VvfsTp::newFile(const string & localPath, const string & remotePath, string
         packIdx++;
     }
 
+    return true;
+}
+
+bool VvfsTp::rmVF(const string & remotePath){
+    logger.debugAction("rm: "+remotePath);
+
+    char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
+    int recvLen;
+    Msg::Message sendMsg, recvMsg;
+    RMFileMsgReqInst(sendMsg, remotePath);
+    sendMsg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf,recvLen)){
+        logger.log(L4, "net error! errno:%d", errno);
+    }
+
+    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
+    {
+        logger.log(L1, "error, info: %s", remotePath.c_str(), recvMsg.response().info().c_str());
+        return false;
+    }
+
+    return true;
+}
+
+bool VvfsTp::lsVF(const string & remotePath){
+    return true;
+}
+
+bool VvfsTp::getVF(const string & remotePath, const string & localPath){
     return true;
 }
 

@@ -1,15 +1,9 @@
 #include "udp_server.hpp"
 
-UdpServer::UdpServer(){
-
-}
-
-UdpServer::~UdpServer(){
-
-}
-
 int UdpServer::createSock(int port){
-    int sockfd=socket(AF_INET,SOCK_DGRAM,0);
+    int sockfd = socket(AF_INET,SOCK_DGRAM,0);
+    if(sockfd < 0) logger.fatal("error create socket");
+
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
@@ -18,7 +12,8 @@ int UdpServer::createSock(int port){
     int ret = bind(sockfd,(struct sockaddr*)&addr,sizeof(addr));
     if(ret < 0)
     {
-        printf("bind error\n");
+     //   printf("bind error\n");
+        logger.log(L4, "error bind socket at port:%d", port);
         return -1;
     }
     return sockfd;

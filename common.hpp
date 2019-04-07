@@ -62,12 +62,14 @@ Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info);
 bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info);
 
 
-bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize);
-
 // create new file, allocate a session id for VvfsTP client
+bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize);
 bool NewFileMsgResInst(Msg::Message & msg, Msg::MsgResStatus status, int postessionId, const char * info);
 // Msg::Message NewFileMsgResInst(Msg::MsgResStatus status, int postessionId, const char * info);
 // Msg::Message GetStateNodeMsgInst();
 
 //file post msg
 bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionid);
+
+// rm file msg
+bool RMFileMsgReqInst(Msg::Message &msg, const string &path);

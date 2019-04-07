@@ -44,6 +44,9 @@ public:
     }
 
     void run(int argc, char *argv[]);
-    bool newFile(const string & localPath, const string & rmotePath, string & err);
+    bool newVF(const string & localPath, const string & rmotePath, string & err);
+    bool rmVF(const string & remotePath);
+    bool lsVF(const string & remotePath);
+    bool getVF(const string & remotePath, const string & localPath);
     bool init();
 };

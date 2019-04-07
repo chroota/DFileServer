@@ -1,4 +1,4 @@
 # count
-# idx; name; path; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
+# idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
 0 1.txt /v -1 -1 2 -1 -1 0 0 0 3 bd1a56c78n3423
 1 2.txt /m -1 -1 -1 -1 -1 0 0 0 4 bd1a56c78n3423

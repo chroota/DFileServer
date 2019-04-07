@@ -281,93 +281,132 @@ int main()
 
 
 
+// #include <iostream>
+// #include <fstream>
+// #include <map>
+
+// using namespace std;
+
+// namespace n_class {
+// 	class Vvfs
+// 	{
+// 	public:
+// 		Vvfs() {};
+// 		~Vvfs() {};
+
+// 		void mTest() {
+// 			cout << m.size() << endl;
+// 		}
+// 		map<string, int> m;
+// 	private:
+
+// 	};
+
+// 	class UdpServer
+// 	{
+// 	public:
+// 		UdpServer() {};
+// 		~UdpServer() {};
+// 		virtual void h() = 0;
+// 	private:
+
+// 	};
+
+// 	class FileServer:UdpServer
+// 	{
+// 	public:
+// 		FileServer(Vvfs *pVvfs) {
+// 			this->pVvfs = pVvfs;
+// 		};
+// 		~FileServer() {};
+// 		void h() {};
+// 		void listen() {
+// 			pVvfs->mTest();
+// 		};
+// 	private:
+// 		Vvfs *pVvfs;
+// 	};
+
+// 	class NodeSync
+// 	{
+// 	public:
+// 		NodeSync() {};
+// 		~NodeSync() {
+// 			if(pFileServer) delete pFileServer;
+//         	if(pVvfs) delete pVvfs;
+// 		};
+// 		void createVFS() {
+// 			pVvfs = new Vvfs();
+// 		};
+// 		void createFileServer() {
+// 			pFileServer = new FileServer(pVvfs);
+// 		}
+
+// 		void start() {
+// 			createVFS();
+// 			createFileServer();
+// 			pFileServer->listen();
+// 		}
+// 	private:
+// 		Vvfs *pVvfs;
+// 		FileServer *pFileServer;
+// 	};
+
+// 	void test_main() {
+// 		NodeSync node;
+// 		node.start();
+// 		//node.createVFS();
+// 		//node.createFileServer();
+// 	}
+// }
+
+
+// int i = 0;
+// int func(){
+// 	cout<<"func"<<endl;
+// 	return i++;
+// }
+
+// int main(){
+//    // n_class::test_main();
+// //    cout<<"123"<<endl;
+// 	cout<<i<<endl;
+// }
+
+
+
 #include <iostream>
+#include <fstream>
 #include <map>
+#include <thread>
+#include <chrono>
 
 using namespace std;
-
-namespace n_class {
-	class Vvfs
-	{
-	public:
-		Vvfs() {};
-		~Vvfs() {};
-
-		void mTest() {
-			cout << m.size() << endl;
-		}
-		map<string, int> m;
-	private:
-
-	};
-
-	class UdpServer
-	{
-	public:
-		UdpServer() {};
-		~UdpServer() {};
-		virtual void h() = 0;
-	private:
-
-	};
-
-	class FileServer:UdpServer
-	{
-	public:
-		FileServer(Vvfs *pVvfs) {
-			this->pVvfs = pVvfs;
-		};
-		~FileServer() {};
-		void h() {};
-		void listen() {
-			pVvfs->mTest();
-		};
-	private:
-		Vvfs *pVvfs;
-	};
-
-	class NodeSync
-	{
-	public:
-		NodeSync() {};
-		~NodeSync() {
-			if(pFileServer) delete pFileServer;
-        	if(pVvfs) delete pVvfs;
-		};
-		void createVFS() {
-			pVvfs = new Vvfs();
-		};
-		void createFileServer() {
-			pFileServer = new FileServer(pVvfs);
-		}
-
-		void start() {
-			createVFS();
-			createFileServer();
-			pFileServer->listen();
-		}
-	private:
-		Vvfs *pVvfs;
-		FileServer *pFileServer;
-	};
-
-	void test_main() {
-		NodeSync node;
-		node.start();
-		//node.createVFS();
-		//node.createFileServer();
-	}
-}
-
-
-int i = 0;
-int func(){
-	cout<<"func"<<endl;
-	return i++;
-}
-
 int main(){
-   // n_class::test_main();
-//    cout<<"123"<<endl;
-	cout<<i<<endl;
+	// ofstream *pOfs = new ofstream("./test_dir/test.txt");
+	// // ofs.write("123", 3);
+	// // ofs.flush();
+	// // ofs<<"124312"<<endl;
+	// // ofs.flush();
+
+	// *pOfs<<"132"<<endl;
+
+	// while(1){
+	// 	this_thread::sleep_for(chrono::seconds(1));
+	// 	cout<<"sleep"<<endl;
+	// }
+
+	// ifstream ifs("./test_dir/remote/oplog.txt");
+	fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
+	int op;
+	string path;
+	// ifs>>i;
+	// cout<<x;
+	long long t;
+
+	while(!ifs.eof()){
+		ifs>>op>>path>>t;
+		if(!op) return false;
+		cout<<op<<" "<<path<<" "<<t<<endl;
+	}
 }

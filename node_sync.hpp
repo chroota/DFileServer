@@ -73,8 +73,13 @@ class UdpFileServer:UdpServer{
     public:
         // null function
         bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse);
+        //create new file
         bool createNewFile(const string &name, Msg::FileType type, int totalFileSize, int totalPackSize, char sendbuf[], int &sendLen);
+        //recieve data chunk
         bool recvChunk(const string &name, int sessionId, int fileIdx, int packIdx, const string & data, char sendbuf[], int &sendLen);
+        //delete file
+        bool rmFile(const string &path, char sendbuf[], int &sendLen);
+        //listen a port
         bool listen(int port);
         bool test();
 
@@ -82,8 +87,7 @@ class UdpFileServer:UdpServer{
             this->pVvfs = pVvfs;
         };
         ~UdpFileServer(){
-            if(pVvfs) delete pVvfs;
-            map<string, FileSaver *>::iterator it;
+            map<string, FileSaver *>::iterator it = savers.begin();
 
             while(it != savers.end())
             {
