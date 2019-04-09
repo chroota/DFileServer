@@ -1,15 +1,13 @@
 #include "VvfsTp.hpp"
 
 void VvfsTp::run(int argc, char *argv[]){
-    init();
     if (argc < 2) help();
 
     if (!strcmp(argv[1], NEW_FILE)) 
     {
         // cout<<NEW_FILE<<endl;
         if (argc < 4) help();
-        string err;
-        newVF(argv[2], argv[3], err);
+        newVF(argv[2], argv[3]);
     }else if(!strcmp(argv[1], RM_FILE))
     {
         // cout<<RM_FILE<<endl;
@@ -36,7 +34,9 @@ void VvfsTp::run(int argc, char *argv[]){
 }
 
 
-bool VvfsTp::newVF(const string & localPath, const string & remotePath, string & err){
+bool VvfsTp::newVF(const string & localPath, const string & remotePath){
+    logger.debug("new file: local path:"+ localPath +", remote path:" + remotePath);
+    string err;
     struct stat statBuf;
     if(stat(localPath.c_str(), &statBuf) == -1){
         logger.log("local path error");
@@ -165,7 +165,17 @@ bool VvfsTp::init(){
 }
 
 
+#define VVFS_DEBUG
 int main(int argc, char *argv[]){
     VvfsTp tp;
-    tp.run(argc, argv);
+    tp.init();
+
+    #ifdef VVFS_DEBUG
+        assert(tp.newVF("./test_dir/local/md5.cpp", "/md5.cpp") == true);
+        assert(tp.rmVF("/md5.cpp") == true);
+    #else
+        tp.run(argc, argv);
+    #endif
 }
+
+

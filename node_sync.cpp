@@ -245,7 +245,15 @@ bool NodeSync::createVFS()
         logger.fatal("Vvfs cofnig init fail");
     }
 
-    return pVvfs->buildVFS();
+    if(!pVvfs->buildVFS()){
+        logger.fatal("Vvfs build error");
+    }
+
+    if(!pVvfs->deamon()){
+        logger.fatal("Vvfs demaon started failed");
+    }
+
+    return true;
 }
 
 bool NodeSync::createFileServer()
@@ -289,7 +297,7 @@ void NodeSync::keepAliveFn(){
     }
 }
 
-void NodeSync::start(){
+void NodeSync::forever(){
     if (!initConfig()) {
         logger.log("config error");
         exit(-1);
@@ -324,7 +332,6 @@ void NodeSync::start(){
         exit(-1);
     }
     pFileServer->listen(8080);
-    // thread UdpFileServer
 }
 
 
@@ -429,5 +436,5 @@ bool NodeSync::initConfig()
 
 int main(){
     NodeSync node;
-    node.start();
+    node.forever();
 }

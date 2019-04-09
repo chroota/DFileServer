@@ -12,7 +12,7 @@ node_sync:
 	g++ ./md5.cpp ./msg.pb.cc ./vvfs.cpp ./common.cpp ./logger.cpp ./udp_server.cpp ./node_sync.cpp -g -o node_sync -std=c++11 -lpthread -lprotobuf -DLOG_DEBUG
 
 VvfsTP:
-	g++ ./logger.cpp ./md5.cpp ./msg.pb.cc ./common.cpp ./VvfsTP.cpp -g -o VvfsTP -std=c++11 -lpthread -lprotobuf
+	g++ ./logger.cpp ./md5.cpp ./msg.pb.cc ./common.cpp ./VvfsTP.cpp  -g -o VvfsTP -std=c++11 -lpthread -lprotobuf
 
 msg_proto:
 	protoc --cpp_out=. msg.proto

@@ -8,12 +8,14 @@
 #include <dirent.h>
 #include <queue>
 #include <map>
+#include <unistd.h>
 #include <sys/inotify.h>
 #include "logger.hpp"
 #include "string.h"
 #include <sstream>
 #include <thread>
 #include <chrono>
+#include <atomic>
 // #include <openssl/md5.h>
 #include "common.hpp"
 #include "md5pkg.hpp"
@@ -63,7 +65,7 @@ private:
     off_t _size = 0;       // for dir: number of chidren; for file: size of file
     string _hash = "";       // todo
     struct timespec _mtime;
-    bool status = 0;        // 1:active 0:dead
+    bool status = false;        // 1:active 0:dead
 public:
 
     VFile(){};
@@ -105,8 +107,12 @@ public:
     }
 
     bool active(){
-        status = 1;
+        status = true;
         return true;
+    }
+
+    bool isActive(){
+        return status;
     }
 
     bool setType(FileType type){
@@ -166,10 +172,11 @@ struct FileOp
 class Vvfs
 {
 private:
-    int num;   //file nums
+    //file nums
+    int num;
     vector<VFile> vFiles;
     // map<string, int> fileNameIdxMap;
-    string vFrLogFile = "";
+    string vFRLogFile = "";
     string vFOpLogFile = "";
     map<string, VFRelation> vRelations;
     string hash = "";
@@ -177,6 +184,7 @@ private:
     MD5pkg hashpkg;
     ofstream *pVFOpLogFileFstream = nullptr;
     bool writeOpLog(Msg::FileOpType op, const string & pathString);
+    atomic<bool> isVFRelationsStored;
 public:
     string vfsPath;
     int getNum(){
@@ -189,44 +197,56 @@ public:
     bool buildVFS();
     bool refreshVFS();
     bool buildVFSByScanDir();
-    bool buildVFsReserve();
+    bool buildVFSReserve();
     bool updateVF(const string &name);
 
     /*
-     * store VFRelations
+     * store VFRelations automatically
     */
     bool storeVFRelations();
     void storeVFRelationsBackend();
 
-    // 
     bool openVFOpLogFile();
     // compute state hash from op log file
     bool updateHashFromVFOpLogFile();
-
-
     bool watchVFS();
     // config init
-    bool initConfig(
-            const string & vfsPath,
-            const string & vFrLogFile = "./test_dir/remote/vfr.txt", 
-            const string & vFOpLogFile="./test_dir/remote/oplog.txt"
+    bool initConfig
+    (
+        const string & vfsPath,
+        const string & vFRLogFile = "./test_dir/remote/vfr.txt", 
+        const string & vFOpLogFile="./test_dir/remote/oplog.txt"
     );
     
-    bool mkVDir(const string &name, string &err);   //create dir
+
+    
+    /*
+     * vf control
+    */
+    //create dir
+    bool mkVDir(const string &name, string &err);
+    // create new vf
     bool newVF(const string &name, string &err, FileType type = VFT_FILE); //create file
+    // remove vf
     bool rmVF(const string &name, string &err);
+    // move vf
     bool mvVF(const string &srcPath, const string &dstPath, string &err);
+    // list vf info
     bool lsVF(const string &name, string & fileList, string &err);
+    // active vf when new file is upload complete
     bool activeVF(const string &name, string &err);
+
+    /*
+     * create root vf
+    */
     bool createRootVF();
- 
+
+
+
     /*
      * update hash when file operation event fired
-     * Vvfs state hash: Hash(old_hash+op+path+now_time)
+     * Vvfs state hash: Hash(old_hash, op+path+now_time)
     */
-    // string newFileOpHash(const string &path);
-    // string RMFileOpHash(const string &path);
-    // string MvFileOpHash(const string &srcPath, const string &dstPath);
     bool updateHashByNewFileOp(const string &path);
     bool updateHashByNewFileOp(const string &path, long long opTime);
     bool updateHashByRMFileOp(const string &path);
@@ -242,7 +262,12 @@ public:
     bool writeMvFileOpLog(const string &srcPath, const string &dstPath);
     bool writeMvFileOpLogTest();
 
-    Vvfs(){};
+    // demaon for Vvfs operations of backend
+    bool deamon();
+
+    Vvfs(){
+        isVFRelationsStored = true;
+    };
     ~Vvfs(){
         logger.debug("Vvfs deconstructor");
         if(pVFOpLogFileFstream){

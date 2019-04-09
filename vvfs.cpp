@@ -1,8 +1,8 @@
 #include "vvfs.hpp"
 
-bool Vvfs::initConfig(const string & vfsPath, const string & vFrLogFile, const string &vFOpLogFile){
+bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const string &vFOpLogFile){
     this->vfsPath = vfsPath;
-    this->vFrLogFile = vFrLogFile;
+    this->vFRLogFile = vFRLogFile;
     this->vFOpLogFile = vFOpLogFile;
     return true;
 }
@@ -23,8 +23,8 @@ bool Vvfs::updateHashFromVFOpLogFile()
     string dstPath;
     while(!ifs.eof()){
         ifs>>op;
-
-        if(ifs.fail()) {
+        if(ifs.fail()) 
+        {
             // logger.fatal("op log file error");
             break;
         }
@@ -47,24 +47,31 @@ bool Vvfs::updateHashFromVFOpLogFile()
                 logger.fatal("read op log fail");
                 break;
             }
-            if(op == Msg::NEW_OP) updateHashByNewFileOp(path, opTime);
-            else if(op == Msg::RM_OP) updateHashByRMFileOp(path, opTime);
+            if(op == Msg::NEW_OP) 
+                updateHashByNewFileOp(path, opTime);
+            else if(op == Msg::RM_OP) 
+                updateHashByRMFileOp(path, opTime);
         }
     }
     ifs.close();
     return true;
 }
 
-bool Vvfs::createRootVF(){
+bool Vvfs::createRootVF()
+{
     string rootPath = "/";
     int rootIdx = 0;
     VFRelation rootVfr(rootIdx, -1, -1, -1, -1, -1);
     vRelations[rootPath] = rootVfr;
-    VFile rootVf("root", VFT_DIR, rootPath, 0, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
-    if(vFiles.size() == 0){
-        vFiles.push_back(rootVf);
+    if(vFiles.size() == 0)
+    {
+        vFiles.emplace_back("root", VFT_DIR, rootPath, 0, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
     }else{
-        vFiles[rootIdx] = rootVf;
+        logger.fatal("vFiles is not empty, can't create root vf");
+    }
+    string err;
+    if(!activeVF(rootPath, err)){
+        logger.fatal("can't active vf");
     }
     logger.debug("success craete root vf");
     return true;
@@ -91,32 +98,32 @@ bool Vvfs::buildVFS()
         return false;
     }
 
-    FILE *fp;
-    fp = fopen(vFrLogFile.c_str(), "r");
-    if(fp == NULL){
-        logger.log("vfr config file not exists, now ceate a new vfr config file!!", L4);
-        fp = fopen(vFrLogFile.c_str(), "w");
-        char count = '0';
-        fputc(count, fp);
-        if(!fp) {
+    ifstream ifs(vFRLogFile);
+    if(ifs.fail()){
+        logger.log("vfr config file not exists, now ceate a new vfr config file!!");
+        ofstream ofs(vFRLogFile);
+        ofs << 0 << endl;
+        if(ofs.fail()){
             logger.log(" cann't ceate a new vfr config file!!");
             return false;
         }
-        fclose(fp);
-        createRootVF();
+        ofs.close();
+        if(!createRootVF()){
+            logger.fatal("create root vf error");
+        }
         return true;
     }
+
 
     char name[MAXBUFSIZE], dirPath[MAXBUFSIZE];
     int idx, prev_bro_idx, next_bro_idx, fa_idx, first_son_idx, last_son_idx, type, count;
     long tv_sec, tv_nsec, size;
+    // char hashBuf[17];
+    string readHash;
 
-    char hashBuf[17];
-
-     // todo exception deal
-    fscanf(fp, "%d", &count);
-
-    if(count <= 0){
+    ifs>>count;
+    if(count <= 0)
+    {
         logger.log("there are no records in relations");
         createRootVF();
         return true;
@@ -125,41 +132,39 @@ bool Vvfs::buildVFS()
     vFiles.resize(count);
 
     int i = 0;
-    logger.log("read file realations from " + vFrLogFile + ", file num:" + to_string(count));
+    logger.log("read file realations from " + vFRLogFile + ", file num:" + to_string(count));
 
-    while(!feof(fp) && i++ < count)
+    while(i++<count)
     {
 
-        fscanf(fp, 
-            "%d %s %s %d %d %d %d %d %d %ld %ld %ld %s", 
-            &idx, name, dirPath, &fa_idx, &prev_bro_idx, &next_bro_idx, 
-            &first_son_idx, &last_son_idx,&type, &tv_sec, &tv_nsec, 
-            &size, hashBuf
-        );
-
-        // printf("%d %s %s %d %d %d %d %d %d %ld %ld %ld %s\n", idx, name, path, fa_idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx, type, tv_sec, tv_nsec, size, hashBuf);
-
-        if(idx >= count){
+        //idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
+        ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
+        if(ifs.fail()){
+            logger.fatal("read VFRelations error");
+        }
+        if(idx >= count)
+        {
             logger.log("invalid file idx for file" + string(name) + " " + to_string(idx));
             continue;
         }
 
         VFRelation vfr(idx, fa_idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx);
         string fullPath = string(dirPath) + "/" + name;
-        if (vRelations.count(fullPath) != 0) {
+        if (vRelations.count(fullPath) != 0) 
+        {
             logger.log("file path repeat!");
         }
+        cout<<fullPath<<endl;
         
         vRelations[fullPath] = vfr;
         timespec tspc = {tv_sec, tv_nsec};
         VFile vf(name, (FileType)type, dirPath, size, tspc, fa_idx, idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx);
         vFiles[idx] = vf;
     }
-
-    fclose(fp);
+    ifs.close();
+    // fclose(fp);
     return true;
 }
-
 
 bool Vvfs::mkVDir(const string & name, string & err)
 {
@@ -167,8 +172,6 @@ bool Vvfs::mkVDir(const string & name, string & err)
 }
 
 bool Vvfs::newVF(const string &name, string &err, FileType type){
-    // cout<<vRelations.size()<<endl;
-    // cout<< "newVF:" <<name<<endl;
     if (name.size() == 0 || name == " ") {
         err = "file name error!";
         logger.log(err);
@@ -188,6 +191,7 @@ bool Vvfs::newVF(const string &name, string &err, FileType type){
     int newIdx = allocIdx();
     VFRelation newVfr(newIdx, -1, -1, -1, -1, -1);  
     vRelations[name] = newVfr;
+    logger.debug(dirPath);
     if (vRelations.count(dirPath) == 0) 
     {
         err = "dir path not exist!";
@@ -278,7 +282,10 @@ bool Vvfs::activeVF(const string &name, string & err){
         err = "no relation for file:"+name;
         return false;
     }
+    logger.log(LDEBUG, "vFile size:%d, now active:%d", vFiles.size(), vRelations[name].idx);
     vFiles[vRelations[name].idx].active();
+    // cout<<vFiles.size()<<endl;
+    isVFRelationsStored = false;
 
     if(!writeNewFileOpLog(name)){
         return false;
@@ -288,58 +295,10 @@ bool Vvfs::activeVF(const string &name, string & err){
         return false;
     }
 
-    logger.debug("new hash:"+hash);
-
+    logger.debug("new hash:" + hash);
     return true;
 }
 
-
-bool Vvfs::storeVFRelations(){
-    ofstream ofs(".vfr.tmp.txt");
-
-    if(ofs.fail()){
-        logger.fatal("error store VRelations");
-        return false;
-    }
-
-    ostringstream oss;
-    map<string, VFRelation>::iterator it;
-
-    //count
-    //idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
-
-    ofs<<vRelations.size()<<endl;
-    for( it = vRelations.begin(); it != vRelations.end(); it++)
-    {
-        VFRelation *pVFR = &it->second;
-        VFile *pVF = &vFiles[pVFR->idx];
-        string sep = " ";
-        oss <<pVFR->idx
-            << sep << pVF->getName() 
-            << sep << pVF->getDirPath()
-            << sep << pVFR->fa_idx
-            << sep << pVFR->next_bro_idx 
-            << sep << pVFR->first_son_idx
-            << sep << pVFR->last_son_idx
-            << sep << pVF->getType()
-            << sep << pVF->getTvSec()
-            << sep << pVF->getTvNsec()
-            << sep << pVF->getSize()
-            << sep << pVF->getHash()
-            << endl;
-    }
-    ofs<<oss.str();
-    return true;
-}
-
-
-void Vvfs::storeVFRelationsBackend()
-{
-    while(true){
-        storeVFRelations();
-        this_thread::sleep_for(chrono::seconds(VFRELATIONS_BACKEND_INTERVAL));
-    }
-}
 
 bool Vvfs::updateHashByNewFileOp(const string &path)
 {
@@ -430,6 +389,101 @@ bool Vvfs::writeMvFileOpLog(const string &srcPath, const string &dstPath)
         logger.fatal("write mv log fail");
         return false;
     }
+    return true;
+}
+
+
+
+/*
+ * store vf relations
+ * format:
+ *        count
+ *        idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
+*/
+bool Vvfs::storeVFRelations(){
+    // string vfrPath = vfsPath + "/" + ".vfr.tmp.txt";
+    string vfrPath = vfsPath + "/" + ".vfr.tmp.txt";
+    ofstream ofs(vfrPath);
+
+    if(ofs.fail()){
+        logger.fatal("error store VRelations");
+        return false;
+    }
+
+    ostringstream oss;
+    map<string, VFRelation>::iterator it;
+
+    int count = 0;
+    ofs << count << endl;
+    string sep = " ";
+    for( it = vRelations.begin(); it != vRelations.end(); it++)
+    {
+        if(!vFiles[it->second.idx].isActive())
+        {
+            cout<<"not active"<<endl;
+            continue;
+        }
+        VFRelation *pVFR = &it->second;
+        VFile *pVF = &vFiles[pVFR->idx];
+        oss << pVFR->idx
+            << sep << pVF->getName() 
+            << sep << pVF->getDirPath()
+            << sep << pVFR->fa_idx
+            << sep << pVFR->prev_bro_idx
+            << sep << pVFR->next_bro_idx 
+            << sep << pVFR->first_son_idx
+            << sep << pVFR->last_son_idx
+            << sep << pVF->getType()
+            << sep << pVF->getTvSec()
+            << sep << pVF->getTvNsec()
+            << sep << pVF->getSize()
+            << sep << pVF->getHash()
+            << endl;
+        ofs<<oss.str();
+        if(ofs.fail())
+        {
+            logger.fatal("write VFRelations fail");
+        }
+        count++;
+    }
+    ofs.seekp(0, ios::beg);
+    ofs<<count;
+    ofs.flush();
+
+    if(ofs.fail()){
+        logger.log("sotre VFRations fail!");
+        return false;
+    }
+
+    ofs.close();
+    
+    string dstPath = vfsPath + "/vfr.txt";
+    cout<<"rename:"<<vfrPath<<" dstPath:"<<dstPath<<endl;
+    if(rename(vfrPath.c_str(), dstPath.c_str()) < 0){
+        logger.log("move vfr file fail");
+        return false;
+    }
+    return true;
+}
+
+
+void Vvfs::storeVFRelationsBackend()
+{
+    while(true){
+        if(!isVFRelationsStored && storeVFRelations()){
+            logger.debug("success store VFRelations");
+            isVFRelationsStored = true;
+        }
+        this_thread::sleep_for(chrono::seconds(VFRELATIONS_BACKEND_INTERVAL));
+        logger.debug("store relations");
+    }
+}
+
+bool Vvfs::deamon(){
+    logger.log("starting deamon...");
+    thread storeVFRelationsBackendThd(&Vvfs::storeVFRelationsBackend, this);
+    storeVFRelationsBackendThd.detach();
+    logger.log("deamon started");
     return true;
 }
 

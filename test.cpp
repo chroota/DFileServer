@@ -380,6 +380,8 @@ int main()
 #include <map>
 #include <thread>
 #include <chrono>
+#include <unistd.h>
+#include <atomic>
 
 using namespace std;
 int main(){
@@ -397,40 +399,58 @@ int main(){
 	// }
 
 	// ifstream ifs("./test_dir/remote/oplog.txt");
-	fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out);
-	int op;
-	string path;
+	// fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out);
+	// int op;
+	// string path;
 	// ifs>>i;
 	// cout<<x;
-	long long t;
+	// long long t;
 
-	while(!ifs.eof()){
-		// ifs>>op>>path>>t;
-		ifs>>op;
+	// while(!ifs.eof()){
+	// 	// ifs>>op>>path>>t;
+	// 	ifs>>op;
 
-		cout<<ifs.eof()<<endl;
-		// if(ifs.)
+	// 	cout<<ifs.eof()<<endl;
+	// 	// if(ifs.)
 		
-		if(ifs.fail()){
-			cout<<"fuck error"<<endl;
-		}
+	// 	if(ifs.fail()){
+	// 		cout<<"fuck error"<<endl;
+	// 	}
 
-		cout<<op<<" "<<path<<" "<<t<<endl;
-		// if(!op) {
-		// 	break;
-		// }
+	// 	cout<<op<<" "<<path<<" "<<t<<endl;
+	// 	// if(!op) {
+	// 	// 	break;
+	// 	// }
+	// }
+
+	// return 1;
+	// ifs.seekg(ifs.end-1);
+
+	// //ifs.close();
+	// //ifs = fstream("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
+	// cout<<ifs.cur<<endl;
+	// ifs.seekp(0, ios::beg);
+	// // ifs.seekg(0, ios::beg);
+	// // cout<<ifs.tellp()<<endl;
+	// ifs<<"789test"<<endl;
+	// ifs<<"12321test"<<endl;
+	// ifs<<"12321test"<<endl;
+
+	// cout<<rename("./test_dir/test1.txt", "./test_dir/test.txt")<<endl;
+
+	// atomic<bool> b(true);
+
+	int idx, prev_bro_idx, next_bro_idx, fa_idx, first_son_idx, last_son_idx, type, count;
+    long tv_sec, tv_nsec, size;
+    // char hashBuf[17];
+    string readHash, name, dirPath;
+	ifstream ifs("./test_dir/remote/vfr.txt");
+	ifs>>count;
+	while(!ifs.eof()){
+		// ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
+		ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>readHash;
+        cout<<readHash<<endl;
+        cout<<idx << " "<<name<< " "<<dirPath<< " "<<fa_idx<< " "<<prev_bro_idx<< " "<<next_bro_idx<< " "<<first_son_idx<< " "<<last_son_idx<< " "<<type<< " "<<tv_sec<< " "<<tv_nsec<< " "<<size<< " "<<readHash<<endl;
+		return 1;
 	}
-
-	return 1;
-	ifs.seekg(ifs.end-1);
-
-	//ifs.close();
-	//ifs = fstream("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
-	cout<<ifs.cur<<endl;
-	ifs.seekp(0, ios::beg);
-	// ifs.seekg(0, ios::beg);
-	// cout<<ifs.tellp()<<endl;
-	ifs<<"789test"<<endl;
-	ifs<<"12321test"<<endl;
-	ifs<<"12321test"<<endl;
 }

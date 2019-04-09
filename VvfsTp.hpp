@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <assert.h>
 #include "msg.pb.h"
 #include "defines.hpp"
 #include "logger.hpp"
@@ -44,7 +45,7 @@ public:
     }
 
     void run(int argc, char *argv[]);
-    bool newVF(const string & localPath, const string & rmotePath, string & err);
+    bool newVF(const string & localPath, const string & rmotePath);
     bool rmVF(const string & remotePath);
     bool lsVF(const string & remotePath);
     bool getVF(const string & remotePath, const string & localPath);
