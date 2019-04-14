@@ -115,7 +115,8 @@ bool Vvfs::buildVFS()
     }
 
 
-    char name[MAXBUFSIZE], dirPath[MAXBUFSIZE];
+    // char name[MAXBUFSIZE], dirPath[MAXBUFSIZE];
+    string name, dirPath;
     int idx, prev_bro_idx, next_bro_idx, fa_idx, first_son_idx, last_son_idx, type, count;
     long tv_sec, tv_nsec, size;
     // char hashBuf[17];
@@ -150,11 +151,14 @@ bool Vvfs::buildVFS()
 
         VFRelation vfr(idx, fa_idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx);
         string fullPath = string(dirPath) + "/" + name;
+        if(dirPath == "/" && name == "root"){
+            fullPath = "/";
+        }
         if (vRelations.count(fullPath) != 0) 
         {
             logger.log("file path repeat!");
         }
-        cout<<fullPath<<endl;
+        // cout<<fullPath<<endl;
         
         vRelations[fullPath] = vfr;
         timespec tspc = {tv_sec, tv_nsec};
