@@ -249,9 +249,9 @@ bool NodeSync::createVFS()
         logger.fatal("Vvfs build error");
     }
 
-    if(!pVvfs->deamon()){
-        logger.fatal("Vvfs demaon started failed");
-    }
+    // if(!pVvfs->deamon()){
+    //     logger.fatal("Vvfs demaon started failed");
+    // }
 
     return true;
 }

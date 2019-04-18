@@ -46,6 +46,7 @@ struct VFRelation{
     VFRelation(){}
     VFRelation(int idx, int fa_idx, int prev_bro_idx, int next_bro_idx, int first_son_idx, int last_son_idx){
         this->idx = idx;
+        this->fa_idx = fa_idx;
         this->prev_bro_idx = prev_bro_idx;
         this->first_son_idx = first_son_idx;
         this->next_bro_idx = next_bro_idx;
@@ -86,8 +87,14 @@ public:
     //     );
     // }
 
-    string getName(){
+    string getName()
+    {
         return _name;
+    }
+
+    string getVfrKey(){
+        if(_dirPath == "/" && _name == "root") return "/";
+        return _dirPath + _name;
     }
 
     string getDirPath(){
@@ -191,9 +198,7 @@ public:
         return num;
     }
 
-    int allocIdx(){
-        return vFiles.size();
-    }
+    int allocIdx();
     bool buildVFS();
     bool refreshVFS();
     bool buildVFSByScanDir();

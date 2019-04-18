@@ -146,7 +146,8 @@ bool VvfsTp::rmVF(const string & remotePath){
         logger.log(L1, "error, info: %s", remotePath.c_str(), recvMsg.response().info().c_str());
         return false;
     }
-
+    
+    logger.log("success remove file:"+remotePath);
     return true;
 }
 

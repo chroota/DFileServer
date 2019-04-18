@@ -384,73 +384,131 @@ int main()
 #include <atomic>
 
 using namespace std;
-int main(){
-	// ofstream *pOfs = new ofstream("./test_dir/test.txt");
-	// // ofs.write("123", 3);
-	// // ofs.flush();
-	// // ofs<<"124312"<<endl;
-	// // ofs.flush();
+// int main(){
+// 	// ofstream *pOfs = new ofstream("./test_dir/test.txt");
+// 	// // ofs.write("123", 3);
+// 	// // ofs.flush();
+// 	// // ofs<<"124312"<<endl;
+// 	// // ofs.flush();
 
-	// *pOfs<<"132"<<endl;
+// 	// *pOfs<<"132"<<endl;
 
-	// while(1){
-	// 	this_thread::sleep_for(chrono::seconds(1));
-	// 	cout<<"sleep"<<endl;
-	// }
+// 	// while(1){
+// 	// 	this_thread::sleep_for(chrono::seconds(1));
+// 	// 	cout<<"sleep"<<endl;
+// 	// }
 
-	// ifstream ifs("./test_dir/remote/oplog.txt");
-	// fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out);
-	// int op;
-	// string path;
-	// ifs>>i;
-	// cout<<x;
-	// long long t;
+// 	// ifstream ifs("./test_dir/remote/oplog.txt");
+// 	// fstream ifs("./test_dir/remote/oplog.txt", ios::in | ios::out);
+// 	// int op;
+// 	// string path;
+// 	// ifs>>i;
+// 	// cout<<x;
+// 	// long long t;
 
-	// while(!ifs.eof()){
-	// 	// ifs>>op>>path>>t;
-	// 	ifs>>op;
+// 	// while(!ifs.eof()){
+// 	// 	// ifs>>op>>path>>t;
+// 	// 	ifs>>op;
 
-	// 	cout<<ifs.eof()<<endl;
-	// 	// if(ifs.)
+// 	// 	cout<<ifs.eof()<<endl;
+// 	// 	// if(ifs.)
 		
-	// 	if(ifs.fail()){
-	// 		cout<<"fuck error"<<endl;
-	// 	}
+// 	// 	if(ifs.fail()){
+// 	// 		cout<<"fuck error"<<endl;
+// 	// 	}
 
-	// 	cout<<op<<" "<<path<<" "<<t<<endl;
-	// 	// if(!op) {
-	// 	// 	break;
-	// 	// }
-	// }
+// 	// 	cout<<op<<" "<<path<<" "<<t<<endl;
+// 	// 	// if(!op) {
+// 	// 	// 	break;
+// 	// 	// }
+// 	// }
 
-	// return 1;
-	// ifs.seekg(ifs.end-1);
+// 	// return 1;
+// 	// ifs.seekg(ifs.end-1);
 
-	// //ifs.close();
-	// //ifs = fstream("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
-	// cout<<ifs.cur<<endl;
-	// ifs.seekp(0, ios::beg);
-	// // ifs.seekg(0, ios::beg);
-	// // cout<<ifs.tellp()<<endl;
-	// ifs<<"789test"<<endl;
-	// ifs<<"12321test"<<endl;
-	// ifs<<"12321test"<<endl;
+// 	// //ifs.close();
+// 	// //ifs = fstream("./test_dir/remote/oplog.txt", ios::in | ios::out | ios::app);
+// 	// cout<<ifs.cur<<endl;
+// 	// ifs.seekp(0, ios::beg);
+// 	// // ifs.seekg(0, ios::beg);
+// 	// // cout<<ifs.tellp()<<endl;
+// 	// ifs<<"789test"<<endl;
+// 	// ifs<<"12321test"<<endl;
+// 	// ifs<<"12321test"<<endl;
 
-	// cout<<rename("./test_dir/test1.txt", "./test_dir/test.txt")<<endl;
+// 	// cout<<rename("./test_dir/test1.txt", "./test_dir/test.txt")<<endl;
 
-	// atomic<bool> b(true);
+// 	// atomic<bool> b(true);
 
-	int idx, prev_bro_idx, next_bro_idx, fa_idx, first_son_idx, last_son_idx, type, count;
-    long tv_sec, tv_nsec, size;
-    // char hashBuf[17];
-    string readHash, name, dirPath;
-	ifstream ifs("./test_dir/remote/vfr.txt");
-	ifs>>count;
-	while(!ifs.eof()){
-		// ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
-		ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>readHash;
-        cout<<readHash<<endl;
-        cout<<idx << " "<<name<< " "<<dirPath<< " "<<fa_idx<< " "<<prev_bro_idx<< " "<<next_bro_idx<< " "<<first_son_idx<< " "<<last_son_idx<< " "<<type<< " "<<tv_sec<< " "<<tv_nsec<< " "<<size<< " "<<readHash<<endl;
-		return 1;
-	}
+// 	// int idx, prev_bro_idx, next_bro_idx, fa_idx, first_son_idx, last_son_idx, type, count;
+//     // long tv_sec, tv_nsec, size;
+//     // // char hashBuf[17];
+//     // string readHash, name, dirPath;
+// 	// ifstream ifs("./test_dir/remote/vfr.txt");
+// 	// ifs>>count;
+// 	// while(!ifs.eof()){
+// 	// 	// ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
+// 	// 	ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>readHash;
+//     //     cout<<readHash<<endl;
+//     //     cout<<idx << " "<<name<< " "<<dirPath<< " "<<fa_idx<< " "<<prev_bro_idx<< " "<<next_bro_idx<< " "<<first_son_idx<< " "<<last_son_idx<< " "<<type<< " "<<tv_sec<< " "<<tv_nsec<< " "<<size<< " "<<readHash<<endl;
+// 	// 	return 1;
+// 	// }
+
+// 	class Test
+// 	{
+// 	private:
+// 	public:
+// 		Test(){};
+// 		Test(Test & t){};
+// 		~Test(){};
+// 	};
+// }
+
+
+class Person
+{
+public:
+    Person(){}
+    Person(const Person& p)
+    {
+        cout << "Copy Constructor" << endl;
+    }
+
+    Person& operator=(const Person& p)
+    {
+        cout << "Assign" << endl;
+        return *this;
+    }
+
+private:
+    int age;
+    string name;
+};
+
+void f(Person p)
+{
+    return;
+}
+
+Person f1()
+{
+    Person p;
+    return p;
+}
+
+int main()
+{
+    Person p;
+	
+    Person p1 = p;    // 1
+    // Person p2;
+    // p2 = p;           // 2
+    // f(p2);            // 3
+
+    // p2 = f1();        // 4
+
+    // Person p3 = f1(); // 5
+
+    getchar();
+    return 0;
 }
