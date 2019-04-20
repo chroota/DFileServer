@@ -1,6 +1,7 @@
 #include "vvfs.hpp"
 
-bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const string &vFOpLogFile){
+bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const string &vFOpLogFile)
+{
     this->vfsPath = vfsPath;
     this->vFRLogFile = vFRLogFile;
     this->vFOpLogFile = vFOpLogFile;
@@ -8,7 +9,8 @@ bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const s
 }
 
 string VFile::Hash(FileType type, const string & path, off_t size, 
-    struct timespec mtime, int fa_idx, int idx, int next_bro_idx, int first_son_idx, int last_son_idx){
+    struct timespec mtime, int fa_idx, int idx, int next_bro_idx, int first_son_idx, int last_son_idx)
+{
     ostringstream oss;
     oss<<type<<path<<size<<mtime.tv_sec<<mtime.tv_nsec<<fa_idx<<idx<<next_bro_idx<<first_son_idx<<last_son_idx;
     return getBufMD5(oss.str().c_str(), oss.str().length());
@@ -24,18 +26,13 @@ bool Vvfs::updateHashFromVFOpLogFile()
     while(!ifs.eof())
     {
         ifs>>op;
-        if(ifs.fail()) 
-        {
-            // logger.fatal("op log file error");
-            break;
-        }
-
+        if(ifs.fail()) break;
         if(ifs.eof()) break;
-
         if(op == Msg::MV_OP)
         {
             ifs >> path >> dstPath >> opTime;
-            if(ifs.fail()){
+            if(ifs.fail())
+            {
                 logger.fatal("read op log fail");
                 break;
             }
@@ -44,7 +41,8 @@ bool Vvfs::updateHashFromVFOpLogFile()
         else
         {
             ifs >> path >> opTime;
-            if(ifs.fail()){
+            if(ifs.fail())
+            {
                 logger.fatal("read op log fail");
                 break;
             }
@@ -78,21 +76,17 @@ bool Vvfs::createRootVF()
     return true;
 }
 
-bool Vvfs::openVFOpLogFile(){
+bool Vvfs::openVFOpLogFile()
+{
     pVFOpLogFileFstream = new ofstream(vFOpLogFile,ios::app);
-    if(pVFOpLogFileFstream->fail()){
-        return false;
-    }
-
+    if(pVFOpLogFileFstream->fail()) return false;
     return true;
 }
 
-int Vvfs::allocIdx(){
-    for(int idx = 0; idx < vFiles.size(); idx++){
-        if(!vFiles[idx].isActive()){
-            return idx;
-        }
-    }
+int Vvfs::allocIdx()
+{
+    for(int idx = 0; idx < vFiles.size(); idx++)
+        if(!vFiles[idx].isActive()) return idx;
     return -1;
 }
 
@@ -109,7 +103,8 @@ bool Vvfs::buildVFS()
     }
 
     ifstream ifs(vFRLogFile);
-    if(ifs.fail()){
+    if(ifs.fail())
+    {
         logger.log("vfr config file not exists, now ceate a new vfr config file!!");
         ofstream ofs(vFRLogFile);
         ofs << 0 << endl;
@@ -190,10 +185,11 @@ bool Vvfs::buildVFS()
 
 bool Vvfs::mkVDir(const string & name, string & err)
 {
-    return newVF(name, 0, err, VFT_DIR);
+    string diskPath;
+    return newVF(name, 0, err, diskPath, VFT_DIR);
 }
 
-bool Vvfs::newVF(const string &path, off_t totalSize, string &err, FileType type)
+bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskPath, FileType type)
 {
     if (path.size() == 0 || path == " ") {
         err = "file name error!";
@@ -202,7 +198,8 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, FileType type
     }
 
     // if file exists, use origin relations
-    if (vRelations.count(path) != 0) {
+    if (vRelations.count(path) != 0) 
+    {
         err = "file:"+path+" exists!";
         logger.log(err);
         return true;
@@ -213,7 +210,8 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, FileType type
     string name = path.substr(spIdx + 1);
     VFile vf(name, type, dirPath, totalSize, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
     int newIdx = allocIdx();
-    if(newIdx == -1){
+    if(newIdx == -1)
+    {
         newIdx = vFiles.size();
         vFiles.push_back(vf);
     }else
@@ -233,7 +231,8 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, FileType type
     VFRelation &dirVfr = vRelations[dirPath];
     if (dirVfr.last_son_idx != -1) 
     {
-        vRelations[vFiles[dirVfr.last_son_idx].getFullPath()].next_bro_idx = newIdx;
+        VFRelation & lastSonvfr = getLastSonVfrByVfr(dirVfr);
+        lastSonvfr.next_bro_idx = newIdx;
         vRelations[path].prev_bro_idx = dirVfr.last_son_idx;
         dirVfr.last_son_idx = newIdx;
     }else{
@@ -250,6 +249,55 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, FileType type
 
     //todo recursive create
     err ="";
+    diskPath = vf.getDiskPath();
+    return true;
+}
+
+string Vvfs::getVFPhasicalPath(VFile & vf){
+    return vfsPath + "/" + vf.getDiskPath();
+}
+
+string Vvfs::getVFPhasicalPath(string &vfDiskPath){
+    return vfsPath + "/" + vfDiskPath;
+}
+
+bool Vvfs::rmSubVFS(VFile &vf, string &err){
+    if(vf.getSize() == 0) return true;
+
+    queue<int> idxQ;
+    VFRelation &vfr = getVfrByVf(vf);
+    VFRelation &firstSonVfr = getFirstSonVfrByVfr(vfr);
+    idxQ.push(firstSonVfr.idx);
+    int nextIdx = firstSonVfr.next_bro_idx;
+    while (nextIdx != -1)
+    {
+        idxQ.push(nextIdx);
+        nextIdx = getNextIdxByIdx(nextIdx);
+    }
+
+
+    while (!idxQ.empty())
+    {
+        int idx = idxQ.front();
+        idxQ.pop();
+        VFile &vf = vFiles[idx];
+        VFRelation &vfr = getVfrByIdx(idx);
+        if(vfr.next_bro_idx  != -1) 
+            idxQ.push(vfr.next_bro_idx);
+        if(vfr.first_son_idx != -1) 
+            idxQ.push(vfr.first_son_idx);
+        vf.destory();
+        vRelations.erase(vf.getVfrKey());
+        string diskPath = getVFPhasicalPath(vf);
+
+        //todo deal i/o backgground thread
+        if(remove(diskPath.c_str()) == -1)
+        {
+            logger.log("fail to remove :" + diskPath);
+            err = "fail to remove :" + diskPath;
+            return false;
+        }
+    }
     return true;
 }
 
@@ -269,43 +317,58 @@ bool Vvfs::rmVF(const string &path, string &err)
 
     VFRelation &vfr = vRelations[path];
     VFile &vf = vFiles[vfr.idx];
+
     VFile &vfDir = vFiles[vfr.fa_idx];
     // VFRelation vfrDir = vRelations[vfDir.getName()];
     VFRelation &vfrDir = vRelations[vfDir.getVfrKey()];
-
-    if(remove((vfsPath+path).c_str()) == -1){
+    string diskPath = getVFPhasicalPath(vf);
+    if(remove(diskPath.c_str()) == -1)
+    {
         // logger.log(string("fail to remove :")+name);
         err = string("fail to remove :")+path;
         return false;
     }
 
+    if(vf.getType() == VFT_DIR && rmSubVFS(vf, err)){
+        //todo if a directory
+        return false;
+    }
+
     // perent has one son
-    if(vfr.idx == vfrDir.first_son_idx && vfrDir.first_son_idx == vfrDir.last_son_idx){
+    if(vfr.idx == vfrDir.first_son_idx && vfrDir.first_son_idx == vfrDir.last_son_idx)
+    {
         vfrDir.first_son_idx = vfrDir.last_son_idx = -1;
     }
     //first son
-    else if(vfr.idx == vfrDir.first_son_idx){
-        VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getName()];
+    else if(vfr.idx == vfrDir.first_son_idx)
+    {
+        // VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getVfrKey()];
+        VFRelation &nextVfr = getNextVfrByVfr(vfr);
         nextVfr.prev_bro_idx = -1;
         vfrDir.first_son_idx = nextVfr.idx;
     }
     // last son
-    else if(vfr.idx == vfrDir.last_son_idx){
-        VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getName()];
+    else if(vfr.idx == vfrDir.last_son_idx)
+    {
+        // VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getVfrKey()];
+        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = -1;
         vfrDir.last_son_idx = prevVfr.idx;
-    }else{
-        VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getName()];
-        VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getName()];
+    }else
+    {
+        // VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getVfrKey()];
+        VFRelation &nextVfr = getNextVfrByVfr(vfr);
+        // VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getVfrKey()];
+        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = nextVfr.idx;
         prevVfr.prev_bro_idx = nextVfr.next_bro_idx;
     }
 
     vf.destory();
     vRelations.erase(path);
-    vf.decSize();
-    err = "";
+    vfDir.decSize();
 
+    err = "";
     if(!updateHashByRMFileOp(path)){
         logger.fatal("rm hash update error");
     }
@@ -313,6 +376,7 @@ bool Vvfs::rmVF(const string &path, string &err)
     if(!writeRMFileOpLog(path)){
         logger.fatal("rm log write error");
     }
+    
     // logger.debug("rm file:"+name+"ok");
     logger.log(LDEBUG, "rm op ok, path:%s, new hash:%s", path.c_str(), hash.c_str());
     return true;
@@ -323,14 +387,48 @@ VFile & Vvfs::getVFByVfr(VFRelation & vfr){
     return vFiles[vfr.idx];
 }
 
-VFRelation &Vvfs::getVFRByVF(VFile &vf){
+VFRelation &Vvfs::getVfrByVf(VFile &vf){
     string path = vf.getFullPath();
     return vRelations[path];
 }
 
-VFRelation &Vvfs::getVFRByIdx(int idx){
+VFRelation &Vvfs::getVfrByIdx(int idx){
     VFile & vf = vFiles[idx];
-    return getVFRByVF(vf);
+    return getVfrByVf(vf);
+}
+
+int Vvfs::getIdxByVf(VFile &vf)
+{
+    VFRelation &vfr = getVfrByVf(vf);
+    return vfr.idx;
+}
+
+VFRelation &Vvfs::getNextVfrByVfr(VFRelation &vfr)
+{
+    return vRelations[vFiles[vfr.next_bro_idx].getVfrKey()];
+}
+
+int Vvfs::getNextIdxByIdx(int idx)
+{
+    if(idx == -1) return -1;
+    VFile &vf = vFiles[idx];
+    VFRelation &vfr = vRelations[vf.getVfrKey()];
+    return vfr.next_bro_idx;
+}
+
+VFRelation &Vvfs::getPrevVfrByVfr(VFRelation &vfr)
+{
+    return vRelations[vFiles[vfr.prev_bro_idx].getVfrKey()];
+}
+
+
+VFRelation &Vvfs::getLastSonVfrByVfr(VFRelation &vfr)
+{
+    return vRelations[vFiles[vfr.last_son_idx].getVfrKey()];
+}
+
+VFRelation &Vvfs::getFirstSonVfrByVfr(VFRelation &vfr){
+    return vRelations[vFiles[vfr.first_son_idx].getVfrKey()];
 }
 
 bool Vvfs::lsVF(const string & path, Msg::Message &msg)
@@ -345,7 +443,7 @@ bool Vvfs::lsVF(const string & path, Msg::Message &msg)
     }
     if (vRelations.count(path) == 0) 
     {
-        err = "ls file:"+path+"not exists!";
+        err = "ls file:"+path+" not exists!";
         LsFileMsgResInst(msg, Msg::MSG_RES_ERROR, err);
         logger.log(err);
         return false;
@@ -359,13 +457,13 @@ bool Vvfs::lsVF(const string & path, Msg::Message &msg)
 
     if(vf.getType() == VFT_FILE || vf.getSize() == 0) return true;
 
-    VFRelation &firstSonVfr = getVFRByIdx(vfr.first_son_idx);
+    VFRelation &firstSonVfr = getVfrByIdx(vfr.first_son_idx);
     VFile &firstSonVf = vFiles[vfr.first_son_idx];
     AddAttributeToFileMsg(msg, firstSonVf.getName(), firstSonVf.getSize(), (Msg::FileType)firstSonVf.getType(), getTimeStringFromTvSec(firstSonVf.getTvSec()));
     int tmpVfrIdx = firstSonVfr.next_bro_idx;
     while (tmpVfrIdx != -1)
     {
-        VFRelation & tmpVfr = getVFRByIdx(tmpVfrIdx);
+        VFRelation & tmpVfr = getVfrByIdx(tmpVfrIdx);
         VFile & tmpVf = vFiles[tmpVfrIdx];
         AddAttributeToFileMsg(msg, tmpVf.getName(), tmpVf.getSize(), (Msg::FileType)tmpVf.getType(), getTimeStringFromTvSec(tmpVf.getTvSec()));
         tmpVfrIdx = tmpVfr.next_bro_idx;
@@ -426,7 +524,6 @@ bool Vvfs::updateHashByRMFileOp(const string &path, long long opTime)
     oss << Msg::RM_OP << path << opTime;
     hashpkg.update(oss.str().c_str(), oss.str().size());
     hash = hashpkg.getMD5Hex();
-    // cout<<hash<<endl;
     return true;
 }
 
@@ -569,8 +666,10 @@ bool Vvfs::storeVFRelations(){
 
 void Vvfs::storeVFRelationsBackend()
 {
-    while(true){
-        if(!isVFRelationsStored && storeVFRelations()){
+    while(true)
+    {
+        if(!isVFRelationsStored && storeVFRelations())
+        {
             logger.debug("success store VFRelations");
             isVFRelationsStored = true;
         }

@@ -1,3 +1,2 @@
 break Vvfs::newVF(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, FileType)
-  condition $bpnum path == "/msg.pb.cc"
 

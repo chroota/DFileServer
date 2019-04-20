@@ -18,6 +18,7 @@
 #define MV_FILE "mv"
 #define GET_FILE "get"
 #define LS_FILE "ls"
+#define CP_FILE "cp"
 
 using namespace std;
 
@@ -49,5 +50,7 @@ public:
     bool rmVF(const string & remotePath);
     bool lsVF(const string & remotePath);
     bool getVF(const string & remotePath, const string & localPath);
+    bool mvVF(const string & remoteSrcPath, const string & remoteDstPath);
+    bool cpVF(const string & remoteSrcPath, const string & remoteDstPath);
     bool init();
 };

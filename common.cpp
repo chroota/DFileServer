@@ -19,13 +19,6 @@ struct timespec getTimeSpec(){
     return ts;
 }
 
-void metis_strftime(time_t t, char *pcTime)
-{
-  struct tm *tm_t;
-  tm_t = localtime(&t);
-  strftime(pcTime,128,"%F %T",tm_t);
-}
-
 
 long long getSystemTime()
 {

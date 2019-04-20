@@ -19,6 +19,8 @@ enum MsgType
   FileOp_Request = 0x0f;
   LsFile_Request = 0x10;
   LsFile_Response = 0x11;
+  MvFile_Request = 0x12;
+  MvFile_Response = 0x13;
 }
 
 enum FileType{
@@ -111,7 +113,8 @@ message FilePost{
 }
 
 
-message EndFilePostRequest{
+message EndFilePostRequest
+{
     required string name = 1;
 }
 

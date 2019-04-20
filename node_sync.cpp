@@ -98,7 +98,8 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
             recvMsg.file_post().data(),sendbuf,sendLen
         );
 
-    }else if(recvMsg.type() == Msg::Rm_File_Request){
+    }else if(recvMsg.type() == Msg::Rm_File_Request)
+    {
         string rmPath = recvMsg.request().rm_op().path();
         logger.debugAction("rmFile:" + rmPath);
         rmFile(rmPath, sendbuf, sendLen);
@@ -108,7 +109,8 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
         logger.debugAction("ls file:" + lsPath);
         lsFiles(lsPath, sendbuf, sendLen);
     }
-    else{
+    else
+    {
         logger.log("msg type not found for udp file server!");
     }
 
@@ -130,7 +132,8 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
         return false;
     }
 
-    if(path[0] != '/'){
+    if(path[0] != '/')
+    {
         err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
@@ -139,7 +142,9 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
         return false;
     }
 
-    if(!pVvfs->newVF(path, totalFileSize, err)){
+    string diskPath;
+    if(!pVvfs->newVF(path, totalFileSize, err, diskPath))
+    {
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
@@ -147,7 +152,7 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
         return false;
     }
 
-    string savePath = pVvfs->vfsPath + "/" + path.substr(1);
+    string savePath = pVvfs->getVFPhasicalPath(diskPath);
     logger.log("save path:" + savePath);
 
     // create file saver

@@ -62,12 +62,13 @@ class VFile
 private:
     FileType _type = VFT_FILE;
     string _name = "";
-    // string _disk_path = "";
+    string _disk_path = "";
     string _dirPath = "";
     off_t _size = 0;       // for dir: number of chidren; for file: size of file
     string _hash = "";       // todo
     struct timespec _mtime;
     bool status = false;        // 1:active 0:dead
+    string _ext = "";
 public:
     VFile(){};
     ~VFile(){};
@@ -77,15 +78,12 @@ public:
         _mtime(mtime)
         {
             //todo hash compute
-            _hash = Hash(type, dirPath, size, mtime, fa_idx, idx, next_bro_idx, first_son_idx, last_son_idx);
+            string fullPath = dirPath + name;
+            _hash = Hash(type, fullPath, size, mtime, fa_idx, idx, next_bro_idx, first_son_idx, last_son_idx);
+            _disk_path = _hash;
+            int extIdx = name.find_last_of(".");
+            if(extIdx != -1) _ext = name.substr(extIdx+1);
         };    
-    
-    
-    // VFile factory(const string &name, FileType, const string &path){
-    //     return VFile(
-            
-    //     );
-    // }
 
     string getName()
     {
@@ -97,12 +95,17 @@ public:
         return _dirPath + _name;
     }
 
+    string getDiskPath()
+    {
+        return _disk_path;
+    }
+
     string getDirPath(){
         return _dirPath;
     }
 
     string getFullPath(){
-        return _dirPath + "/" + _name;
+        return _dirPath + _name;
     }
 
     FileType getType(){
@@ -230,10 +233,15 @@ public:
     /*
      * access vfile & vfrelation mutual
     */
-    VFile &getVFByVfr(VFRelation & vfr);
-    VFRelation &getVFRByVF(VFile &vf);
-    VFRelation &getVFRByIdx(int idx);
-
+    VFile &getVFByVfr(VFRelation &vfr);
+    VFRelation &getVfrByVf(VFile &vf);
+    VFRelation &getVfrByIdx(int idx);
+    int getIdxByVf(VFile &vf);
+    VFRelation &getNextVfrByVfr(VFRelation &vfr);
+    int getNextIdxByIdx(int idx);
+    VFRelation &getPrevVfrByVfr(VFRelation &vfr);
+    VFRelation &getLastSonVfrByVfr(VFRelation &vfr);
+    VFRelation &getFirstSonVfrByVfr(VFRelation &vfr);
     
     /*
      * vf control
@@ -241,22 +249,23 @@ public:
     //create dir
     bool mkVDir(const string &name, string &err);
     // create new vf
-    bool newVF(const string &name, off_t totalSize, string &err, FileType type = VFT_FILE); //create file
+    bool newVF(const string &name, off_t totalSize, string &err, string &diskPath, FileType type = VFT_FILE); //create file
     // remove vf
     bool rmVF(const string &name, string &err);
+    bool rmSubVFS(VFile &vf, string &err);
     // move vf
     bool mvVF(const string &srcPath, const string &dstPath, string &err);
     // list vf info
     bool lsVF(const string & path, Msg::Message &msg);
     // active vf when new file is upload complete
     bool activeVF(const string &name, string &err);
+    string getVFPhasicalPath(VFile & vf);
+    string getVFPhasicalPath(string &vfDiskPath);
 
     /*
      * create root vf
     */
     bool createRootVF();
-
-
 
     /*
      * update hash when file operation event fired
