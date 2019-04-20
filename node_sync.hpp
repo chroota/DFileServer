@@ -25,6 +25,7 @@ private:
     int totalPackSize;
     ofstream *pOutput = nullptr;
     int recvChunkCount = 0;
+    int recvFileSizeCount = 0;
     vector<int> *pRecvFlag = nullptr;
     // int x;
     Logger logger;
@@ -81,6 +82,8 @@ class UdpFileServer:UdpServer{
         bool recvChunk(const string &name, int sessionId, int fileIdx, int packIdx, const string & data, char sendbuf[], int &sendLen);
         //delete file
         bool rmFile(const string &path, char sendbuf[], int &sendLen);
+        // ls files
+        bool lsFiles(const string &path, char sendbuf[], int &sendLen);
         //listen a port
         bool listen(int port);
         bool test();

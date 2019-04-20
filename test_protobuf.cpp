@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include "msg.pb.h"
+#include <vector>
 using namespace std;
 
 int main(){
@@ -21,11 +22,14 @@ int main(){
     //cout<<s<<endl;
     // demo::OneMessage o;
     // o.set_type(demo::OneMessage_Type_BAR);
-    Msg::CommonResponse csp;
-    csp.set_status(0x01);
-    csp.set_info("vvv");
-    char buf[100];
-    csp.SerializeToArray(buf, 100);
-    cout<<buf<<endl;
+    // Msg::CommonResponse csp;
+    // csp.set_status(0x01);
+    // csp.set_info("vvv");
+    // char buf[100];
+    // csp.SerializeToArray(buf, 100);
+    // cout<<buf<<endl;
+    vector<Msg::FileAttribute> fas;
+    // Msg::FileAttribute
+    // fas.emplace_back()
     printf("123");
 }

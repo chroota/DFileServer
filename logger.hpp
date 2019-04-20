@@ -27,6 +27,7 @@ public:
     void log(verbosity verbose, const char* fmt, ...);
     void debug(const string & info);
     void fatal(const string & info);
+    void errnoInfo(int errno);
     void debugAction(const string & action);
     string getTimeFmtString();
     bool saveLog(const string & info);

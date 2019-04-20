@@ -71,3 +71,9 @@ void Logger::debugAction(const string &action)
 void Logger::fatal(const string &info){
     log(L4, info.c_str());
 }
+
+void Logger::errnoInfo(int errno){
+    ostringstream oss;
+    oss << "errno:"<<errno<<" info:"<<strerror(errno);
+    log(oss.str());
+}

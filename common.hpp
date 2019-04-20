@@ -27,6 +27,7 @@ using namespace std;
 */
 struct timespec getTimeSpec();
 long long getSystemTime();
+string getTimeStringFromTvSec(int tv_sec);
 
 /*
  * string
@@ -73,3 +74,8 @@ bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], in
 
 // rm file msg
 bool RMFileMsgReqInst(Msg::Message &msg, const string &path);
+
+// ls file
+bool LsFileMsgReqInst(Msg::Message &msg, const string &remotePath);
+bool LsFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info);
+bool AddAttributeToFileMsg(Msg::Message &msg, const string name, int size, Msg::FileType type, const string &time);

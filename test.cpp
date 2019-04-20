@@ -375,15 +375,7 @@ int main()
 
 
 
-#include <iostream>
-#include <fstream>
-#include <map>
-#include <thread>
-#include <chrono>
-#include <unistd.h>
-#include <atomic>
 
-using namespace std;
 // int main(){
 // 	// ofstream *pOfs = new ofstream("./test_dir/test.txt");
 // 	// // ofs.write("123", 3);
@@ -465,50 +457,107 @@ using namespace std;
 // }
 
 
-class Person
-{
-public:
-    Person(){}
-    Person(const Person& p)
-    {
-        cout << "Copy Constructor" << endl;
-    }
+// class Person
+// {
+// public:
+//     Person(){}
+//     Person(const Person& p)
+//     {
+//         cout << "Copy Constructor" << endl;
+//     }
 
-    Person& operator=(const Person& p)
-    {
-        cout << "Assign" << endl;
-        return *this;
-    }
+//     Person& operator=(const Person& p)
+//     {
+//         cout << "Assign" << endl;
+//         return *this;
+//     }
 
-private:
-    int age;
-    string name;
-};
+// private:
+//     int age;
+//     string name;
+// };
 
-void f(Person p)
-{
-    return;
-}
+// void f(Person p)
+// {
+//     return;
+// }
 
-Person f1()
-{
-    Person p;
-    return p;
-}
+// Person f1()
+// {
+//     Person p;
+//     return p;
+// }
 
+// int main()
+// {
+//     Person p;
+	
+//     Person p1 = p;    // 1
+//     // Person p2;
+//     // p2 = p;           // 2
+//     // f(p2);            // 3
+
+//     // p2 = f1();        // 4
+
+//     // Person p3 = f1(); // 5
+
+//     getchar();
+//     return 0;
+// }
+
+
+// #include <iostream>
+// #include <fstream>
+// #include <map>
+// #include <thread>
+// #include <chrono>
+// #include <unistd.h>
+// #include <atomic>
+// #include <vector>
+
+// using namespace std;
+// int main(){
+// 	vector<int> vecs;
+// 	cout<<vecs.max_size()<<endl;
+// }
+
+// #include<stdio.h>
+// #include<stdlib.h>
+// #include<time.h>
+// char*tzstr="TZ=PST8PDT";
+// int main()
+// {
+//     time_t t;
+//     struct tm *gmt,*area;
+//     putenv(tzstr);
+//     tzset();
+//     t = time(NULL);
+//     area = localtime(&t);
+//     printf("Local time is: %s", asctime(area));
+//     gmt = gmtime(&t);
+//     printf("GMT is: %s", asctime(gmt));
+//     return 0;
+// }
+
+
+#include <time.h> 
+#include <memory.h> 
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
 int main()
 {
-    Person p;
-	
-    Person p1 = p;    // 1
-    // Person p2;
-    // p2 = p;           // 2
-    // f(p2);            // 3
 
-    // p2 = f1();        // 4
-
-    // Person p3 = f1(); // 5
-
-    getchar();
-    return 0;
-}
+  struct timespec ts;
+  memset(&ts, 0, sizeof(ts));
+  clock_gettime(CLOCK_REALTIME, &ts);
+  printf("%d----->%d\n", ts.tv_sec, ts.tv_nsec);
+ struct tm *t;
+    t=localtime((time_t *)&ts.tv_sec);
+    // printf("%4d年%02d月%02d日 %02d:%02d:%02d\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
+ char buf[100];
+    sprintf(buf, "%4d-%02d-%02d %02d:%02d:%02d\n", t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
+    cout<<string(buf).size()<<endl;
+  return 0;
+} 

@@ -1,12 +1,31 @@
 #include "common.hpp"
 
 
+
+string getTimeStringFromTvSec(int tv_sec)
+{
+    struct tm *t;
+    time_t tt = tv_sec;
+    t = localtime(&tt);
+    char buf[MAXBUFSIZE];
+    sprintf(buf, "%4d-%02d-%02d %02d:%02d:%02d", t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
+    return string(buf);
+}
+
 struct timespec getTimeSpec(){
     struct timespec ts;
     memset(&ts, 0, sizeof(ts));
     clock_gettime(CLOCK_REALTIME, &ts);
     return ts;
 }
+
+void metis_strftime(time_t t, char *pcTime)
+{
+  struct tm *tm_t;
+  tm_t = localtime(&t);
+  strftime(pcTime,128,"%F %T",tm_t);
+}
+
 
 long long getSystemTime()
 {
@@ -65,7 +84,8 @@ bool urequest(const char * host, int port,const char sendbuf[], int send_len, ch
     if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
         return false;
     }
-    recv_len = recvfrom(sockfd, recvbuf, MAXBUFSIZE,0,(struct sockaddr*)&addr,&len);
+    recv_len = recvfrom(sockfd, recvbuf, MAXBUFSIZE, 0, (struct sockaddr*)&addr,&len);
+    close(sockfd);
 	return true;
 }
 
@@ -84,10 +104,10 @@ bool urequestNoResponse(const char * host, int port, const char sendbuf[], int s
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = inet_addr(host);
     socklen_t len = sizeof(addr);
-    // sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len);
     if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
         return false;
     }
+    close(sockfd);
     return true;
 }
 
@@ -251,6 +271,33 @@ bool RMFileMsgReqInst(Msg::Message &msg, const string &path){
 }
 
 
+
+// ls files
+bool LsFileMsgReqInst(Msg::Message &msg, const string &remotePath){
+    msg.set_type(Msg::LsFile_Request);
+    msg.mutable_request()->mutable_ls_file_req()->set_path(remotePath);
+    return true;
+}
+
+bool LsFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info){
+    msg.set_type(Msg::LsFile_Response);
+    msg.mutable_response()->set_info(info);
+    msg.mutable_response()->set_status(status);
+    return true;
+}
+
+bool AddAttributeToFileMsg(Msg::Message &msg, const string name, int size, Msg::FileType type, const string &time)
+{
+    Msg::FileAttribute *fattr;
+    fattr = msg.mutable_response()->mutable_ls_file_res()->add_files();
+    fattr->set_name(name);
+    fattr->set_size(size);
+    fattr->set_type(type);
+    fattr->set_time(time);
+    return true;
+}
+
+
 /*
- * message package functions  =============================================================================== end
+ * message package functions  =============================================================================== end =====================================================
 */

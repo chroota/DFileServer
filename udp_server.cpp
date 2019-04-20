@@ -28,16 +28,18 @@ bool UdpServer::start(int port){
     char sendbuf[MAXBUFSIZE];
     bool isResponse = true;
 
-    while(true){
+    while(true)
+    {
         memset(sendbuf, 0, MAXBUFSIZE);
         memset(recvbuf, 0, MAXBUFSIZE);
         int send_len = 0;
         recvfrom(sockfd, recvbuf, sizeof(recvbuf), 0, (struct sockaddr*)&client_addr, &len);
-        //printf("%d\n", strlen(recvbuf));
         handle(recvbuf, strlen(recvbuf), sendbuf, send_len, isResponse);
-        if(isResponse){
+        if(isResponse)
+        {
             sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&client_addr, len);
         }
-        // sprintf(recvbuf, "recieve success");
     }
+
+    close(sockfd);
 }

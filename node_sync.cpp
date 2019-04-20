@@ -20,7 +20,7 @@ bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string 
 {
     logger.debugAction("writeChunk");
 
-    if(recvChunkCount == totalPackSize)
+    if(isComplete())
     {
         err = "file already complete";
         logger.log(err);
@@ -28,15 +28,13 @@ bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string 
     }
 
     // logger.debug(to_string(pRecvFlag->size()));
-    
     if(pRecvFlag->at(packIdx))
     {
         err = "file chunk already writed at packIdx:" + to_string(packIdx);
         return false;
     }
+    // cout<<"complete: fileIdx:"<<fileIdx<<" "<<"packIdx:"<<packIdx<<endl;
 
-    // cout<<"data size:"<<data.size()<<endl
-    //     <<"data:"<<data<<endl;
     //todo exception
     pOutput->seekp(fileIdx);
     pOutput->write(data.c_str(), data.size());
@@ -47,14 +45,20 @@ bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string 
         logger.log(err);
         return false;
     }
+
     recvChunkCount++;
+    recvFileSizeCount += data.size();
     pRecvFlag->at(packIdx) = 1;
     return true;
 }
 
 bool FileSaver::isComplete()
 {
-    if(recvChunkCount == totalPackSize)
+
+    //todo verify file hash
+    // cout<<recvChunkCount<<"/"<<totalPackSize<<endl;
+    // if(recvChunkCount == totalPackSize)
+    if(recvChunkCount == totalPackSize && recvFileSizeCount == totalFileSize)
     {
         pOutput->close();
         return true;
@@ -75,18 +79,20 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
     Msg::Message recvMsg;
     Msg::Message sendMsg;
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-    if(recvMsg.type() == Msg::NewFile_Request){
+    if(recvMsg.type() == Msg::NewFile_Request)
+    {
         logger.debugAction("create file");
-        return createNewFile(
+        return createNewFile
+        (
             recvMsg.request().file().name(),recvMsg.request().file().type(),
             recvMsg.request().file().total_file_size(),recvMsg.request().file().total_pack_size(),
             sendbuf, sendLen
         );
-    }else if(recvMsg.type() == Msg::File_Post){
+    }else if(recvMsg.type() == Msg::File_Post)
+    {
         logger.debugAction("file post");
-        // todo async recieve
-        // isResponse = false;
-        recvChunk(
+        recvChunk
+        (
             recvMsg.file_post().name(),recvMsg.file_post().post_session_id(),
             recvMsg.file_post().file_idx(),recvMsg.file_post().pack_idx(),
             recvMsg.file_post().data(),sendbuf,sendLen
@@ -96,6 +102,11 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
         string rmPath = recvMsg.request().rm_op().path();
         logger.debugAction("rmFile:" + rmPath);
         rmFile(rmPath, sendbuf, sendLen);
+    }else if(recvMsg.type() == Msg::LsFile_Request)
+    {
+        string lsPath = recvMsg.request().ls_file_req().path();
+        logger.debugAction("ls file:" + lsPath);
+        lsFiles(lsPath, sendbuf, sendLen);
     }
     else{
         logger.log("msg type not found for udp file server!");
@@ -105,7 +116,7 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
 }
 
 
-bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int totalFileSize, 
+bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int totalFileSize, 
     int totalPackSize, char sendbuf[], int &sendLen)
 {
     string err;
@@ -119,8 +130,7 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
         return false;
     }
 
-    // cout<<name<<endl;
-    if(name[0] != '/'){
+    if(path[0] != '/'){
         err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
@@ -129,7 +139,7 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
         return false;
     }
 
-    if(!pVvfs->newVF(name, err)){
+    if(!pVvfs->newVF(path, totalFileSize, err)){
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
@@ -137,7 +147,7 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
         return false;
     }
 
-    string savePath = pVvfs->vfsPath + "/" + name.substr(1);
+    string savePath = pVvfs->vfsPath + "/" + path.substr(1);
     logger.log("save path:" + savePath);
 
     // create file saver
@@ -152,13 +162,13 @@ bool UdpFileServer::createNewFile(const string &name, Msg::FileType type, int to
         return false;
     }
 
-    savers[name] = pFileSarver;
+    savers[path] = pFileSarver;
     logger.debug("saver len:" + to_string(savers.size()));
 
     // allocate session post id
     int sessionId = getSessionId();
     logger.log(LDEBUG, "allocate session id:%d", sessionId);
-    sessions[name] = sessionId;
+    sessions[path] = sessionId;
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, sessionId, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
     sendLen = strlen(sendbuf);
@@ -180,6 +190,8 @@ bool UdpFileServer::recvChunk(const string &name, int sessionId, int fileIdx, in
         sendLen = strlen(sendbuf);
         return false;
     }
+
+    cout<<"recv "<<"fileIdx:"<<fileIdx<<" "<<"packIdx:"<<packIdx<<endl;
 
     if(!savers[name]->writeChunk(data, fileIdx, packIdx, err))
     {
@@ -225,14 +237,32 @@ bool UdpFileServer::rmFile(const string &path, char sendbuf[], int &sendLen){
     Msg::Message msg;
     if(!pVvfs->rmVF(path, err)){
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
-        msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
         sendLen = strlen(sendbuf);
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
-    msg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
     sendLen = strlen(sendbuf);
     return true;
+}
+
+bool UdpFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen){
+    string err;
+    Msg::Message msg;
+    if(path[0] != '/')
+    {
+        err = "error name path";
+        logger.log(err);
+        //NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
+    bool ret = pVvfs->lsVF(path, msg);
+    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    sendLen = strlen(sendbuf);
+    return ret;
 }
 
 

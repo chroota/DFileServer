@@ -23,10 +23,11 @@
 using  namespace std;
 
 enum FileType{
-    VFT_FILE = 0,
+    VFT_FILE = 1,
     // VFT_BIN = 1,
-    VFT_DIR = 1
+    VFT_DIR = 2
 };
+
 
 // work mode
 enum VvFsMode{
@@ -68,7 +69,6 @@ private:
     struct timespec _mtime;
     bool status = false;        // 1:active 0:dead
 public:
-
     VFile(){};
     ~VFile(){};
     VFile(const string & name, FileType type, const string & dirPath, off_t size, 
@@ -99,6 +99,10 @@ public:
 
     string getDirPath(){
         return _dirPath;
+    }
+
+    string getFullPath(){
+        return _dirPath + "/" + _name;
     }
 
     FileType getType(){
@@ -162,7 +166,6 @@ public:
         return _hash;
     }
 
-
     string Hash(FileType type, const string & path, off_t size, struct timespec mtime, int _fa_idx,
             int _idx, int next_bro_idx, int first_son_idx, int last_son_idx); //get hash todo
 };
@@ -222,7 +225,14 @@ public:
         const string & vFRLogFile = "./test_dir/remote/vfr.txt", 
         const string & vFOpLogFile="./test_dir/remote/oplog.txt"
     );
-    
+
+
+    /*
+     * access vfile & vfrelation mutual
+    */
+    VFile &getVFByVfr(VFRelation & vfr);
+    VFRelation &getVFRByVF(VFile &vf);
+    VFRelation &getVFRByIdx(int idx);
 
     
     /*
@@ -231,13 +241,13 @@ public:
     //create dir
     bool mkVDir(const string &name, string &err);
     // create new vf
-    bool newVF(const string &name, string &err, FileType type = VFT_FILE); //create file
+    bool newVF(const string &name, off_t totalSize, string &err, FileType type = VFT_FILE); //create file
     // remove vf
     bool rmVF(const string &name, string &err);
     // move vf
     bool mvVF(const string &srcPath, const string &dstPath, string &err);
     // list vf info
-    bool lsVF(const string &name, string & fileList, string &err);
+    bool lsVF(const string & path, Msg::Message &msg);
     // active vf when new file is upload complete
     bool activeVF(const string &name, string &err);
 
@@ -273,9 +283,11 @@ public:
     Vvfs(){
         isVFRelationsStored = true;
     };
-    ~Vvfs(){
+    ~Vvfs()
+    {
         logger.debug("Vvfs deconstructor");
-        if(pVFOpLogFileFstream){
+        if(pVFOpLogFileFstream)
+        {
             delete pVFOpLogFileFstream;
             pVFOpLogFileFstream = nullptr;
         }

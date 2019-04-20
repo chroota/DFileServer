@@ -2,7 +2,6 @@
 
 void VvfsTp::run(int argc, char *argv[]){
     if (argc < 2) help();
-
     if (!strcmp(argv[1], NEW_FILE)) 
     {
         // cout<<NEW_FILE<<endl;
@@ -13,17 +12,14 @@ void VvfsTp::run(int argc, char *argv[]){
         // cout<<RM_FILE<<endl;
         if(argc < 3) help();
         rmVF(argv[2]);
-
     }else if(!strcmp(argv[1], MV_FILE))
     {
         // cout<<MV_FILE<<endl;
         if(argc < 4) help();
-    
     }else if(!strcmp(argv[1], GET_FILE))
     {
         // cout<<GET_FILE<<endl;
         if(argc < 4) help();
-        
     }else if(!strcmp(argv[1], LS_FILE))
     {
         if(argc < 3) help();
@@ -105,39 +101,45 @@ bool VvfsTp::newVF(const string & localPath, const string & remotePath){
         
 
         FileChunkPostMsgInst(sendMsg, remotePath, databuf, fileIdx, packIdx, readedSize, postSessionId);
-        if(strlen(sendbuf) >= MAXBUFSIZE){
+        if(strlen(sendbuf) >= MAXBUFSIZE)
+        {
             logger.debug("size of sendbuf larger than MAXBUFSIZE!");
             return false;
         }
         sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        // urequestNoResponse(host.c_str(), port, sendbuf, MAXBUFSIZE);
 
         int sendCount = 0;
-        urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvBuf, recvLen);
+        if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvBuf, recvLen))
+        {
+            logger.log(L0, "send data error, errorno:%d info:%s", errno, strerror(errno));
+        }
+
         recvMsg.ParseFromArray(recvBuf, MAXBUFSIZE);
 
-        if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
+        if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
+        {
             logger.log(L4, "error send at packIdx:%d fileIdx:%d", packIdx, fileIdx);
         }
         logger.log(L0,"success at packIdx:%d fileIdx:%d", packIdx, fileIdx);
-        // cout<<sendMsg.file_post().data()<<endl;
         packIdx++;
+        recvMsg.Clear();
     }
 
     return true;
 }
 
-bool VvfsTp::rmVF(const string & remotePath){
+bool VvfsTp::rmVF(const string & remotePath)
+{
     logger.debugAction("rm: "+remotePath);
 
     char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
     int recvLen;
     Msg::Message sendMsg, recvMsg;
     RMFileMsgReqInst(sendMsg, remotePath);
-    sendMsg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
+    sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
 
-    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf,recvLen)){
-        logger.log(L4, "net error! errno:%d", errno);
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen)){
+        logger.log(L4, "send data error, errorno:%d info:%s", errno, strerror(errno));
     }
 
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
@@ -146,12 +148,51 @@ bool VvfsTp::rmVF(const string & remotePath){
         logger.log(L1, "error, info: %s", remotePath.c_str(), recvMsg.response().info().c_str());
         return false;
     }
-    
+
     logger.log("success remove file:"+remotePath);
     return true;
 }
 
-bool VvfsTp::lsVF(const string & remotePath){
+bool VvfsTp::lsVF(const string & remotePath)
+{
+    logger.debugAction("ls: "+remotePath);
+    char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
+    int recvLen;
+    Msg::Message sendMsg, recvMsg;
+    LsFileMsgReqInst(sendMsg, remotePath);
+    sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen))
+    {
+        logger.log(L4, "send data error, errorno:%d info:%s", errno, strerror(errno));
+        return false;
+    }
+
+    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
+    {
+        logger.log(L1, "error, info: %s", remotePath.c_str(), recvMsg.response().info().c_str());
+        return false;
+    }
+
+    const Msg::LsFileResponse & lsFileResponse = recvMsg.response().ls_file_res();
+
+    for (int i = 0; i < lsFileResponse.files_size(); i++)
+    {
+        const Msg::FileAttribute & file = lsFileResponse.files(i);
+        cout<<file.time()<<" ";
+        cout.setf(ios::right);
+        cout.width(4);
+        if(file.type() == Msg::FT_DIR){
+            cout<<"dir"<<" ";
+        }else{
+            cout<<"file"<<" ";
+        }
+        cout.setf(ios::right);
+        cout.width(10);
+        cout<<file.size()<<" ";
+        cout<<file.name()<<endl;
+    }
+    
     return true;
 }
 
@@ -173,7 +214,10 @@ int main(int argc, char *argv[]){
 
     #ifdef VVFS_DEBUG
         assert(tp.newVF("./test_dir/local/md5.cpp", "/md5.cpp") == true);
-        assert(tp.rmVF("/md5.cpp") == true);
+        // assert(tp.newVF("./node_sync", "/node_sync") == true);
+        assert(tp.newVF("./msg.pb.cc", "/msg.pb.cc") == true);
+        //assert(tp.rmVF("/md5.cpp") == true);
+        assert(tp.lsVF("/") == true);
     #else
         tp.run(argc, argv);
     #endif
