@@ -19,7 +19,6 @@ bool FileSaver::open(string &err)
 bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string &err)
 {
     logger.debugAction("writeChunk");
-
     if(isComplete())
     {
         err = "file already complete";
@@ -27,13 +26,11 @@ bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string 
         return false;
     }
 
-    // logger.debug(to_string(pRecvFlag->size()));
     if(pRecvFlag->at(packIdx))
     {
         err = "file chunk already writed at packIdx:" + to_string(packIdx);
         return false;
     }
-    // cout<<"complete: fileIdx:"<<fileIdx<<" "<<"packIdx:"<<packIdx<<endl;
 
     //todo exception
     pOutput->seekp(fileIdx);
@@ -88,11 +85,11 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
             recvMsg.request().file().total_file_size(),recvMsg.request().file().total_pack_size(),
             sendbuf, sendLen
         );
-    }else if(recvMsg.type() == Msg::File_Post)
+    }
+    else if(recvMsg.type() == Msg::File_Post)
     {
         logger.debugAction("file post");
-        recvChunk
-        (
+        recvChunk(
             recvMsg.file_post().name(),recvMsg.file_post().post_session_id(),
             recvMsg.file_post().file_idx(),recvMsg.file_post().pack_idx(),
             recvMsg.file_post().data(),sendbuf,sendLen
@@ -109,6 +106,14 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
         logger.debugAction("ls file:" + lsPath);
         lsFiles(lsPath, sendbuf, sendLen);
     }
+    else if(recvMsg.type() == Msg::MvFile_Request)
+    {
+        mvFile(recvMsg.request().mv_file_req().srcpath(), recvMsg.request().mv_file_req().dstpath(), sendbuf, sendLen);
+    }
+    else if(recvMsg.type() == Msg::CpFile_Request)
+    {
+        
+    }
     else
     {
         logger.log("msg type not found for udp file server!");
@@ -117,20 +122,67 @@ bool UdpFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sen
     return false;
 }
 
-
-bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int totalFileSize, 
-    int totalPackSize, char sendbuf[], int &sendLen)
+bool UdpFileServer::cpFile(const string &srcPath, const string & dstPath, char sendbuf[], int &sendLen)
 {
     string err;
     Msg::Message msg;
-    if(savers.size() >= MAX_OPEN_FILES){
-        err = "exceeding max open file nums";
+    cout<<"cp file src:"<<srcPath<<" dst:"<<dstPath<<endl;
+    if(srcPath[0] != '/' || dstPath[0] != '/')
+    {
+        err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
         sendLen = strlen(sendbuf);
         return false;
     }
+    if(!pVvfs->cpVF(srcPath, dstPath, err))
+    {
+        CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
+    CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
+    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    sendLen = strlen(sendbuf);
+    return true;
+}
+
+bool UdpFileServer::mvFile(const string &srcPath, const string & dstPath, char sendbuf[], int &sendLen)
+{
+    string err;
+    Msg::Message msg;
+    cout<<"move file src:"<<srcPath<<" dst:"<<dstPath<<endl;
+
+    if(srcPath[0] != '/' || dstPath[0] != '/')
+    {
+        err = "error name path";
+        logger.log(err);
+        NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
+    if(!pVvfs->mvVF(srcPath, dstPath, err))
+    {
+        CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
+    CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
+    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    sendLen = strlen(sendbuf);
+    return true;    
+}
+
+
+bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int totalFileSize, 
+    int totalPackSize, char sendbuf[], int &sendLen)
+{
+    string err;
+    Msg::Message msg;
 
     if(path[0] != '/')
     {
@@ -141,6 +193,23 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
         sendLen = strlen(sendbuf);
         return false;
     }
+
+    if(type == Msg::FT_DIR)
+    {
+        if(!pVvfs->mkVDir(path, err))
+        {
+            logger.log(err);
+            NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+            msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+            sendLen = strlen(sendbuf);
+            return false;
+        }
+        NewFileMsgResInst(msg, Msg::MSG_RES_OK, -1, "ok");
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return true;
+    }
+    
 
     string diskPath;
     if(!pVvfs->newVF(path, totalFileSize, err, diskPath))
@@ -155,10 +224,20 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
     string savePath = pVvfs->getVFPhasicalPath(diskPath);
     logger.log("save path:" + savePath);
 
-    // create file saver
-    FileSaver *pFileSarver = new FileSaver(savePath, type, totalFileSize, totalPackSize);
+    if(savers.size() >= MAX_OPEN_FILES)
+    {
+        err = "exceeding max open file nums";
+        logger.log(err);
+        NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
+        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        sendLen = strlen(sendbuf);
+        return false;
+    }
 
-    if(!pFileSarver->open(err))
+    // create file saver
+    FileSaver *pFileSaver = new FileSaver(savePath, type, totalFileSize, totalPackSize);
+
+    if(!pFileSaver->open(err))
     {
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
@@ -167,7 +246,7 @@ bool UdpFileServer::createNewFile(const string &path, Msg::FileType type, int to
         return false;
     }
 
-    savers[path] = pFileSarver;
+    savers[path] = pFileSaver;
     logger.debug("saver len:" + to_string(savers.size()));
 
     // allocate session post id
@@ -225,22 +304,26 @@ bool UdpFileServer::listen(int port)
 {
     //todo deamon
     logger.log(L0, "listening at port: %d", port);
-    if (!start(port)) {
+    if (!start(port)) 
+    {
         return false;
     }
     return true;
 }
 
-bool UdpFileServer::test(){
+bool UdpFileServer::test()
+{
     // pVvfs->vfrsTest();
     return false;
 }
 
 
-bool UdpFileServer::rmFile(const string &path, char sendbuf[], int &sendLen){
+bool UdpFileServer::rmFile(const string &path, char sendbuf[], int &sendLen)
+{
     string err;
     Msg::Message msg;
-    if(!pVvfs->rmVF(path, err)){
+    if(!pVvfs->rmVF(path, err))
+    {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
         sendLen = strlen(sendbuf);
@@ -252,7 +335,8 @@ bool UdpFileServer::rmFile(const string &path, char sendbuf[], int &sendLen){
     return true;
 }
 
-bool UdpFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen){
+bool UdpFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen)
+{
     string err;
     Msg::Message msg;
     if(path[0] != '/')
@@ -266,7 +350,8 @@ bool UdpFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen){
     }
     bool ret = pVvfs->lsVF(path, msg);
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    // sendLen = strlen(sendbuf);
+    sendLen = MAXBUFSIZE;
     return ret;
 }
 
@@ -276,11 +361,13 @@ bool NodeSync::createVFS()
 {
     pVvfs = new Vvfs();
 
-    if(!pVvfs->initConfig(syncDir)){
+    if(!pVvfs->initConfig(syncDir))
+    {
         logger.fatal("Vvfs cofnig init fail");
     }
 
-    if(!pVvfs->buildVFS()){
+    if(!pVvfs->buildVFS())
+    {
         logger.fatal("Vvfs build error");
     }
 
@@ -383,7 +470,8 @@ bool NodeSync::getStateNode()
     Msg::Message recvMsg;
     // printf("%d\n", strlen(recvbuf));
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
+    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
+    {
         logger.log(recvMsg.response().info());
         return false;
     }
@@ -408,7 +496,8 @@ bool NodeSync::updateState(const string &hash)
     Msg::Message recvMsg;
     // printf("%d\n", strlen(recvbuf));
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
+    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
+    {
         logger.log(recvMsg.response().info());
         return false;
     }
@@ -450,7 +539,8 @@ bool NodeSync::join()
     // printf("%d\n", strlen(recvbuf));
     Msg::Message recvMsg;
     recvMsg.ParseFromArray(recvbuf, recv_len);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) {
+    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
+    {
         logger.log(recvMsg.response().info());
         return false;
     }

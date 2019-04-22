@@ -29,43 +29,73 @@ void VvfsTp::run(int argc, char *argv[])
     }
 }
 
+bool VvfsTp::mkDir(const string & remotePath)
+{
+    return newVF("", remotePath, Msg::FT_DIR);
+}
 
-bool VvfsTp::newVF(const string & localPath, const string & remotePath){
-    logger.debug("new file: local path:"+ localPath +", remote path:" + remotePath);
+
+bool VvfsTp::newVF(const string & localPath, const string & remotePath, Msg::FileType type)
+{
+    if(type == Msg::FT_FILE)
+    {
+        logger.debug("new file: local path:"+ localPath +", remote path:" + remotePath);
+    }else
+    {
+        logger.debug("mkdir:"+remotePath);
+    }
     string err;
     struct stat statBuf;
-    if(stat(localPath.c_str(), &statBuf) == -1){
-        logger.log("local path error");
-        return false;
+    int totalPackSize, totalBufSize;
+    int lastBufSize;
+    if(type == Msg::FT_FILE)
+    {
+        if(stat(localPath.c_str(), &statBuf) == -1)
+        {
+            logger.log("local path error");
+            return false;
+        }
+        totalBufSize = statBuf.st_size;
+        totalPackSize = statBuf.st_size / TRANS_CHUNK_SIZE;
+        lastBufSize = statBuf.st_size % TRANS_CHUNK_SIZE;
+        if(lastBufSize != 0) totalPackSize++;
+    }else
+    {
+        totalPackSize = 1;
+        totalBufSize = 0;
     }
+    
 
     // create new file message
-    int totalPackSize = statBuf.st_size / TRANS_CHUNK_SIZE;
-    int lastBufSize = statBuf.st_size % TRANS_CHUNK_SIZE;
-    if(lastBufSize !=0) totalPackSize++;
+    
 
     Msg::Message sendMsg, recvMsg;
-    NewFileMsgReqInst(sendMsg, remotePath, Msg::FT_FILE, totalPackSize, statBuf.st_size);
+    NewFileMsgReqInst(sendMsg, remotePath, type, totalPackSize, totalBufSize);
     char sendbuf[MAXBUFSIZE], recvBuf[MAXBUFSIZE];
     int recvLen;
     sendMsg.SerializePartialToArray(sendbuf, MAXBUFSIZE);
-    if(!urequest(host.c_str(), port, sendbuf, strlen(sendbuf), recvBuf, recvLen)){
+    if(!urequest(host.c_str(), port, sendbuf, strlen(sendbuf), recvBuf, recvLen))
+    {
         logger.log("new file send fail");
         return false;
     }
     recvMsg.ParseFromArray(recvBuf, recvLen);
-    if(recvMsg.response().status() == Msg::MSG_RES_ERROR){
+    if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
+    {
         err = recvMsg.response().info();
         logger.log(err);
         return false;
     }
+
+    if(type == Msg::FT_DIR) return true;
 
     //logger.log("create remote file success: "+ remotePath + " postSessionId:");
     int postSessionId = recvMsg.response().new_file_response().post_session_id();
     // cout<<postSessionId<<endl;
 
     ifstream ifs(localPath);
-    if(ifs.fail()){
+    if(ifs.fail())
+    {
         logger.log(strerror(errno));
         return false;
     }
@@ -80,7 +110,8 @@ bool VvfsTp::newVF(const string & localPath, const string & remotePath){
     // send file data
     // todo design of high performance
     int readedSize;
-    while(!ifs.eof()){
+    while(!ifs.eof())
+    {
         memset(databuf, 0, TRANS_CHUNK_SIZE);
         fileIdx = ifs.tellg();
         try
@@ -92,9 +123,6 @@ bool VvfsTp::newVF(const string & localPath, const string & remotePath){
             // std::cerr << e.what() << '\n';
             logger.fatal(e.what());
         }
-
-        // packFileIdxMap
-        // packFileIdxMap[packIdx] = fileIdx;
 
         if(ifs.eof()) readedSize = lastBufSize;
         else readedSize = TRANS_CHUNK_SIZE;
@@ -139,14 +167,15 @@ bool VvfsTp::rmVF(const string & remotePath)
     sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
 
     if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen)){
-        logger.log(L4, "send data error, errorno:%d info:%s", errno, strerror(errno));
+        cout<<"send data error, errorno:"<<errno<<" info:%s"<<strerror(errno);
+        return false;
     }
 
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
     {
-        logger.log(L1, "error, info: %s", remotePath.c_str(), recvMsg.response().info().c_str());
-        return false;
+        cout << "rm fail, "<<recvMsg.response().info()<<endl;
+        return true;
     }
 
     logger.log("success remove file:"+remotePath);
@@ -171,7 +200,7 @@ bool VvfsTp::lsVF(const string & remotePath)
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
     {
         cout<<"error, info:"<<recvMsg.response().info().c_str()<<endl;
-        return false;
+        return true;
     }
 
     const Msg::LsFileResponse & lsFileResponse = recvMsg.response().ls_file_res();
@@ -186,7 +215,8 @@ bool VvfsTp::lsVF(const string & remotePath)
         if(file.type() == Msg::FT_DIR)
         {
             cout<<"dir"<<" ";
-        }else{
+        }else
+        {
             cout<<"file"<<" ";
         }
         cout.setf(ios::right);
@@ -210,7 +240,53 @@ bool VvfsTp::getVF(const string & remotePath, const string & localPath)
 bool VvfsTp::mvVF(const string & remoteSrcPath, const string & remoteDstPath)
 {
     logger.debugAction("mv: src:"+remoteSrcPath+" dst:"+remoteDstPath);
-    
+
+    char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
+    int recvLen;
+    Msg::Message sendMsg, recvMsg;
+    MvFileMsgReqInst(sendMsg, remoteSrcPath, remoteDstPath);
+    sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen)){
+        cout<<"send data error, errorno:"<<errno<<" info:%s"<<strerror(errno);
+        return false;
+    }
+
+    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
+    {
+        cout << "move fail, "<<recvMsg.response().info()<<endl;
+        return true;
+    }
+
+    cout<<"success move "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
+    return true;   
+}
+
+bool VvfsTp::cpVF(const string & remoteSrcPath, const string & remoteDstPath)
+{
+    logger.debugAction("cp: src:"+remoteSrcPath+" dst:"+remoteDstPath);
+
+    char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
+    int recvLen;
+    Msg::Message sendMsg, recvMsg;
+    CpFileMsgReqInst(sendMsg, remoteSrcPath, remoteDstPath);
+    sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
+
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen)){
+        cout<<"send data error, errorno:"<<errno<<" info:%s"<<strerror(errno);
+        return false;
+    }
+
+    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
+    {
+        cout << "move fail, "<<recvMsg.response().info()<<endl;
+        return true;
+    }
+
+    cout<<"success move "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
+    return true;   
 }
 
 bool VvfsTp::init()
@@ -229,11 +305,24 @@ int main(int argc, char *argv[])
     #ifdef VVFS_DEBUG
         assert(tp.newVF("./test_dir/local/md5.cpp", "/md5.cpp") == true);
         // assert(tp.newVF("./node_sync", "/node_sync") == true);
-        assert(tp.newVF("./msg.pb.cc", "/msg.pb.cc") == true);
+        assert(tp.mkDir("/test") == true);
         assert(tp.lsVF("/") == true);
-        assert(tp.rmVF("/md5.cpp") == true);
+        assert(tp.mvVF("/md5.cpp", "/test/md5.cpp") == true);
+        // assert(tp.mkDir("/test/test123") == true);
+        // assert(tp.mkDir("/test/test234") == true);
+        // assert(tp.mkDir("/test/test123/test456") == true);
+        // assert(tp.newVF("./msg.pb.cc", "/msg.pb.cc") == true);
         assert(tp.lsVF("/") == true);
-        assert(tp.lsVF("/msg.pb.c") == true);
+        // assert(tp.lsVF("/md5.cpp") == true);
+        // assert(tp.rmVF("/md5.cpp") == true);
+        // assert(tp.rmVF("/md5.cpp") == true);
+        // assert(tp.lsVF("/") == true);
+        assert(tp.lsVF("/test") == true);
+        // assert(tp.lsVF("/test/test123") == true);
+        // assert(tp.rmVF("/test") == true);
+        // assert(tp.lsVF("/") == true);
+        // assert(tp.lsVF("/test/test123/test456") == true);
+        // assert(tp.lsVF("/msg.pb.c") == true);
     #else
         tp.run(argc, argv);
     #endif

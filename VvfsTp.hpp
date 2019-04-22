@@ -19,6 +19,7 @@
 #define GET_FILE "get"
 #define LS_FILE "ls"
 #define CP_FILE "cp"
+#define MK_DIR "mkdir"
 
 using namespace std;
 
@@ -46,11 +47,12 @@ public:
     }
 
     void run(int argc, char *argv[]);
-    bool newVF(const string & localPath, const string & rmotePath);
+    bool newVF(const string & localPath, const string & rmotePath, Msg::FileType type=Msg::FT_FILE);
     bool rmVF(const string & remotePath);
     bool lsVF(const string & remotePath);
     bool getVF(const string & remotePath, const string & localPath);
     bool mvVF(const string & remoteSrcPath, const string & remoteDstPath);
+    bool mkDir(const string & remotePath);
     bool cpVF(const string & remoteSrcPath, const string & remoteDstPath);
     bool init();
 };

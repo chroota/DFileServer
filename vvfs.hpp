@@ -45,7 +45,8 @@ struct VFRelation{
     int last_son_idx = -1;  //id of last son idx     
 
     VFRelation(){}
-    VFRelation(int idx, int fa_idx, int prev_bro_idx, int next_bro_idx, int first_son_idx, int last_son_idx){
+    VFRelation(int idx, int fa_idx, int prev_bro_idx, int next_bro_idx, int first_son_idx, int last_son_idx)
+    {
         this->idx = idx;
         this->fa_idx = fa_idx;
         this->prev_bro_idx = prev_bro_idx;
@@ -72,27 +73,42 @@ private:
 public:
     VFile(){};
     ~VFile(){};
-    VFile(const string & name, FileType type, const string & dirPath, off_t size, 
-    struct timespec mtime, int fa_idx, int idx, int prev_bro_idx, int next_bro_idx, int first_son_idx, int last_son_idx)
-        :_name(name), _type(type), _dirPath(dirPath), _size(size),
-        _mtime(mtime)
+    VFile(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime)
+        :_name(name), _type(type), _dirPath(dirPath), _size(size), _mtime(mtime)
+    {
+        string fullPath = dirPath + name;
+        if(type == VFT_FILE)
         {
-            //todo hash compute
-            string fullPath = dirPath + name;
-            _hash = Hash(type, fullPath, size, mtime, fa_idx, idx, next_bro_idx, first_son_idx, last_son_idx);
-            _disk_path = _hash;
+            ostringstream oss;
+            oss<<dirPath<<name<<size<<mtime.tv_nsec<<mtime.tv_sec;
+            _disk_path = getBufMD5(oss.str().c_str(), oss.str().size());
             int extIdx = name.find_last_of(".");
-            if(extIdx != -1) _ext = name.substr(extIdx+1);
-        };    
+            if(extIdx != -1) 
+                _ext = name.substr(extIdx+1);
+        }
+    };
+
+    struct timespec getMtime()
+    {
+        return _mtime;
+    }
+
+    bool setDirPath(const string &path)
+    {
+        _dirPath = path;
+        return true;
+    }
 
     string getName()
     {
         return _name;
     }
 
-    string getVfrKey(){
+    string getVfrKey()
+    {
         if(_dirPath == "/" && _name == "root") return "/";
-        return _dirPath + _name;
+        if(_dirPath == "/") return "/" + _name;
+        return _dirPath + "/" + _name;
     }
 
     string getDiskPath()
@@ -100,77 +116,92 @@ public:
         return _disk_path;
     }
 
-    string getDirPath(){
+    string getDirPath()
+    {
         return _dirPath;
     }
 
-    string getFullPath(){
-        return _dirPath + _name;
+    string getFullPath()
+    {
+        if(_dirPath == "/") return "/" + _name;
+        return _dirPath + "/" + _name;
     }
 
-    FileType getType(){
+    FileType getType()
+    {
         return _type;
     }
 
-    long getTvSec(){
+    long getTvSec()
+    {
         return _mtime.tv_sec;
     }
 
-    long getTvNsec(){
+    long getTvNsec()
+    {
         return _mtime.tv_nsec;
     }
 
-    bool active(){
+    bool active()
+    {
         status = true;
         return true;
     }
 
-    bool isActive(){
+    bool isActive()
+    {
         return status;
     }
 
-    bool setType(FileType type){
+    bool setType(FileType type)
+    {
         // todo exception
         _type = type;
         return true;
     }
 
-    bool setSize(off_t size){
+    bool setSize(off_t size)
+    {
         //todo exception atomic
         _size = size;
         return true;
     }
 
-    off_t getSize(){
+    off_t getSize()
+    {
         return _size;
     }
 
     // size increment 1
-    off_t incSize(){
+    off_t incSize()
+    {
         //todo atomic
         _size += 1;
         return _size;
     }
 
     // size decrement 1
-    off_t decSize(){
+    off_t decSize()
+    {
         //todo atomic
         _size -= 1;
         return _size;
     }
 
     //file destory 
-    bool destory(){
-        status = 0;
+    bool destory()
+    {
+       status = 0;
         return true;
     }
 
-    const string & getHash(){
+    const string & getHash()
+    {
         return _hash;
     }
 
-    string Hash(FileType type, const string & path, off_t size, struct timespec mtime, int _fa_idx,
-            int _idx, int next_bro_idx, int first_son_idx, int last_son_idx); //get hash todo
+    bool updateHash(FileType type, const string & path, off_t size, struct timespec mtime); //get hash todo
+    bool updateHash(VFRelation &vfr);
 };
 
 
@@ -221,6 +252,7 @@ public:
     // compute state hash from op log file
     bool updateHashFromVFOpLogFile();
     bool watchVFS();
+
     // config init
     bool initConfig
     (
@@ -255,12 +287,27 @@ public:
     bool rmSubVFS(VFile &vf, string &err);
     // move vf
     bool mvVF(const string &srcPath, const string &dstPath, string &err);
+    // cp vf
+    bool cpVF(const string &srcPath, const string &dstPath, string &err);
     // list vf info
     bool lsVF(const string & path, Msg::Message &msg);
     // active vf when new file is upload complete
     bool activeVF(const string &name, string &err);
+
+    // copy disk path
+    bool copyDiskFile(const string& srcPath, const string &dstPath);
+
+    //
+    int pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime);
+
+    bool pushbackVf(VFRelation & dirVfr, VFile &vf);
+    bool removeVfRelation(VFile &vf, bool isVfDestory=true);
+    bool changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &newDirPath, bool isVfDestory=true);
+
     string getVFPhasicalPath(VFile & vf);
     string getVFPhasicalPath(string &vfDiskPath);
+    bool getDirPathAndName(const string &path, string &dirPath, string &name, string &err);
+
 
     /*
      * create root vf
@@ -289,7 +336,8 @@ public:
     // demaon for Vvfs operations of backend
     bool deamon();
 
-    Vvfs(){
+    Vvfs()
+    {
         isVFRelationsStored = true;
     };
     ~Vvfs()

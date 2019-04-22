@@ -21,6 +21,8 @@ enum MsgType
   LsFile_Response = 0x11;
   MvFile_Request = 0x12;
   MvFile_Response = 0x13;
+  CpFile_Request = 0x14;
+  CpFile_Response = 0x15;
 }
 
 enum FileType{
@@ -118,7 +120,8 @@ message EndFilePostRequest
     required string name = 1;
 }
 
-message EndFilePostResponse{
+message EndFilePostResponse
+{
     required bool ok = 1;
     optional int32 lost_pack_idx = 2;
 }
@@ -140,6 +143,19 @@ message LsFileResponse
 }
 
 
+message MvFileRequest
+{
+    required string srcPath = 1;
+    required string dstPath = 2;
+}
+
+message CpFileRequest
+{
+    required string srcPath = 1;
+    required string dstPath = 2;
+}
+
+
 message Request
 {
     optional JoinRequest join = 1;
@@ -149,6 +165,8 @@ message Request
     optional NewFileRequest file = 5;
     optional RmFileRequest rm_op = 6;
     optional LsFileRequest ls_file_req = 7;
+    optional MvFileRequest mv_file_req = 8;
+    optional CpFileRequest cp_file_req = 9;
 }
 
 // message VFS

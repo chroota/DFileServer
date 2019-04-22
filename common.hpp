@@ -19,8 +19,8 @@
 #include <time.h>
 #include <sstream>
 
-using namespace std;
 
+using namespace std;
 
 /*
  * time
@@ -79,3 +79,9 @@ bool RMFileMsgReqInst(Msg::Message &msg, const string &path);
 bool LsFileMsgReqInst(Msg::Message &msg, const string &remotePath);
 bool LsFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info);
 bool AddAttributeToFileMsg(Msg::Message &msg, const string name, int size, Msg::FileType type, const string &time);
+
+//move file
+bool MvFileMsgReqInst(Msg::Message &msg, const string &srcPath, const string &dstPath);
+
+//cp file
+bool CpFileMsgReqInst(Msg::Message &msg, const string &srcPath, const string &dstPath);

@@ -8,13 +8,14 @@ bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const s
     return true;
 }
 
-string VFile::Hash(FileType type, const string & path, off_t size, 
-    struct timespec mtime, int fa_idx, int idx, int next_bro_idx, int first_son_idx, int last_son_idx)
+bool VFile::updateHash(VFRelation &vfr)
 {
     ostringstream oss;
-    oss<<type<<path<<size<<mtime.tv_sec<<mtime.tv_nsec<<fa_idx<<idx<<next_bro_idx<<first_son_idx<<last_son_idx;
-    return getBufMD5(oss.str().c_str(), oss.str().length());
+    oss<<_type << getFullPath() <<_size<<_mtime.tv_sec<<_mtime.tv_nsec<<vfr.fa_idx<<vfr.idx<<vfr.prev_bro_idx<<vfr.next_bro_idx<<vfr.first_son_idx<<vfr.last_son_idx;
+    _hash = getBufMD5(oss.str().c_str(), oss.str().size());
+    return true;
 }
+
 
 bool Vvfs::updateHashFromVFOpLogFile()
 {
@@ -64,14 +65,20 @@ bool Vvfs::createRootVF()
     vRelations[rootPath] = rootVfr;
     if(vFiles.size() == 0)
     {
-        vFiles.emplace_back("root", VFT_DIR, rootPath, 0, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
-    }else{
+        vFiles.emplace_back("root", VFT_DIR, rootPath, 0, getTimeSpec());
+    }else
+    {
         logger.fatal("vFiles is not empty, can't create root vf");
     }
+
     string err;
-    if(!activeVF(rootPath, err)){
-        logger.fatal("can't active vf");
-    }
+    vFiles[0].active();
+    if(!vFiles[0].updateHash(rootVfr))
+        return false;
+    if(!writeNewFileOpLog(rootPath))
+        return false;
+    if(!updateHashByNewFileOp(rootPath))
+        return false;
     logger.debug("success craete root vf");
     return true;
 }
@@ -79,7 +86,8 @@ bool Vvfs::createRootVF()
 bool Vvfs::openVFOpLogFile()
 {
     pVFOpLogFileFstream = new ofstream(vFOpLogFile,ios::app);
-    if(pVFOpLogFileFstream->fail()) return false;
+    if(pVFOpLogFileFstream->fail()) 
+        return false;
     return true;
 }
 
@@ -92,12 +100,14 @@ int Vvfs::allocIdx()
 
 bool Vvfs::buildVFS()
 {
-    if(!updateHashFromVFOpLogFile()) {
+    if(!updateHashFromVFOpLogFile()) 
+    {
         logger.fatal("hash init fail");
         return false;
     }
 
-    if(!openVFOpLogFile()){
+    if(!openVFOpLogFile())
+    {
         logger.fatal("op log file open fail!");
         return false;
     }
@@ -108,12 +118,14 @@ bool Vvfs::buildVFS()
         logger.log("vfr config file not exists, now ceate a new vfr config file!!");
         ofstream ofs(vFRLogFile);
         ofs << 0 << endl;
-        if(ofs.fail()){
+        if(ofs.fail())
+        {
             logger.log(" cann't ceate a new vfr config file!!");
             return false;
         }
         ofs.close();
-        if(!createRootVF()){
+        if(!createRootVF())
+        {
             logger.fatal("create root vf error");
         }
         return true;
@@ -145,7 +157,8 @@ bool Vvfs::buildVFS()
     {
         //idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
         ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
-        if(ifs.fail()){
+        if(ifs.fail())
+        {
             logger.fatal("read VFRelations error");
         }
         if(idx >= count)
@@ -156,7 +169,8 @@ bool Vvfs::buildVFS()
 
         VFRelation vfr(idx, fa_idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx);
         string fullPath = string(dirPath) + "/" + name;
-        if(dirPath == "/" && name == "root"){
+        if(dirPath == "/" && name == "root")
+        {
             fullPath = "/";
             isRootExists = true;
         }
@@ -168,7 +182,7 @@ bool Vvfs::buildVFS()
         
         vRelations[fullPath] = vfr;
         timespec tspc = {tv_sec, tv_nsec};
-        vFiles[idx] = VFile(name, (FileType)type, dirPath, size, tspc, fa_idx, idx, prev_bro_idx, next_bro_idx, first_son_idx, last_son_idx);
+        vFiles[idx] = VFile(name, (FileType)type, dirPath, size, tspc);
         vFiles[idx].active();
     }
 
@@ -189,10 +203,26 @@ bool Vvfs::mkVDir(const string & name, string & err)
     return newVF(name, 0, err, diskPath, VFT_DIR);
 }
 
+int Vvfs::pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime)
+{
+    int newIdx = allocIdx();
+    if(newIdx == -1)
+    {
+        newIdx = vFiles.size();
+        vFiles.emplace_back(name, type, dirPath, size, getTimeSpec());
+    }else
+    {
+        vFiles[newIdx] = VFile(name, type, dirPath, size, getTimeSpec());
+    }
+
+    return newIdx;    
+}
+
 bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskPath, FileType type)
 {
-    if (path.size() == 0 || path == " ") {
-        err = "file name error!";
+    if (path.size() == 0 || path == " ") 
+    {
+        err = "path error!";
         logger.log(err);
         return false;
     }
@@ -205,21 +235,12 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskP
         return true;
     }
 
-    int spIdx = path.find_last_of("/");
-    string dirPath = path.substr(0, spIdx + 1);
-    string name = path.substr(spIdx + 1);
-    VFile vf(name, type, dirPath, totalSize, getTimeSpec(), -1,  -1, -1, -1, -1, -1);
-    int newIdx = allocIdx();
-    if(newIdx == -1)
-    {
-        newIdx = vFiles.size();
-        vFiles.push_back(vf);
-    }else
-    {
-        vFiles[newIdx] = vf;
-    }
-    
-    // VFRelation newVfr(newIdx, -1, -1, -1, -1, -1);  
+    string dirPath, name;
+    if(!getDirPathAndName(path, dirPath, name, err))
+        return false;
+
+    int newIdx = pushVf2vFiles(name, type, dirPath, totalSize, getTimeSpec());
+    VFile &newVf = vFiles[newIdx];
     vRelations[path] = VFRelation(newIdx, -1, -1, -1, -1, -1);
     logger.debug(dirPath);
     if (vRelations.count(dirPath) == 0) 
@@ -227,41 +248,289 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskP
         err = "dir path not exist!";
         return false;
     }
-    VFile dirVf = vFiles[vRelations[dirPath].idx];
+
     VFRelation &dirVfr = vRelations[dirPath];
-    if (dirVfr.last_son_idx != -1) 
-    {
-        VFRelation & lastSonvfr = getLastSonVfrByVfr(dirVfr);
-        lastSonvfr.next_bro_idx = newIdx;
-        vRelations[path].prev_bro_idx = dirVfr.last_son_idx;
-        dirVfr.last_son_idx = newIdx;
-    }else{
-        dirVfr.last_son_idx = newIdx;
-    }
-
-    if(dirVfr.first_son_idx == -1)
-    {
-        dirVfr.first_son_idx = newIdx;
-    }
-
     vRelations[path].fa_idx = dirVfr.idx;
-    dirVf.incSize();
+
+    if(type == VFT_DIR)
+        return activeVF(path, err);
 
     //todo recursive create
-    err ="";
-    diskPath = vf.getDiskPath();
+    err = "";
+    diskPath = newVf.getDiskPath();
     return true;
 }
 
-string Vvfs::getVFPhasicalPath(VFile & vf){
+
+bool Vvfs::pushbackVf(VFRelation & dirVfr, VFile &vf)
+{
+    VFRelation &vfr = getVfrByVf(vf);
+    VFile & dirVf = vFiles[dirVfr.idx];
+
+    if (dirVfr.last_son_idx != -1) 
+    {
+        VFRelation & lastSonvfr = getLastSonVfrByVfr(dirVfr);
+        lastSonvfr.next_bro_idx = vfr.idx;
+        vfr.prev_bro_idx = dirVfr.last_son_idx;
+        dirVfr.last_son_idx = vfr.idx;
+    }else 
+        dirVfr.last_son_idx = vfr.idx;
+
+    if(dirVfr.first_son_idx == -1) 
+        dirVfr.first_son_idx = vfr.idx;
+    dirVf.incSize();
+
+    return true;
+}
+
+
+bool Vvfs::removeVfRelation(VFile &vf, bool isVfDestory)
+{
+    if(vf.getName() == "root")
+        return false;
+    VFRelation &vfr = getVfrByVf(vf);
+    if(vfr.fa_idx == -1)
+        return false;
+    
+    
+    VFile & dirVf = vFiles[vfr.fa_idx];
+    VFRelation &dirVfr = getVfrByVf(dirVf);
+
+    // perent has one son
+    if(vfr.idx == dirVfr.first_son_idx && dirVfr.first_son_idx == dirVfr.last_son_idx)
+    {
+        dirVfr.first_son_idx = dirVfr.last_son_idx = -1;
+    }
+    //first son
+    else if(vfr.idx == dirVfr.first_son_idx)
+    {
+        VFRelation &nextVfr = getNextVfrByVfr(vfr);
+        nextVfr.prev_bro_idx = -1;
+        dirVfr.first_son_idx = nextVfr.idx;
+    }
+    // last son
+    else if(vfr.idx == dirVfr.last_son_idx)
+    {
+        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
+        prevVfr.next_bro_idx = -1;
+        dirVfr.last_son_idx = prevVfr.idx;
+    }else
+    {
+        VFRelation &nextVfr = getNextVfrByVfr(vfr);
+        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
+        prevVfr.next_bro_idx = nextVfr.idx;
+        nextVfr.prev_bro_idx = prevVfr.idx;
+    }
+
+    if(isVfDestory)
+        vf.destory();
+    vRelations.erase(vf.getVfrKey());
+    dirVf.decSize();
+    return true;
+}
+
+bool Vvfs::changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &newDirPath, bool isVfDestory)
+{
+    removeVfRelation(vf, false);
+    vf.setDirPath(newDirPath);
+    pushbackVf(newDirVfr, vf);
+    vf.updateHash(newDirVfr);
+    return true;
+}
+
+
+bool Vvfs::mvVF(const string &srcPath, const string &dstPath, string &err)
+{
+    if (srcPath.size() == 0 || srcPath == " " || dstPath.size() == 0 || dstPath == " ") 
+    {
+        err = "move: file name error!";
+        logger.log(err);
+        return false;
+    }
+    if (vRelations.count(srcPath) == 0) 
+    {
+        err = "move: src file "+srcPath+" not exists!";
+        logger.log(err);
+        return false;
+    }
+    logger.debug("test move vf");
+    
+    string dstDirPath, dstName;
+    string srcDirPath, srcName;
+    if(!getDirPathAndName(dstPath, dstDirPath, dstName, err) || !getDirPathAndName(srcPath, srcDirPath, srcName, err))
+        return false;
+
+    if(vRelations.count(dstDirPath) == 0)
+    {
+        err = "move: dst path " + dstDirPath +" not exists!";
+        logger.log(err);
+        return false;
+    }
+
+    VFRelation &srcVfr    = vRelations[srcPath];
+    VFRelation &srcDirVfr = vRelations[srcDirPath];
+    VFRelation &dstDirVfr = vRelations[dstDirPath];
+    VFile &srcVf          = vFiles[srcVfr.idx];
+    VFile &dstDirVf       = vFiles[dstDirVfr.idx];
+    VFile &srcDirVf       = vFiles[srcDirVfr.idx];
+
+    vRelations[dstPath] = VFRelation(srcVfr.idx, dstDirVfr.idx, -1, -1, -1, -1);
+
+    if(!changeVfDirRelation(srcVf, dstDirVfr, dstDirPath))
+    {
+        err = "change vf relation error";
+        return false;
+    }
+
+    return true;
+}
+
+
+bool Vvfs::copyDiskFile(const string& srcPath, const string &dstPath)
+{
+    try
+    {
+        ifstream in(srcPath,ios::binary);
+        ofstream out(dstPath,ios::binary);
+        if (!in.is_open()) {
+            cout << "error open file " << srcPath << endl;
+            return false;
+        }
+        if (!out.is_open()) {
+            cout << "error open file " << dstPath << endl;
+            return false;
+        }
+        if (srcPath == dstPath) {
+            cout << "the src file can't be same with dst file" << endl;
+            return false;
+        }
+        char buf[2048];
+        long long totalBytes = 0;
+        while(in)
+        {
+            in.read(buf, 2048);    
+            out.write(buf, in.gcount());    
+            totalBytes += in.gcount();
+        }
+        in.close();
+        out.close();
+        return true;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << endl;
+        return false;
+    }
+}
+
+bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err)
+{
+    if (srcPath.size() == 0 || srcPath == " " || dstPath.size() == 0 || dstPath == " ") 
+    {
+        err = "cp: file name error!";
+        logger.log(err);
+        return false;
+    }
+    if (vRelations.count(srcPath) == 0) 
+    {
+        err = "cp: src file "+srcPath+" not exists!";
+        logger.log(err);
+        return false;
+    }
+    logger.debug("test cp vf");
+    
+    string dstDirPath, dstName;
+    string srcDirPath, srcName;
+    if(!getDirPathAndName(dstPath, dstDirPath, dstName, err) || !getDirPathAndName(srcPath, srcDirPath, srcName, err))
+        return false;
+
+    if(vRelations.count(dstDirPath) == 0)
+    {
+        err = "cp: dst path " + dstDirPath +" not exists!";
+        logger.log(err);
+        return false;
+    }
+
+    VFRelation &srcVfr    = vRelations[srcPath];
+    VFRelation &srcDirVfr = vRelations[srcDirPath];
+    VFRelation &dstDirVfr = vRelations[dstDirPath];
+    VFile &srcVf          = vFiles[srcVfr.idx];
+    VFile &dstDirVf       = vFiles[dstDirVfr.idx];
+    VFile &srcDirVf       = vFiles[srcDirVfr.idx];
+
+    int newIdx = pushVf2vFiles(srcVf.getName(), srcVf.getType(), dstDirPath, srcVf.getSize(), srcVf.getMtime());
+    VFile &newVf = vFiles[newIdx];
+    vRelations[dstPath] = VFRelation(newIdx, dstDirVfr.idx, -1, -1, -1, -1);
+    if(!pushbackVf(dstDirVfr, newVf))
+    {
+        err = "cp: err at create new VF";
+        return false;
+    }
+    
+    if(!copyDiskFile(srcDirVf.getDiskPath(), newVf.getDiskPath()))
+    {
+        err = "cp: err at copy disk file";
+        return false;
+    }
+
+    return true;
+}
+
+
+bool Vvfs::activeVF(const string &path, string & err)
+{
+    if(!vRelations.count(path))
+    {
+        err = "no relation for file:"+path;
+        return false;
+    }
+
+    VFRelation &vfr = vRelations[path];
+    VFile &vf = vFiles[vfr.idx];
+
+    VFile &dirVf = vFiles[vfr.fa_idx];
+    VFRelation &dirVfr = getVfrByIdx(vfr.fa_idx);
+    if (dirVfr.last_son_idx != -1) 
+    {
+        VFRelation & lastSonvfr = getLastSonVfrByVfr(dirVfr);
+        lastSonvfr.next_bro_idx = vfr.idx;
+        vfr.prev_bro_idx = dirVfr.last_son_idx;
+        dirVfr.last_son_idx = vfr.idx;
+    }else 
+        dirVfr.last_son_idx = vfr.idx;
+
+    if(dirVfr.first_son_idx == -1) 
+        dirVfr.first_son_idx = vfr.idx;
+
+    dirVf.incSize();
+    vf.active();
+    isVFRelationsStored = false;
+
+    if(!vf.updateHash(vfr) || !dirVf.updateHash(dirVfr))
+        return false;
+    if(!writeNewFileOpLog(path)) 
+        return false;
+    if(!updateHashByNewFileOp(path))
+        return false;
+
+    logger.log(LDEBUG, "vFile size:%d, now active:%d", vFiles.size(), vfr.idx);
+    logger.debug("new hash:" + hash);
+    return true;
+}
+
+
+string Vvfs::getVFPhasicalPath(VFile & vf)
+{
     return vfsPath + "/" + vf.getDiskPath();
 }
 
-string Vvfs::getVFPhasicalPath(string &vfDiskPath){
+string Vvfs::getVFPhasicalPath(string &vfDiskPath)
+{
     return vfsPath + "/" + vfDiskPath;
 }
 
-bool Vvfs::rmSubVFS(VFile &vf, string &err){
+bool Vvfs::rmSubVFS(VFile &vf, string &err)
+{
     if(vf.getSize() == 0) return true;
 
     queue<int> idxQ;
@@ -274,7 +543,6 @@ bool Vvfs::rmSubVFS(VFile &vf, string &err){
         idxQ.push(nextIdx);
         nextIdx = getNextIdxByIdx(nextIdx);
     }
-
 
     while (!idxQ.empty())
     {
@@ -290,12 +558,11 @@ bool Vvfs::rmSubVFS(VFile &vf, string &err){
         vRelations.erase(vf.getVfrKey());
         string diskPath = getVFPhasicalPath(vf);
 
-        //todo deal i/o backgground thread
-        if(remove(diskPath.c_str()) == -1)
+        //todo deal remove i/o backgground thread
+        if(vf.getType() == VFT_FILE && remove(diskPath.c_str()) == -1)
         {
-            logger.log("fail to remove :" + diskPath);
-            err = "fail to remove :" + diskPath;
-            return false;
+            logger.log("fail to remove " + diskPath);
+            err = "fail to remove " + diskPath;
         }
     }
     return true;
@@ -308,7 +575,7 @@ bool Vvfs::rmVF(const string &path, string &err)
         return false;
     }
     if (vRelations.count(path) == 0) {
-        err = "file:"+path+"not exists!";
+        err = "file:"+path+" not exists!";
         return false;
     }
     logger.debug("test rm vf");
@@ -322,17 +589,15 @@ bool Vvfs::rmVF(const string &path, string &err)
     // VFRelation vfrDir = vRelations[vfDir.getName()];
     VFRelation &vfrDir = vRelations[vfDir.getVfrKey()];
     string diskPath = getVFPhasicalPath(vf);
-    if(remove(diskPath.c_str()) == -1)
+    if(vf.getType() == VFT_FILE && remove(diskPath.c_str()) == -1)
     {
         // logger.log(string("fail to remove :")+name);
-        err = string("fail to remove :")+path;
+        err = string("fail to remove ")+path;
         return false;
     }
 
-    if(vf.getType() == VFT_DIR && rmSubVFS(vf, err)){
-        //todo if a directory
+    if(vf.getType() == VFT_DIR && !rmSubVFS(vf, err))
         return false;
-    }
 
     // perent has one son
     if(vfr.idx == vfrDir.first_son_idx && vfrDir.first_son_idx == vfrDir.last_son_idx)
@@ -342,7 +607,6 @@ bool Vvfs::rmVF(const string &path, string &err)
     //first son
     else if(vfr.idx == vfrDir.first_son_idx)
     {
-        // VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getVfrKey()];
         VFRelation &nextVfr = getNextVfrByVfr(vfr);
         nextVfr.prev_bro_idx = -1;
         vfrDir.first_son_idx = nextVfr.idx;
@@ -350,18 +614,15 @@ bool Vvfs::rmVF(const string &path, string &err)
     // last son
     else if(vfr.idx == vfrDir.last_son_idx)
     {
-        // VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getVfrKey()];
         VFRelation &prevVfr = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = -1;
         vfrDir.last_son_idx = prevVfr.idx;
     }else
     {
-        // VFRelation &nextVfr = vRelations[vFiles[vfr.next_bro_idx].getVfrKey()];
         VFRelation &nextVfr = getNextVfrByVfr(vfr);
-        // VFRelation &prevVfr = vRelations[vFiles[vfr.prev_bro_idx].getVfrKey()];
         VFRelation &prevVfr = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = nextVfr.idx;
-        prevVfr.prev_bro_idx = nextVfr.next_bro_idx;
+        nextVfr.prev_bro_idx = prevVfr.idx;
     }
 
     vf.destory();
@@ -369,11 +630,13 @@ bool Vvfs::rmVF(const string &path, string &err)
     vfDir.decSize();
 
     err = "";
-    if(!updateHashByRMFileOp(path)){
+    if(!updateHashByRMFileOp(path))
+    {
         logger.fatal("rm hash update error");
     }
 
-    if(!writeRMFileOpLog(path)){
+    if(!writeRMFileOpLog(path))
+    {
         logger.fatal("rm log write error");
     }
     
@@ -383,16 +646,19 @@ bool Vvfs::rmVF(const string &path, string &err)
 }
 
 
-VFile & Vvfs::getVFByVfr(VFRelation & vfr){
+VFile & Vvfs::getVFByVfr(VFRelation & vfr)
+{
     return vFiles[vfr.idx];
 }
 
-VFRelation &Vvfs::getVfrByVf(VFile &vf){
-    string path = vf.getFullPath();
+VFRelation &Vvfs::getVfrByVf(VFile &vf)
+{
+    string path = vf.getVfrKey();
     return vRelations[path];
 }
 
-VFRelation &Vvfs::getVfrByIdx(int idx){
+VFRelation &Vvfs::getVfrByIdx(int idx)
+{
     VFile & vf = vFiles[idx];
     return getVfrByVf(vf);
 }
@@ -448,15 +714,16 @@ bool Vvfs::lsVF(const string & path, Msg::Message &msg)
         logger.log(err);
         return false;
     }
-    logger.debug("test ls vf");
 
+    logger.debug("test ls vf");
     VFRelation &vfr = vRelations[path];
     VFile &vf = vFiles[vfr.idx];
 
     AddAttributeToFileMsg(msg, vf.getName(), vf.getSize(), (Msg::FileType)vf.getType(), getTimeStringFromTvSec(vf.getTvSec()));
+    if(vf.getType() == VFT_FILE || vf.getSize() == 0)
+        return true;
 
-    if(vf.getType() == VFT_FILE || vf.getSize() == 0) return true;
-
+    // cout<<vfr.first_son_idx<<endl;
     VFRelation &firstSonVfr = getVfrByIdx(vfr.first_son_idx);
     VFile &firstSonVf = vFiles[vfr.first_son_idx];
     AddAttributeToFileMsg(msg, firstSonVf.getName(), firstSonVf.getSize(), (Msg::FileType)firstSonVf.getType(), getTimeStringFromTvSec(firstSonVf.getTvSec()));
@@ -472,30 +739,28 @@ bool Vvfs::lsVF(const string & path, Msg::Message &msg)
     return true;
 }
 
-bool Vvfs::activeVF(const string &name, string & err){
-    if(!vRelations.count(name)){
-        err = "no relation for file:"+name;
+
+bool Vvfs::getDirPathAndName(const string &path, string &dirPath, string &name, string &err)
+{
+    try
+    {
+        int spIdx = path.find_last_of("/");
+        if(spIdx == -1) 
+            return false;
+        if (spIdx == 0) 
+            dirPath = "/";
+        else
+            dirPath = path.substr(0, spIdx);
+        name = path.substr(spIdx + 1);
+        if(name.size() == 0) 
+            return false;
+        return true;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
         return false;
     }
-
-    VFRelation &vfr = vRelations[name];
-    VFile &vf = vFiles[vfr.idx];
-
-    logger.log(LDEBUG, "vFile size:%d, now active:%d", vFiles.size(), vfr.idx);
-    vf.active();
-    isVFRelationsStored = false;
-    vFiles[vfr.fa_idx].incSize();
-
-    if(!writeNewFileOpLog(name)){
-        return false;
-    }
-
-    if(!updateHashByNewFileOp(name)){
-        return false;
-    }
-
-    logger.debug("new hash:" + hash);
-    return true;
 }
 
 
@@ -544,18 +809,21 @@ bool Vvfs::updateHashByMvFileOp(const string &srcPath, const string &dstPath, lo
 bool Vvfs::writeOpLog(Msg::FileOpType op, const string & pathString)
 {
     *pVFOpLogFileFstream << op << " " << pathString << " " << getSystemTime() <<endl;
-    if(pVFOpLogFileFstream->fail()){
+    if(pVFOpLogFileFstream->fail())
+    {
         cout<<"write log error"<<endl;
         return false;
     }
     return true;
 }
 
-bool Vvfs::writeMvFileOpLogTest(){
+bool Vvfs::writeMvFileOpLogTest()
+{
     // pVFOpLogFileFstream->write("132");
     (*pVFOpLogFileFstream)<<"4323"<<endl;
 
-    if(pVFOpLogFileFstream->fail()){
+    if(pVFOpLogFileFstream->fail())
+    {
         cout<<"fuck"<<endl;
         return false;
     }
@@ -564,7 +832,8 @@ bool Vvfs::writeMvFileOpLogTest(){
 
 bool Vvfs::writeNewFileOpLog(const string &path)
 {
-    if(!writeOpLog(Msg::NEW_OP, path)){
+    if(!writeOpLog(Msg::NEW_OP, path))
+    {
         logger.fatal("write new file log fail");
         return false;
     }
@@ -572,7 +841,8 @@ bool Vvfs::writeNewFileOpLog(const string &path)
 }
 bool Vvfs::writeRMFileOpLog(const string &path)
 {
-    if(!writeOpLog(Msg::RM_OP, path)){
+    if(!writeOpLog(Msg::RM_OP, path))
+    {
         logger.fatal("write rm log fail");
         return false;
     }
@@ -591,19 +861,20 @@ bool Vvfs::writeMvFileOpLog(const string &srcPath, const string &dstPath)
 }
 
 
-
 /*
  * store vf relations
  * format:
  *        count
  *        idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
 */
-bool Vvfs::storeVFRelations(){
+bool Vvfs::storeVFRelations()
+{
     // string vfrPath = vfsPath + "/" + ".vfr.tmp.txt";
     string vfrPath = vfsPath + "/" + ".vfr.tmp.txt";
     ofstream ofs(vfrPath);
 
-    if(ofs.fail()){
+    if(ofs.fail())
+    {
         logger.fatal("error store VRelations");
         return false;
     }
@@ -623,32 +894,24 @@ bool Vvfs::storeVFRelations(){
         VFRelation *pVFR = &it->second;
         VFile *pVF = &vFiles[pVFR->idx];
         //ostringstream oss;
-        ofs << pVFR->idx
-            << sep << pVF->getName() 
-            << sep << pVF->getDirPath()
-            << sep << pVFR->fa_idx
-            << sep << pVFR->prev_bro_idx
-            << sep << pVFR->next_bro_idx 
-            << sep << pVFR->first_son_idx
-            << sep << pVFR->last_son_idx
-            << sep << pVF->getType()
-            << sep << pVF->getTvSec()
-            << sep << pVF->getTvNsec()
-            << sep << pVF->getSize()
-            << sep << pVF->getHash()
+        ofs << pVFR->idx << sep << pVF->getName() 
+            << sep << pVF->getDirPath() << sep << pVFR->fa_idx << sep << pVFR->prev_bro_idx
+            << sep << pVFR->next_bro_idx << sep << pVFR->first_son_idx
+            << sep << pVFR->last_son_idx << sep << pVF->getType()
+            << sep << pVF->getTvSec() << sep << pVF->getTvNsec() 
+            << sep << pVF->getSize()  << sep << pVF->getHash()
             << endl;
         //ofs<<oss.str();
         if(ofs.fail())
-        {
             logger.fatal("write VFRelations fail");
-        }
         count++;
     }
     ofs.seekp(0, ios::beg);
     ofs<<count;
     ofs.flush();
 
-    if(ofs.fail()){
+    if(ofs.fail())
+    {
         logger.log("sotre VFRations fail!");
         return false;
     }
@@ -656,7 +919,8 @@ bool Vvfs::storeVFRelations(){
     ofs.close();
     string dstPath = vfsPath + "/vfr.txt";
     cout<<"rename:"<<vfrPath<<" dstPath:"<<dstPath<<endl;
-    if(rename(vfrPath.c_str(), dstPath.c_str()) < 0){
+    if(rename(vfrPath.c_str(), dstPath.c_str()) < 0)
+    {
         logger.log("move vfr file fail");
         return false;
     }
@@ -678,7 +942,8 @@ void Vvfs::storeVFRelationsBackend()
     }
 }
 
-bool Vvfs::deamon(){
+bool Vvfs::deamon()
+{
     logger.log("starting deamon...");
     thread storeVFRelationsBackendThd(&Vvfs::storeVFRelationsBackend, this);
     storeVFRelationsBackendThd.detach();
@@ -687,7 +952,8 @@ bool Vvfs::deamon(){
 }
 
 //reverse todo
-bool Vvfs::watchVFS(){
+bool Vvfs::watchVFS()
+{
     int fd;
 	int wd;
 	int len;

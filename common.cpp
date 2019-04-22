@@ -155,7 +155,8 @@ Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash){
     return msg;
 }
 
-Msg::Message UpdateStateHashMsgReqInst(const string & name, const string & hash){
+Msg::Message UpdateStateHashMsgReqInst(const string & name, const string & hash)
+{
     return UpdateStateHashMsgReqInst(name.c_str(), hash.c_str());
 }
 
@@ -165,7 +166,8 @@ Msg::Message GetStateNodeMsgReqInst(string & name)
 }
 
 
-Msg::Message GetStateNodeMsgReqInst(const char * name){
+Msg::Message GetStateNodeMsgReqInst(const char * name)
+{
     Msg::Message msg;
     msg.set_type(Msg::GetStateNode_Request);
     msg.mutable_request()->mutable_get_state_node()->set_name(name);
@@ -173,7 +175,8 @@ Msg::Message GetStateNodeMsgReqInst(const char * name){
 }
 
 
-bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * ip, const char * hash){
+bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * ip, const char * hash)
+{
     cout<<name<<endl;
     cout<<ip<<endl;
     cout<<hash<<endl;
@@ -185,7 +188,8 @@ bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * 
     return true;
 }
 
-bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & ip, const string & hash){
+bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & ip, const string & hash)
+{
     return GetStateNodeMsgResInst(msg, name.c_str(), ip.c_str(), hash.c_str());
 }
 
@@ -211,7 +215,8 @@ Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info)
     return msg;
 }
 
-bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info){
+bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info)
+{
     msg.mutable_response()->set_info(info);
     msg.mutable_response()->set_status(status);
     return true;
@@ -223,7 +228,8 @@ bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * 
 // }
 
 
-bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize){
+bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type, int totalPackSize, int totalFileSize)
+{
     msg.set_type(Msg::NewFile_Request);
     msg.mutable_request()->mutable_file()->set_name(name);
     msg.mutable_request()->mutable_file()->set_type(type);
@@ -234,7 +240,8 @@ bool NewFileMsgReqInst(Msg::Message &msg, const string &name, Msg::FileType type
 
 
 //
-bool NewFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, int postSessionId, const char * info){
+bool NewFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, int postSessionId, const char * info)
+{
     msg.set_type(Msg::NewFile_Response);
     msg.mutable_response()->set_info(info);
     msg.mutable_response()->set_status(status);
@@ -290,6 +297,21 @@ bool AddAttributeToFileMsg(Msg::Message &msg, const string name, int size, Msg::
     return true;
 }
 
+bool MvFileMsgReqInst(Msg::Message &msg, const string &srcPath, const string &dstPath)
+{
+    msg.set_type(Msg::MvFile_Request);
+    msg.mutable_request()->mutable_mv_file_req()->set_srcpath(srcPath);
+    msg.mutable_request()->mutable_mv_file_req()->set_dstpath(dstPath);
+    return true;
+}
+
+bool CpFileMsgReqInst(Msg::Message &msg, const string &srcPath, const string &dstPath)
+{
+    msg.set_type(Msg::CpFile_Request);
+    msg.mutable_request()->mutable_cp_file_req()->set_srcpath(srcPath);
+    msg.mutable_request()->mutable_cp_file_req()->set_dstpath(dstPath);
+    return true;
+}
 
 /*
  * message package functions  =============================================================================== end =====================================================

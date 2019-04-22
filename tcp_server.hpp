@@ -23,8 +23,8 @@ private:
     int create_sock(int port);
     bool set_nonblocking(int fd);
 public:
-    TcpServer();
-    ~TcpServer();
+    TcpServer(){};
+    ~TcpServer(){};
     bool start(int port);
     virtual void handle(char buf[])=0;
 };

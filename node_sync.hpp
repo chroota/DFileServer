@@ -84,6 +84,10 @@ class UdpFileServer:UdpServer{
         bool rmFile(const string &path, char sendbuf[], int &sendLen);
         // ls files
         bool lsFiles(const string &path, char sendbuf[], int &sendLen);
+        // move file
+        bool mvFile(const string &srcPath, const string & dstPath, char sendbuf[], int &sendLen);
+        //cp file
+        bool cpFile(const string &srcPath, const string & dstPath, char sendbuf[], int &sendLen);
         //listen a port
         bool listen(int port);
         bool test();

@@ -47,7 +47,7 @@ struct TableStruct_msg_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[18]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[20]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,6 +55,9 @@ struct TableStruct_msg_2eproto {
 };
 void AddDescriptors_msg_2eproto();
 namespace Msg {
+class CpFileRequest;
+class CpFileRequestDefaultTypeInternal;
+extern CpFileRequestDefaultTypeInternal _CpFileRequest_default_instance_;
 class EndFilePostRequest;
 class EndFilePostRequestDefaultTypeInternal;
 extern EndFilePostRequestDefaultTypeInternal _EndFilePostRequest_default_instance_;
@@ -88,6 +91,9 @@ extern LsFileResponseDefaultTypeInternal _LsFileResponse_default_instance_;
 class Message;
 class MessageDefaultTypeInternal;
 extern MessageDefaultTypeInternal _Message_default_instance_;
+class MvFileRequest;
+class MvFileRequestDefaultTypeInternal;
+extern MvFileRequestDefaultTypeInternal _MvFileRequest_default_instance_;
 class NewFileRequest;
 class NewFileRequestDefaultTypeInternal;
 extern NewFileRequestDefaultTypeInternal _NewFileRequest_default_instance_;
@@ -111,6 +117,7 @@ class UpdateStatusRequestDefaultTypeInternal;
 extern UpdateStatusRequestDefaultTypeInternal _UpdateStatusRequest_default_instance_;
 }  // namespace Msg
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Msg::CpFileRequest* Arena::CreateMaybeMessage<::Msg::CpFileRequest>(Arena*);
 template<> ::Msg::EndFilePostRequest* Arena::CreateMaybeMessage<::Msg::EndFilePostRequest>(Arena*);
 template<> ::Msg::EndFilePostResponse* Arena::CreateMaybeMessage<::Msg::EndFilePostResponse>(Arena*);
 template<> ::Msg::FileAttribute* Arena::CreateMaybeMessage<::Msg::FileAttribute>(Arena*);
@@ -122,6 +129,7 @@ template<> ::Msg::JoinRequest* Arena::CreateMaybeMessage<::Msg::JoinRequest>(Are
 template<> ::Msg::LsFileRequest* Arena::CreateMaybeMessage<::Msg::LsFileRequest>(Arena*);
 template<> ::Msg::LsFileResponse* Arena::CreateMaybeMessage<::Msg::LsFileResponse>(Arena*);
 template<> ::Msg::Message* Arena::CreateMaybeMessage<::Msg::Message>(Arena*);
+template<> ::Msg::MvFileRequest* Arena::CreateMaybeMessage<::Msg::MvFileRequest>(Arena*);
 template<> ::Msg::NewFileRequest* Arena::CreateMaybeMessage<::Msg::NewFileRequest>(Arena*);
 template<> ::Msg::NewFileResponse* Arena::CreateMaybeMessage<::Msg::NewFileResponse>(Arena*);
 template<> ::Msg::Request* Arena::CreateMaybeMessage<::Msg::Request>(Arena*);
@@ -149,11 +157,15 @@ enum MsgType {
   Rm_File_Request = 14,
   FileOp_Request = 15,
   LsFile_Request = 16,
-  LsFile_Response = 17
+  LsFile_Response = 17,
+  MvFile_Request = 18,
+  MvFile_Response = 19,
+  CpFile_Request = 20,
+  CpFile_Response = 21
 };
 bool MsgType_IsValid(int value);
 constexpr MsgType MsgType_MIN = Join_Request;
-constexpr MsgType MsgType_MAX = LsFile_Response;
+constexpr MsgType MsgType_MAX = CpFile_Response;
 constexpr int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgType_descriptor();
@@ -2362,6 +2374,296 @@ class LsFileResponse final :
 };
 // -------------------------------------------------------------------
 
+class MvFileRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.MvFileRequest) */ {
+ public:
+  MvFileRequest();
+  virtual ~MvFileRequest();
+
+  MvFileRequest(const MvFileRequest& from);
+  MvFileRequest(MvFileRequest&& from) noexcept
+    : MvFileRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline MvFileRequest& operator=(const MvFileRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MvFileRequest& operator=(MvFileRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const MvFileRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MvFileRequest* internal_default_instance() {
+    return reinterpret_cast<const MvFileRequest*>(
+               &_MvFileRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  void Swap(MvFileRequest* other);
+  friend void swap(MvFileRequest& a, MvFileRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MvFileRequest* New() const final {
+    return CreateMaybeMessage<MvFileRequest>(nullptr);
+  }
+
+  MvFileRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MvFileRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MvFileRequest& from);
+  void MergeFrom(const MvFileRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MvFileRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Msg.MvFileRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string srcPath = 1;
+  bool has_srcpath() const;
+  void clear_srcpath();
+  static const int kSrcPathFieldNumber = 1;
+  const std::string& srcpath() const;
+  void set_srcpath(const std::string& value);
+  void set_srcpath(std::string&& value);
+  void set_srcpath(const char* value);
+  void set_srcpath(const char* value, size_t size);
+  std::string* mutable_srcpath();
+  std::string* release_srcpath();
+  void set_allocated_srcpath(std::string* srcpath);
+
+  // required string dstPath = 2;
+  bool has_dstpath() const;
+  void clear_dstpath();
+  static const int kDstPathFieldNumber = 2;
+  const std::string& dstpath() const;
+  void set_dstpath(const std::string& value);
+  void set_dstpath(std::string&& value);
+  void set_dstpath(const char* value);
+  void set_dstpath(const char* value, size_t size);
+  std::string* mutable_dstpath();
+  std::string* release_dstpath();
+  void set_allocated_dstpath(std::string* dstpath);
+
+  // @@protoc_insertion_point(class_scope:Msg.MvFileRequest)
+ private:
+  class HasBitSetters;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr srcpath_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dstpath_;
+  friend struct ::TableStruct_msg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CpFileRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.CpFileRequest) */ {
+ public:
+  CpFileRequest();
+  virtual ~CpFileRequest();
+
+  CpFileRequest(const CpFileRequest& from);
+  CpFileRequest(CpFileRequest&& from) noexcept
+    : CpFileRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline CpFileRequest& operator=(const CpFileRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CpFileRequest& operator=(CpFileRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const CpFileRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CpFileRequest* internal_default_instance() {
+    return reinterpret_cast<const CpFileRequest*>(
+               &_CpFileRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  void Swap(CpFileRequest* other);
+  friend void swap(CpFileRequest& a, CpFileRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CpFileRequest* New() const final {
+    return CreateMaybeMessage<CpFileRequest>(nullptr);
+  }
+
+  CpFileRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CpFileRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CpFileRequest& from);
+  void MergeFrom(const CpFileRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CpFileRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Msg.CpFileRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string srcPath = 1;
+  bool has_srcpath() const;
+  void clear_srcpath();
+  static const int kSrcPathFieldNumber = 1;
+  const std::string& srcpath() const;
+  void set_srcpath(const std::string& value);
+  void set_srcpath(std::string&& value);
+  void set_srcpath(const char* value);
+  void set_srcpath(const char* value, size_t size);
+  std::string* mutable_srcpath();
+  std::string* release_srcpath();
+  void set_allocated_srcpath(std::string* srcpath);
+
+  // required string dstPath = 2;
+  bool has_dstpath() const;
+  void clear_dstpath();
+  static const int kDstPathFieldNumber = 2;
+  const std::string& dstpath() const;
+  void set_dstpath(const std::string& value);
+  void set_dstpath(std::string&& value);
+  void set_dstpath(const char* value);
+  void set_dstpath(const char* value, size_t size);
+  std::string* mutable_dstpath();
+  std::string* release_dstpath();
+  void set_allocated_dstpath(std::string* dstpath);
+
+  // @@protoc_insertion_point(class_scope:Msg.CpFileRequest)
+ private:
+  class HasBitSetters;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr srcpath_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dstpath_;
+  friend struct ::TableStruct_msg_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Request final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.Request) */ {
  public:
@@ -2405,7 +2707,7 @@ class Request final :
                &_Request_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   void Swap(Request* other);
   friend void swap(Request& a, Request& b) {
@@ -2528,6 +2830,24 @@ class Request final :
   ::Msg::LsFileRequest* mutable_ls_file_req();
   void set_allocated_ls_file_req(::Msg::LsFileRequest* ls_file_req);
 
+  // optional .Msg.MvFileRequest mv_file_req = 8;
+  bool has_mv_file_req() const;
+  void clear_mv_file_req();
+  static const int kMvFileReqFieldNumber = 8;
+  const ::Msg::MvFileRequest& mv_file_req() const;
+  ::Msg::MvFileRequest* release_mv_file_req();
+  ::Msg::MvFileRequest* mutable_mv_file_req();
+  void set_allocated_mv_file_req(::Msg::MvFileRequest* mv_file_req);
+
+  // optional .Msg.CpFileRequest cp_file_req = 9;
+  bool has_cp_file_req() const;
+  void clear_cp_file_req();
+  static const int kCpFileReqFieldNumber = 9;
+  const ::Msg::CpFileRequest& cp_file_req() const;
+  ::Msg::CpFileRequest* release_cp_file_req();
+  ::Msg::CpFileRequest* mutable_cp_file_req();
+  void set_allocated_cp_file_req(::Msg::CpFileRequest* cp_file_req);
+
   // @@protoc_insertion_point(class_scope:Msg.Request)
  private:
   class HasBitSetters;
@@ -2542,6 +2862,8 @@ class Request final :
   ::Msg::NewFileRequest* file_;
   ::Msg::RmFileRequest* rm_op_;
   ::Msg::LsFileRequest* ls_file_req_;
+  ::Msg::MvFileRequest* mv_file_req_;
+  ::Msg::CpFileRequest* cp_file_req_;
   friend struct ::TableStruct_msg_2eproto;
 };
 // -------------------------------------------------------------------
@@ -2589,7 +2911,7 @@ class Response final :
                &_Response_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   void Swap(Response* other);
   friend void swap(Response& a, Response& b) {
@@ -2755,7 +3077,7 @@ class Message final :
                &_Message_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    19;
 
   void Swap(Message* other);
   friend void swap(Message& a, Message& b) {
@@ -4376,6 +4698,246 @@ LsFileResponse::files() const {
 
 // -------------------------------------------------------------------
 
+// MvFileRequest
+
+// required string srcPath = 1;
+inline bool MvFileRequest::has_srcpath() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void MvFileRequest::clear_srcpath() {
+  srcpath_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& MvFileRequest::srcpath() const {
+  // @@protoc_insertion_point(field_get:Msg.MvFileRequest.srcPath)
+  return srcpath_.GetNoArena();
+}
+inline void MvFileRequest::set_srcpath(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.MvFileRequest.srcPath)
+}
+inline void MvFileRequest::set_srcpath(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.MvFileRequest.srcPath)
+}
+inline void MvFileRequest::set_srcpath(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.MvFileRequest.srcPath)
+}
+inline void MvFileRequest::set_srcpath(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.MvFileRequest.srcPath)
+}
+inline std::string* MvFileRequest::mutable_srcpath() {
+  _has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_mutable:Msg.MvFileRequest.srcPath)
+  return srcpath_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MvFileRequest::release_srcpath() {
+  // @@protoc_insertion_point(field_release:Msg.MvFileRequest.srcPath)
+  if (!has_srcpath()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return srcpath_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MvFileRequest::set_allocated_srcpath(std::string* srcpath) {
+  if (srcpath != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  srcpath_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), srcpath);
+  // @@protoc_insertion_point(field_set_allocated:Msg.MvFileRequest.srcPath)
+}
+
+// required string dstPath = 2;
+inline bool MvFileRequest::has_dstpath() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void MvFileRequest::clear_dstpath() {
+  dstpath_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& MvFileRequest::dstpath() const {
+  // @@protoc_insertion_point(field_get:Msg.MvFileRequest.dstPath)
+  return dstpath_.GetNoArena();
+}
+inline void MvFileRequest::set_dstpath(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.MvFileRequest.dstPath)
+}
+inline void MvFileRequest::set_dstpath(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.MvFileRequest.dstPath)
+}
+inline void MvFileRequest::set_dstpath(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.MvFileRequest.dstPath)
+}
+inline void MvFileRequest::set_dstpath(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.MvFileRequest.dstPath)
+}
+inline std::string* MvFileRequest::mutable_dstpath() {
+  _has_bits_[0] |= 0x00000002u;
+  // @@protoc_insertion_point(field_mutable:Msg.MvFileRequest.dstPath)
+  return dstpath_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MvFileRequest::release_dstpath() {
+  // @@protoc_insertion_point(field_release:Msg.MvFileRequest.dstPath)
+  if (!has_dstpath()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return dstpath_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MvFileRequest::set_allocated_dstpath(std::string* dstpath) {
+  if (dstpath != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  dstpath_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), dstpath);
+  // @@protoc_insertion_point(field_set_allocated:Msg.MvFileRequest.dstPath)
+}
+
+// -------------------------------------------------------------------
+
+// CpFileRequest
+
+// required string srcPath = 1;
+inline bool CpFileRequest::has_srcpath() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CpFileRequest::clear_srcpath() {
+  srcpath_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& CpFileRequest::srcpath() const {
+  // @@protoc_insertion_point(field_get:Msg.CpFileRequest.srcPath)
+  return srcpath_.GetNoArena();
+}
+inline void CpFileRequest::set_srcpath(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.CpFileRequest.srcPath)
+}
+inline void CpFileRequest::set_srcpath(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.CpFileRequest.srcPath)
+}
+inline void CpFileRequest::set_srcpath(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.CpFileRequest.srcPath)
+}
+inline void CpFileRequest::set_srcpath(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  srcpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.CpFileRequest.srcPath)
+}
+inline std::string* CpFileRequest::mutable_srcpath() {
+  _has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_mutable:Msg.CpFileRequest.srcPath)
+  return srcpath_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CpFileRequest::release_srcpath() {
+  // @@protoc_insertion_point(field_release:Msg.CpFileRequest.srcPath)
+  if (!has_srcpath()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return srcpath_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CpFileRequest::set_allocated_srcpath(std::string* srcpath) {
+  if (srcpath != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  srcpath_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), srcpath);
+  // @@protoc_insertion_point(field_set_allocated:Msg.CpFileRequest.srcPath)
+}
+
+// required string dstPath = 2;
+inline bool CpFileRequest::has_dstpath() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CpFileRequest::clear_dstpath() {
+  dstpath_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& CpFileRequest::dstpath() const {
+  // @@protoc_insertion_point(field_get:Msg.CpFileRequest.dstPath)
+  return dstpath_.GetNoArena();
+}
+inline void CpFileRequest::set_dstpath(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.CpFileRequest.dstPath)
+}
+inline void CpFileRequest::set_dstpath(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.CpFileRequest.dstPath)
+}
+inline void CpFileRequest::set_dstpath(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.CpFileRequest.dstPath)
+}
+inline void CpFileRequest::set_dstpath(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  dstpath_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.CpFileRequest.dstPath)
+}
+inline std::string* CpFileRequest::mutable_dstpath() {
+  _has_bits_[0] |= 0x00000002u;
+  // @@protoc_insertion_point(field_mutable:Msg.CpFileRequest.dstPath)
+  return dstpath_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CpFileRequest::release_dstpath() {
+  // @@protoc_insertion_point(field_release:Msg.CpFileRequest.dstPath)
+  if (!has_dstpath()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return dstpath_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CpFileRequest::set_allocated_dstpath(std::string* dstpath) {
+  if (dstpath != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  dstpath_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), dstpath);
+  // @@protoc_insertion_point(field_set_allocated:Msg.CpFileRequest.dstPath)
+}
+
+// -------------------------------------------------------------------
+
 // Request
 
 // optional .Msg.JoinRequest join = 1;
@@ -4719,6 +5281,104 @@ inline void Request::set_allocated_ls_file_req(::Msg::LsFileRequest* ls_file_req
   }
   ls_file_req_ = ls_file_req;
   // @@protoc_insertion_point(field_set_allocated:Msg.Request.ls_file_req)
+}
+
+// optional .Msg.MvFileRequest mv_file_req = 8;
+inline bool Request::has_mv_file_req() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void Request::clear_mv_file_req() {
+  if (mv_file_req_ != nullptr) mv_file_req_->Clear();
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline const ::Msg::MvFileRequest& Request::mv_file_req() const {
+  const ::Msg::MvFileRequest* p = mv_file_req_;
+  // @@protoc_insertion_point(field_get:Msg.Request.mv_file_req)
+  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::MvFileRequest*>(
+      &::Msg::_MvFileRequest_default_instance_);
+}
+inline ::Msg::MvFileRequest* Request::release_mv_file_req() {
+  // @@protoc_insertion_point(field_release:Msg.Request.mv_file_req)
+  _has_bits_[0] &= ~0x00000080u;
+  ::Msg::MvFileRequest* temp = mv_file_req_;
+  mv_file_req_ = nullptr;
+  return temp;
+}
+inline ::Msg::MvFileRequest* Request::mutable_mv_file_req() {
+  _has_bits_[0] |= 0x00000080u;
+  if (mv_file_req_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Msg::MvFileRequest>(GetArenaNoVirtual());
+    mv_file_req_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:Msg.Request.mv_file_req)
+  return mv_file_req_;
+}
+inline void Request::set_allocated_mv_file_req(::Msg::MvFileRequest* mv_file_req) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete mv_file_req_;
+  }
+  if (mv_file_req) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      mv_file_req = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, mv_file_req, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000080u;
+  } else {
+    _has_bits_[0] &= ~0x00000080u;
+  }
+  mv_file_req_ = mv_file_req;
+  // @@protoc_insertion_point(field_set_allocated:Msg.Request.mv_file_req)
+}
+
+// optional .Msg.CpFileRequest cp_file_req = 9;
+inline bool Request::has_cp_file_req() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void Request::clear_cp_file_req() {
+  if (cp_file_req_ != nullptr) cp_file_req_->Clear();
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline const ::Msg::CpFileRequest& Request::cp_file_req() const {
+  const ::Msg::CpFileRequest* p = cp_file_req_;
+  // @@protoc_insertion_point(field_get:Msg.Request.cp_file_req)
+  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::CpFileRequest*>(
+      &::Msg::_CpFileRequest_default_instance_);
+}
+inline ::Msg::CpFileRequest* Request::release_cp_file_req() {
+  // @@protoc_insertion_point(field_release:Msg.Request.cp_file_req)
+  _has_bits_[0] &= ~0x00000100u;
+  ::Msg::CpFileRequest* temp = cp_file_req_;
+  cp_file_req_ = nullptr;
+  return temp;
+}
+inline ::Msg::CpFileRequest* Request::mutable_cp_file_req() {
+  _has_bits_[0] |= 0x00000100u;
+  if (cp_file_req_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Msg::CpFileRequest>(GetArenaNoVirtual());
+    cp_file_req_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:Msg.Request.cp_file_req)
+  return cp_file_req_;
+}
+inline void Request::set_allocated_cp_file_req(::Msg::CpFileRequest* cp_file_req) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete cp_file_req_;
+  }
+  if (cp_file_req) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      cp_file_req = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cp_file_req, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000100u;
+  } else {
+    _has_bits_[0] &= ~0x00000100u;
+  }
+  cp_file_req_ = cp_file_req;
+  // @@protoc_insertion_point(field_set_allocated:Msg.Request.cp_file_req)
 }
 
 // -------------------------------------------------------------------
@@ -5122,6 +5782,10 @@ inline void Message::set_allocated_file_post(::Msg::FilePost* file_post) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
