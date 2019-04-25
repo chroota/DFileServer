@@ -12,7 +12,8 @@ string getTimeStringFromTvSec(int tv_sec)
     return string(buf);
 }
 
-struct timespec getTimeSpec(){
+struct timespec getTimeSpec()
+{
     struct timespec ts;
     memset(&ts, 0, sizeof(ts));
     clock_gettime(CLOCK_REALTIME, &ts);
@@ -27,7 +28,8 @@ long long getSystemTime()
 	return 1000*t.time + t.millitm;
 }
 
-void ssplit(const string& s, vector<string>& sv, const char flag) {
+void ssplit(const string& s, vector<string>& sv, const char flag) 
+{
     sv.clear();
     istringstream iss(s);
     string temp;
@@ -41,7 +43,8 @@ void ssplit(const string& s, vector<string>& sv, const char flag) {
 
 
 // 
-string getBufMD5(const void * buf, int len){
+string getBufMD5(const void * buf, int len)
+{
     MD5_CTX md5Context;
     MD5Init(&md5Context);
     MD5Update(&md5Context, (unsigned char *)buf, len);
@@ -50,7 +53,8 @@ string getBufMD5(const void * buf, int len){
     return getMD5string(result, MD5_DIGEST_LENGTH);
 }
 
-string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH){
+string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH)
+{
     char hex[35];
     memset(hex, 0, sizeof(hex));
     for (int i = 0; i < len; ++i)
@@ -106,22 +110,43 @@ bool urequestNoResponse(const char * host, int port, const char sendbuf[], int s
 
 
 /*
+ * file
+*/
+bool mkdirIfNotExist(const string &path, string &err)
+{
+    struct stat statbuf;
+    stat(path.c_str(), &statbuf);
+    if(stat(path.c_str(), &statbuf) == -1)
+    {
+        if(mkdir(path.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH))
+        {
+            err = "mkdir err";
+            return false;
+        }
+        return true;
+    }
+    if(!S_ISDIR(statbuf.st_mode))
+    {
+        err = "target path is not a dir";
+        return false;
+    }
+    return true;
+}
+
+
+/*
  * message package functions  =============================================================================== start
 */
 
-//message
-Msg::Message JoinMsgReqInst(const char * name, const char * ip)
+
+Msg::Message JoinMsgReqInst(const string & name, const string & ip, const string &port)
 {
     Msg::Message msg;
     msg.set_type(Msg::Join_Request);
     msg.mutable_request()->mutable_join()->set_ip(ip);
     msg.mutable_request()->mutable_join()->set_name(name);
+    msg.mutable_request()->mutable_join()->set_port(port);
     return msg;
-}
-
-Msg::Message JoinMsgReqInst(const string & name, const string & ip)
-{
-    return JoinMsgReqInst(name.c_str(), ip.c_str());
 }
 
 //update status
@@ -139,18 +164,17 @@ Msg::Message UpdateStatusMsgReqInst(const string & name, NODE_STATUS status)
     return UpdateStatusMsgReqInst(name.c_str(), status);
 }
 
-bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash){
+bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash)
+{
     msg.set_type(Msg::UpdateStateHash_Request);
     msg.mutable_request()->mutable_state_hash()->set_name(name);
     msg.mutable_request()->mutable_state_hash()->set_hash(hash);
 }
 
 //update state hash
-Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash){
+Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash)
+{
     Msg::Message msg;
-    // msg.set_type(Msg::UpdateStateHash_Request);
-    // msg.mutable_request()->mutable_state_hash()->set_name(name);
-    // msg.mutable_request()->mutable_state_hash()->set_hash(hash);
     UpdateStateHashMsgReqInst(msg, name, hash);
     return msg;
 }
@@ -175,26 +199,19 @@ Msg::Message GetStateNodeMsgReqInst(const char * name)
 }
 
 
-bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * ip, const char * hash)
+bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & connString, const string & hash)
 {
-    cout<<name<<endl;
-    cout<<ip<<endl;
-    cout<<hash<<endl;
     msg.mutable_response()->set_status(Msg::MSG_RES_OK);
     msg.mutable_response()->set_info("ok");
     msg.mutable_response()->mutable_state_node()->set_name(name);
     msg.mutable_response()->mutable_state_node()->set_hash(hash);
-    msg.mutable_response()->mutable_state_node()->set_ip(ip);
+    msg.mutable_response()->mutable_state_node()->set_conn_string(connString);
     return true;
 }
 
-bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & ip, const string & hash)
+
+bool GetStateNodeMsgResErrorInst(Msg::Message &msg, const char * info)
 {
-    return GetStateNodeMsgResInst(msg, name.c_str(), ip.c_str(), hash.c_str());
-}
-
-
-bool GetStateNodeMsgResErrorInst(Msg::Message &msg, const char * info){
     msg.mutable_response()->set_status(Msg::MSG_RES_OK);
     msg.mutable_response()->set_info(info);
     return true;

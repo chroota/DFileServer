@@ -5,17 +5,14 @@ void VvfsTp::run(int argc, char *argv[])
     if (argc < 2) help();
     if (!strcmp(argv[1], NEW_FILE)) 
     {
-        // cout<<NEW_FILE<<endl;
         if (argc < 4) help();
         newVF(argv[2], argv[3]);
     }else if(!strcmp(argv[1], RM_FILE))
     {
-        // cout<<RM_FILE<<endl;
         if(argc < 3) help();
         rmVF(argv[2]);
     }else if(!strcmp(argv[1], MV_FILE))
     {
-        // cout<<MV_FILE<<endl;
         if(argc < 4) help();
     }else if(!strcmp(argv[1], GET_FILE))
     {
@@ -281,11 +278,11 @@ bool VvfsTp::cpVF(const string & remoteSrcPath, const string & remoteDstPath)
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
     {
-        cout << "move fail, "<<recvMsg.response().info()<<endl;
+        cout << "cp fail, "<<recvMsg.response().info()<<endl;
         return true;
     }
 
-    cout<<"success move "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
+    cout<<"success cp "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
     return true;   
 }
 
@@ -318,6 +315,9 @@ int main(int argc, char *argv[])
         // assert(tp.rmVF("/md5.cpp") == true);
         // assert(tp.lsVF("/") == true);
         assert(tp.lsVF("/test") == true);
+        assert(tp.mkDir("/test1") == true);
+        assert(tp.cpVF("/test/md5.cpp", "/test1/md5.cpp") == true);
+        assert(tp.lsVF("/test1") == true);
         // assert(tp.lsVF("/test/test123") == true);
         // assert(tp.rmVF("/test") == true);
         // assert(tp.lsVF("/") == true);

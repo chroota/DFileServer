@@ -534,6 +534,19 @@ class JoinRequest final :
   std::string* release_ip();
   void set_allocated_ip(std::string* ip);
 
+  // required string port = 3;
+  bool has_port() const;
+  void clear_port();
+  static const int kPortFieldNumber = 3;
+  const std::string& port() const;
+  void set_port(const std::string& value);
+  void set_port(std::string&& value);
+  void set_port(const char* value);
+  void set_port(const char* value, size_t size);
+  std::string* mutable_port();
+  std::string* release_port();
+  void set_allocated_port(std::string* port);
+
   // @@protoc_insertion_point(class_scope:Msg.JoinRequest)
  private:
   class HasBitSetters;
@@ -546,6 +559,7 @@ class JoinRequest final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr port_;
   friend struct ::TableStruct_msg_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1078,18 +1092,18 @@ class GetStateNodeResponse final :
   std::string* release_name();
   void set_allocated_name(std::string* name);
 
-  // optional string ip = 2;
-  bool has_ip() const;
-  void clear_ip();
-  static const int kIpFieldNumber = 2;
-  const std::string& ip() const;
-  void set_ip(const std::string& value);
-  void set_ip(std::string&& value);
-  void set_ip(const char* value);
-  void set_ip(const char* value, size_t size);
-  std::string* mutable_ip();
-  std::string* release_ip();
-  void set_allocated_ip(std::string* ip);
+  // optional string conn_string = 2;
+  bool has_conn_string() const;
+  void clear_conn_string();
+  static const int kConnStringFieldNumber = 2;
+  const std::string& conn_string() const;
+  void set_conn_string(const std::string& value);
+  void set_conn_string(std::string&& value);
+  void set_conn_string(const char* value);
+  void set_conn_string(const char* value, size_t size);
+  std::string* mutable_conn_string();
+  std::string* release_conn_string();
+  void set_allocated_conn_string(std::string* conn_string);
 
   // optional string hash = 3;
   bool has_hash() const;
@@ -1112,7 +1126,7 @@ class GetStateNodeResponse final :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr conn_string_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
   friend struct ::TableStruct_msg_2eproto;
 };
@@ -3508,6 +3522,64 @@ inline void JoinRequest::set_allocated_ip(std::string* ip) {
   // @@protoc_insertion_point(field_set_allocated:Msg.JoinRequest.ip)
 }
 
+// required string port = 3;
+inline bool JoinRequest::has_port() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void JoinRequest::clear_port() {
+  port_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& JoinRequest::port() const {
+  // @@protoc_insertion_point(field_get:Msg.JoinRequest.port)
+  return port_.GetNoArena();
+}
+inline void JoinRequest::set_port(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  port_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.JoinRequest.port)
+}
+inline void JoinRequest::set_port(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  port_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Msg.JoinRequest.port)
+}
+inline void JoinRequest::set_port(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  port_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.JoinRequest.port)
+}
+inline void JoinRequest::set_port(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  port_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Msg.JoinRequest.port)
+}
+inline std::string* JoinRequest::mutable_port() {
+  _has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_mutable:Msg.JoinRequest.port)
+  return port_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* JoinRequest::release_port() {
+  // @@protoc_insertion_point(field_release:Msg.JoinRequest.port)
+  if (!has_port()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return port_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void JoinRequest::set_allocated_port(std::string* port) {
+  if (port != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  port_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), port);
+  // @@protoc_insertion_point(field_set_allocated:Msg.JoinRequest.port)
+}
+
 // -------------------------------------------------------------------
 
 // UpdateStatusRequest
@@ -3832,62 +3904,62 @@ inline void GetStateNodeResponse::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.name)
 }
 
-// optional string ip = 2;
-inline bool GetStateNodeResponse::has_ip() const {
+// optional string conn_string = 2;
+inline bool GetStateNodeResponse::has_conn_string() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GetStateNodeResponse::clear_ip() {
-  ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void GetStateNodeResponse::clear_conn_string() {
+  conn_string_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& GetStateNodeResponse::ip() const {
-  // @@protoc_insertion_point(field_get:Msg.GetStateNodeResponse.ip)
-  return ip_.GetNoArena();
+inline const std::string& GetStateNodeResponse::conn_string() const {
+  // @@protoc_insertion_point(field_get:Msg.GetStateNodeResponse.conn_string)
+  return conn_string_.GetNoArena();
 }
-inline void GetStateNodeResponse::set_ip(const std::string& value) {
+inline void GetStateNodeResponse::set_conn_string(const std::string& value) {
   _has_bits_[0] |= 0x00000002u;
-  ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Msg.GetStateNodeResponse.ip)
+  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.GetStateNodeResponse.conn_string)
 }
-inline void GetStateNodeResponse::set_ip(std::string&& value) {
+inline void GetStateNodeResponse::set_conn_string(std::string&& value) {
   _has_bits_[0] |= 0x00000002u;
-  ip_.SetNoArena(
+  conn_string_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeResponse.ip)
+  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeResponse.conn_string)
 }
-inline void GetStateNodeResponse::set_ip(const char* value) {
+inline void GetStateNodeResponse::set_conn_string(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000002u;
-  ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeResponse.ip)
+  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeResponse.conn_string)
 }
-inline void GetStateNodeResponse::set_ip(const char* value, size_t size) {
+inline void GetStateNodeResponse::set_conn_string(const char* value, size_t size) {
   _has_bits_[0] |= 0x00000002u;
-  ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeResponse.ip)
+  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeResponse.conn_string)
 }
-inline std::string* GetStateNodeResponse::mutable_ip() {
+inline std::string* GetStateNodeResponse::mutable_conn_string() {
   _has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeResponse.ip)
-  return ip_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeResponse.conn_string)
+  return conn_string_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* GetStateNodeResponse::release_ip() {
-  // @@protoc_insertion_point(field_release:Msg.GetStateNodeResponse.ip)
-  if (!has_ip()) {
+inline std::string* GetStateNodeResponse::release_conn_string() {
+  // @@protoc_insertion_point(field_release:Msg.GetStateNodeResponse.conn_string)
+  if (!has_conn_string()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000002u;
-  return ip_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return conn_string_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void GetStateNodeResponse::set_allocated_ip(std::string* ip) {
-  if (ip != nullptr) {
+inline void GetStateNodeResponse::set_allocated_conn_string(std::string* conn_string) {
+  if (conn_string != nullptr) {
     _has_bits_[0] |= 0x00000002u;
   } else {
     _has_bits_[0] &= ~0x00000002u;
   }
-  ip_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.ip)
+  conn_string_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), conn_string);
+  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.conn_string)
 }
 
 // optional string hash = 3;

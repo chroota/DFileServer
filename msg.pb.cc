@@ -458,8 +458,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::JoinRequest, name_),
   PROTOBUF_FIELD_OFFSET(::Msg::JoinRequest, ip_),
+  PROTOBUF_FIELD_OFFSET(::Msg::JoinRequest, port_),
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::Msg::UpdateStatusRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::UpdateStatusRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -491,7 +493,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, name_),
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, ip_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, conn_string_),
   PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, hash_),
   0,
   1,
@@ -655,25 +657,25 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 9, sizeof(::Msg::FileOp)},
-  { 13, 20, sizeof(::Msg::JoinRequest)},
-  { 22, 29, sizeof(::Msg::UpdateStatusRequest)},
-  { 31, 38, sizeof(::Msg::UpdateStateHashRequest)},
-  { 40, 46, sizeof(::Msg::GetStateNodeRequest)},
-  { 47, 55, sizeof(::Msg::GetStateNodeResponse)},
-  { 58, 67, sizeof(::Msg::NewFileRequest)},
-  { 71, 77, sizeof(::Msg::NewFileResponse)},
-  { 78, 84, sizeof(::Msg::RmFileRequest)},
-  { 85, 96, sizeof(::Msg::FilePost)},
-  { 102, 108, sizeof(::Msg::EndFilePostRequest)},
-  { 109, 116, sizeof(::Msg::EndFilePostResponse)},
-  { 118, 124, sizeof(::Msg::LsFileRequest)},
-  { 125, 134, sizeof(::Msg::FileAttribute)},
-  { 138, 144, sizeof(::Msg::LsFileResponse)},
-  { 145, 152, sizeof(::Msg::MvFileRequest)},
-  { 154, 161, sizeof(::Msg::CpFileRequest)},
-  { 163, 177, sizeof(::Msg::Request)},
-  { 186, 196, sizeof(::Msg::Response)},
-  { 201, 210, sizeof(::Msg::Message)},
+  { 13, 21, sizeof(::Msg::JoinRequest)},
+  { 24, 31, sizeof(::Msg::UpdateStatusRequest)},
+  { 33, 40, sizeof(::Msg::UpdateStateHashRequest)},
+  { 42, 48, sizeof(::Msg::GetStateNodeRequest)},
+  { 49, 57, sizeof(::Msg::GetStateNodeResponse)},
+  { 60, 69, sizeof(::Msg::NewFileRequest)},
+  { 73, 79, sizeof(::Msg::NewFileResponse)},
+  { 80, 86, sizeof(::Msg::RmFileRequest)},
+  { 87, 98, sizeof(::Msg::FilePost)},
+  { 104, 110, sizeof(::Msg::EndFilePostRequest)},
+  { 111, 118, sizeof(::Msg::EndFilePostResponse)},
+  { 120, 126, sizeof(::Msg::LsFileRequest)},
+  { 127, 136, sizeof(::Msg::FileAttribute)},
+  { 140, 146, sizeof(::Msg::LsFileResponse)},
+  { 147, 154, sizeof(::Msg::MvFileRequest)},
+  { 156, 163, sizeof(::Msg::CpFileRequest)},
+  { 165, 179, sizeof(::Msg::Request)},
+  { 188, 198, sizeof(::Msg::Response)},
+  { 203, 212, sizeof(::Msg::Message)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -708,69 +710,69 @@ static ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptorsTable assign_descript
 const char descriptor_table_protodef_msg_2eproto[] =
   "\n\tmsg.proto\022\003Msg\"W\n\006FileOp\022\035\n\004type\030\001 \002(\016"
   "2\017.Msg.FileOpType\022\014\n\004path\030\002 \002(\t\022\017\n\007dstPa"
-  "th\030\003 \001(\t\022\017\n\007newHash\030\004 \002(\t\"\'\n\013JoinRequest"
-  "\022\014\n\004name\030\001 \002(\t\022\n\n\002ip\030\002 \002(\t\"3\n\023UpdateStat"
-  "usRequest\022\014\n\004name\030\001 \002(\t\022\016\n\006status\030\002 \002(\005\""
-  "4\n\026UpdateStateHashRequest\022\014\n\004name\030\001 \002(\t\022"
-  "\014\n\004hash\030\002 \002(\t\"#\n\023GetStateNodeRequest\022\014\n\004"
-  "name\030\001 \002(\t\">\n\024GetStateNodeResponse\022\014\n\004na"
-  "me\030\001 \001(\t\022\n\n\002ip\030\002 \001(\t\022\014\n\004hash\030\003 \001(\t\"m\n\016Ne"
-  "wFileRequest\022\014\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\016"
-  "2\r.Msg.FileType\022\027\n\017total_pack_size\030\003 \002(\005"
-  "\022\027\n\017total_file_size\030\004 \002(\005\"*\n\017NewFileResp"
-  "onse\022\027\n\017post_session_id\030\001 \001(\005\"\035\n\rRmFileR"
-  "equest\022\014\n\004path\030\001 \002(\t\"v\n\010FilePost\022\014\n\004name"
-  "\030\001 \002(\t\022\027\n\017post_session_id\030\002 \002(\003\022\020\n\010pack_"
-  "idx\030\003 \002(\005\022\020\n\010file_idx\030\004 \002(\005\022\014\n\004data\030\005 \002("
-  "\014\022\021\n\tdata_size\030\006 \002(\005\"\"\n\022EndFilePostReque"
-  "st\022\014\n\004name\030\001 \002(\t\"8\n\023EndFilePostResponse\022"
-  "\n\n\002ok\030\001 \002(\010\022\025\n\rlost_pack_idx\030\002 \001(\005\"\035\n\rLs"
-  "FileRequest\022\014\n\004path\030\001 \002(\t\"V\n\rFileAttribu"
-  "te\022\014\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.Fil"
-  "eType\022\014\n\004size\030\003 \002(\005\022\014\n\004time\030\004 \002(\t\"3\n\016LsF"
-  "ileResponse\022!\n\005files\030\001 \003(\0132\022.Msg.FileAtt"
-  "ribute\"1\n\rMvFileRequest\022\017\n\007srcPath\030\001 \002(\t"
-  "\022\017\n\007dstPath\030\002 \002(\t\"1\n\rCpFileRequest\022\017\n\007sr"
-  "cPath\030\001 \002(\t\022\017\n\007dstPath\030\002 \002(\t\"\376\002\n\007Request"
-  "\022\036\n\004join\030\001 \001(\0132\020.Msg.JoinRequest\022/\n\rupda"
-  "te_status\030\002 \001(\0132\030.Msg.UpdateStatusReques"
-  "t\0220\n\016get_state_node\030\003 \001(\0132\030.Msg.GetState"
-  "NodeRequest\022/\n\nstate_hash\030\004 \001(\0132\033.Msg.Up"
-  "dateStateHashRequest\022!\n\004file\030\005 \001(\0132\023.Msg"
-  ".NewFileRequest\022!\n\005rm_op\030\006 \001(\0132\022.Msg.RmF"
-  "ileRequest\022\'\n\013ls_file_req\030\007 \001(\0132\022.Msg.Ls"
-  "FileRequest\022\'\n\013mv_file_req\030\010 \001(\0132\022.Msg.M"
-  "vFileRequest\022\'\n\013cp_file_req\030\t \001(\0132\022.Msg."
-  "CpFileRequest\"\305\001\n\010Response\022!\n\006status\030\001 \002"
-  "(\0162\021.Msg.MsgResStatus\022\014\n\004info\030\002 \001(\t\022-\n\ns"
-  "tate_node\030\003 \001(\0132\031.Msg.GetStateNodeRespon"
-  "se\022/\n\021new_file_response\030\004 \001(\0132\024.Msg.NewF"
-  "ileResponse\022(\n\013ls_file_res\030\006 \001(\0132\023.Msg.L"
-  "sFileResponse\"\207\001\n\007Message\022\032\n\004type\030\001 \002(\0162"
-  "\014.Msg.MsgType\022\035\n\007request\030\002 \001(\0132\014.Msg.Req"
-  "uest\022\037\n\010response\030\003 \001(\0132\r.Msg.Response\022 \n"
-  "\tfile_post\030\004 \001(\0132\r.Msg.FilePost*\341\003\n\007MsgT"
-  "ype\022\020\n\014Join_Request\020\001\022\021\n\rJoin_Response\020\002"
-  "\022\030\n\024UpdateStatus_Request\020\003\022\033\n\027UpdateStat"
-  "eHash_Request\020\004\022\030\n\024GetStateNode_Request\020"
-  "\005\022\031\n\025GetStateNode_Response\020\006\022\023\n\017Common_R"
-  "esponse\020\007\022\033\n\027MasterNotifyCmd_Request\020\010\022\023"
-  "\n\017NewFile_Request\020\t\022\024\n\020NewFile_Response\020"
-  "\n\022\r\n\tFile_Post\020\013\022\031\n\025End_File_Post_Reques"
-  "t\020\014\022\032\n\026End_File_Post_Response\020\r\022\023\n\017Rm_Fi"
-  "le_Request\020\016\022\022\n\016FileOp_Request\020\017\022\022\n\016LsFi"
-  "le_Request\020\020\022\023\n\017LsFile_Response\020\021\022\022\n\016MvF"
-  "ile_Request\020\022\022\023\n\017MvFile_Response\020\023\022\022\n\016Cp"
-  "File_Request\020\024\022\023\n\017CpFile_Response\020\025*#\n\010F"
-  "ileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR\020\002*.\n\nFile"
-  "OpType\022\n\n\006NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003"
-  "*1\n\014MsgResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_"
-  "RES_ERROR\020\002"
+  "th\030\003 \001(\t\022\017\n\007newHash\030\004 \002(\t\"5\n\013JoinRequest"
+  "\022\014\n\004name\030\001 \002(\t\022\n\n\002ip\030\002 \002(\t\022\014\n\004port\030\003 \002(\t"
+  "\"3\n\023UpdateStatusRequest\022\014\n\004name\030\001 \002(\t\022\016\n"
+  "\006status\030\002 \002(\005\"4\n\026UpdateStateHashRequest\022"
+  "\014\n\004name\030\001 \002(\t\022\014\n\004hash\030\002 \002(\t\"#\n\023GetStateN"
+  "odeRequest\022\014\n\004name\030\001 \002(\t\"G\n\024GetStateNode"
+  "Response\022\014\n\004name\030\001 \001(\t\022\023\n\013conn_string\030\002 "
+  "\001(\t\022\014\n\004hash\030\003 \001(\t\"m\n\016NewFileRequest\022\014\n\004n"
+  "ame\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\027"
+  "\n\017total_pack_size\030\003 \002(\005\022\027\n\017total_file_si"
+  "ze\030\004 \002(\005\"*\n\017NewFileResponse\022\027\n\017post_sess"
+  "ion_id\030\001 \001(\005\"\035\n\rRmFileRequest\022\014\n\004path\030\001 "
+  "\002(\t\"v\n\010FilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017post_se"
+  "ssion_id\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020\n\010file"
+  "_idx\030\004 \002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size\030\006 "
+  "\002(\005\"\"\n\022EndFilePostRequest\022\014\n\004name\030\001 \002(\t\""
+  "8\n\023EndFilePostResponse\022\n\n\002ok\030\001 \002(\010\022\025\n\rlo"
+  "st_pack_idx\030\002 \001(\005\"\035\n\rLsFileRequest\022\014\n\004pa"
+  "th\030\001 \002(\t\"V\n\rFileAttribute\022\014\n\004name\030\001 \002(\t\022"
+  "\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\014\n\004size\030\003 \002"
+  "(\005\022\014\n\004time\030\004 \002(\t\"3\n\016LsFileResponse\022!\n\005fi"
+  "les\030\001 \003(\0132\022.Msg.FileAttribute\"1\n\rMvFileR"
+  "equest\022\017\n\007srcPath\030\001 \002(\t\022\017\n\007dstPath\030\002 \002(\t"
+  "\"1\n\rCpFileRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n\007ds"
+  "tPath\030\002 \002(\t\"\376\002\n\007Request\022\036\n\004join\030\001 \001(\0132\020."
+  "Msg.JoinRequest\022/\n\rupdate_status\030\002 \001(\0132\030"
+  ".Msg.UpdateStatusRequest\0220\n\016get_state_no"
+  "de\030\003 \001(\0132\030.Msg.GetStateNodeRequest\022/\n\nst"
+  "ate_hash\030\004 \001(\0132\033.Msg.UpdateStateHashRequ"
+  "est\022!\n\004file\030\005 \001(\0132\023.Msg.NewFileRequest\022!"
+  "\n\005rm_op\030\006 \001(\0132\022.Msg.RmFileRequest\022\'\n\013ls_"
+  "file_req\030\007 \001(\0132\022.Msg.LsFileRequest\022\'\n\013mv"
+  "_file_req\030\010 \001(\0132\022.Msg.MvFileRequest\022\'\n\013c"
+  "p_file_req\030\t \001(\0132\022.Msg.CpFileRequest\"\305\001\n"
+  "\010Response\022!\n\006status\030\001 \002(\0162\021.Msg.MsgResSt"
+  "atus\022\014\n\004info\030\002 \001(\t\022-\n\nstate_node\030\003 \001(\0132\031"
+  ".Msg.GetStateNodeResponse\022/\n\021new_file_re"
+  "sponse\030\004 \001(\0132\024.Msg.NewFileResponse\022(\n\013ls"
+  "_file_res\030\006 \001(\0132\023.Msg.LsFileResponse\"\207\001\n"
+  "\007Message\022\032\n\004type\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007"
+  "request\030\002 \001(\0132\014.Msg.Request\022\037\n\010response\030"
+  "\003 \001(\0132\r.Msg.Response\022 \n\tfile_post\030\004 \001(\0132"
+  "\r.Msg.FilePost*\341\003\n\007MsgType\022\020\n\014Join_Reque"
+  "st\020\001\022\021\n\rJoin_Response\020\002\022\030\n\024UpdateStatus_"
+  "Request\020\003\022\033\n\027UpdateStateHash_Request\020\004\022\030"
+  "\n\024GetStateNode_Request\020\005\022\031\n\025GetStateNode"
+  "_Response\020\006\022\023\n\017Common_Response\020\007\022\033\n\027Mast"
+  "erNotifyCmd_Request\020\010\022\023\n\017NewFile_Request"
+  "\020\t\022\024\n\020NewFile_Response\020\n\022\r\n\tFile_Post\020\013\022"
+  "\031\n\025End_File_Post_Request\020\014\022\032\n\026End_File_P"
+  "ost_Response\020\r\022\023\n\017Rm_File_Request\020\016\022\022\n\016F"
+  "ileOp_Request\020\017\022\022\n\016LsFile_Request\020\020\022\023\n\017L"
+  "sFile_Response\020\021\022\022\n\016MvFile_Request\020\022\022\023\n\017"
+  "MvFile_Response\020\023\022\022\n\016CpFile_Request\020\024\022\023\n"
+  "\017CpFile_Response\020\025*#\n\010FileType\022\013\n\007FT_FIL"
+  "E\020\001\022\n\n\006FT_DIR\020\002*.\n\nFileOpType\022\n\n\006NEW_OP\020"
+  "\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003*1\n\014MsgResStatus\022"
+  "\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_RES_ERROR\020\002"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {
   false, InitDefaults_msg_2eproto, 
   descriptor_table_protodef_msg_2eproto,
-  "msg.proto", &assign_descriptors_table_msg_2eproto, 2371,
+  "msg.proto", &assign_descriptors_table_msg_2eproto, 2394,
 };
 
 void AddDescriptors_msg_2eproto() {
@@ -1388,11 +1390,15 @@ class JoinRequest::HasBitSetters {
   static void set_has_ip(JoinRequest* msg) {
     msg->_has_bits_[0] |= 0x00000002u;
   }
+  static void set_has_port(JoinRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
 };
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int JoinRequest::kNameFieldNumber;
 const int JoinRequest::kIpFieldNumber;
+const int JoinRequest::kPortFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 JoinRequest::JoinRequest()
@@ -1413,6 +1419,10 @@ JoinRequest::JoinRequest(const JoinRequest& from)
   if (from.has_ip()) {
     ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
   }
+  port_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_port()) {
+    port_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.port_);
+  }
   // @@protoc_insertion_point(copy_constructor:Msg.JoinRequest)
 }
 
@@ -1421,6 +1431,7 @@ void JoinRequest::SharedCtor() {
       &scc_info_JoinRequest_msg_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  port_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 JoinRequest::~JoinRequest() {
@@ -1431,6 +1442,7 @@ JoinRequest::~JoinRequest() {
 void JoinRequest::SharedDtor() {
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ip_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  port_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void JoinRequest::SetCachedSize(int size) const {
@@ -1449,12 +1461,15 @@ void JoinRequest::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       ip_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      port_.ClearNonDefaultToEmptyNoArena();
     }
   }
   _has_bits_.Clear();
@@ -1480,6 +1495,13 @@ const char* JoinRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
       case 2: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
         ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_ip(), ptr, ctx, "Msg.JoinRequest.ip");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string port = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_port(), ptr, ctx, "Msg.JoinRequest.port");
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -1539,6 +1561,21 @@ bool JoinRequest::MergePartialFromCodedStream(
         break;
       }
 
+      // required string port = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_port()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->port().data(), static_cast<int>(this->port().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.JoinRequest.port");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1587,6 +1624,16 @@ void JoinRequest::SerializeWithCachedSizes(
       2, this->ip(), output);
   }
 
+  // required string port = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->port().data(), static_cast<int>(this->port().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.JoinRequest.port");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->port(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -1623,6 +1670,17 @@ void JoinRequest::SerializeWithCachedSizes(
         2, this->ip(), target);
   }
 
+  // required string port = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->port().data(), static_cast<int>(this->port().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.JoinRequest.port");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        3, this->port(), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -1649,6 +1707,13 @@ size_t JoinRequest::RequiredFieldsByteSizeFallback() const {
         this->ip());
   }
 
+  if (has_port()) {
+    // required string port = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->port());
+  }
+
   return total_size;
 }
 size_t JoinRequest::ByteSizeLong() const {
@@ -1660,7 +1725,7 @@ size_t JoinRequest::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
     // required string name = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
@@ -1670,6 +1735,11 @@ size_t JoinRequest::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->ip());
+
+    // required string port = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->port());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -1706,7 +1776,7 @@ void JoinRequest::MergeFrom(const JoinRequest& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
@@ -1714,6 +1784,10 @@ void JoinRequest::MergeFrom(const JoinRequest& from) {
     if (cached_has_bits & 0x00000002u) {
       _has_bits_[0] |= 0x00000002u;
       ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      port_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.port_);
     }
   }
 }
@@ -1733,7 +1807,7 @@ void JoinRequest::CopyFrom(const JoinRequest& from) {
 }
 
 bool JoinRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   return true;
 }
 
@@ -1748,6 +1822,8 @@ void JoinRequest::InternalSwap(JoinRequest* other) {
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   ip_.Swap(&other->ip_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  port_.Swap(&other->port_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
 }
 
@@ -2792,7 +2868,7 @@ class GetStateNodeResponse::HasBitSetters {
   static void set_has_name(GetStateNodeResponse* msg) {
     msg->_has_bits_[0] |= 0x00000001u;
   }
-  static void set_has_ip(GetStateNodeResponse* msg) {
+  static void set_has_conn_string(GetStateNodeResponse* msg) {
     msg->_has_bits_[0] |= 0x00000002u;
   }
   static void set_has_hash(GetStateNodeResponse* msg) {
@@ -2802,7 +2878,7 @@ class GetStateNodeResponse::HasBitSetters {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int GetStateNodeResponse::kNameFieldNumber;
-const int GetStateNodeResponse::kIpFieldNumber;
+const int GetStateNodeResponse::kConnStringFieldNumber;
 const int GetStateNodeResponse::kHashFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2820,9 +2896,9 @@ GetStateNodeResponse::GetStateNodeResponse(const GetStateNodeResponse& from)
   if (from.has_name()) {
     name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from.has_ip()) {
-    ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  conn_string_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_conn_string()) {
+    conn_string_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.conn_string_);
   }
   hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from.has_hash()) {
@@ -2835,7 +2911,7 @@ void GetStateNodeResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
       &scc_info_GetStateNodeResponse_msg_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  conn_string_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -2846,7 +2922,7 @@ GetStateNodeResponse::~GetStateNodeResponse() {
 
 void GetStateNodeResponse::SharedDtor() {
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ip_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  conn_string_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   hash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -2871,7 +2947,7 @@ void GetStateNodeResponse::Clear() {
       name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
-      ip_.ClearNonDefaultToEmptyNoArena();
+      conn_string_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000004u) {
       hash_.ClearNonDefaultToEmptyNoArena();
@@ -2896,10 +2972,10 @@ const char* GetStateNodeResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAM
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
-      // optional string ip = 2;
+      // optional string conn_string = 2;
       case 2: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_ip(), ptr, ctx, "Msg.GetStateNodeResponse.ip");
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_conn_string(), ptr, ctx, "Msg.GetStateNodeResponse.conn_string");
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -2951,15 +3027,15 @@ bool GetStateNodeResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string ip = 2;
+      // optional string conn_string = 2;
       case 2: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->mutable_ip()));
+                input, this->mutable_conn_string()));
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->ip().data(), static_cast<int>(this->ip().length()),
+            this->conn_string().data(), static_cast<int>(this->conn_string().length()),
             ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateNodeResponse.ip");
+            "Msg.GetStateNodeResponse.conn_string");
         } else {
           goto handle_unusual;
         }
@@ -3019,14 +3095,14 @@ void GetStateNodeResponse::SerializeWithCachedSizes(
       1, this->name(), output);
   }
 
-  // optional string ip = 2;
+  // optional string conn_string = 2;
   if (cached_has_bits & 0x00000002u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->ip().data(), static_cast<int>(this->ip().length()),
+      this->conn_string().data(), static_cast<int>(this->conn_string().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.ip");
+      "Msg.GetStateNodeResponse.conn_string");
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->ip(), output);
+      2, this->conn_string(), output);
   }
 
   // optional string hash = 3;
@@ -3064,15 +3140,15 @@ void GetStateNodeResponse::SerializeWithCachedSizes(
         1, this->name(), target);
   }
 
-  // optional string ip = 2;
+  // optional string conn_string = 2;
   if (cached_has_bits & 0x00000002u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->ip().data(), static_cast<int>(this->ip().length()),
+      this->conn_string().data(), static_cast<int>(this->conn_string().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.ip");
+      "Msg.GetStateNodeResponse.conn_string");
     target =
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
-        2, this->ip(), target);
+        2, this->conn_string(), target);
   }
 
   // optional string hash = 3;
@@ -3116,11 +3192,11 @@ size_t GetStateNodeResponse::ByteSizeLong() const {
           this->name());
     }
 
-    // optional string ip = 2;
+    // optional string conn_string = 2;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->ip());
+          this->conn_string());
     }
 
     // optional string hash = 3;
@@ -3166,7 +3242,7 @@ void GetStateNodeResponse::MergeFrom(const GetStateNodeResponse& from) {
     }
     if (cached_has_bits & 0x00000002u) {
       _has_bits_[0] |= 0x00000002u;
-      ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.ip_);
+      conn_string_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.conn_string_);
     }
     if (cached_has_bits & 0x00000004u) {
       _has_bits_[0] |= 0x00000004u;
@@ -3203,7 +3279,7 @@ void GetStateNodeResponse::InternalSwap(GetStateNodeResponse* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  ip_.Swap(&other->ip_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  conn_string_.Swap(&other->conn_string_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   hash_.Swap(&other->hash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());

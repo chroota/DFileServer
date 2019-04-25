@@ -2,7 +2,13 @@
 
 bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const string &vFOpLogFile)
 {
+    string err;
     this->vfsPath = vfsPath;
+    if(!mkdirIfNotExist(vfsPath, err))
+    {
+        logger.fatal("fail to create vfs path:" + err);
+        return false;
+    }
     this->vFRLogFile = vFRLogFile;
     this->vFOpLogFile = vFOpLogFile;
     return true;
@@ -279,6 +285,8 @@ bool Vvfs::pushbackVf(VFRelation & dirVfr, VFile &vf)
     if(dirVfr.first_son_idx == -1) 
         dirVfr.first_son_idx = vfr.idx;
     dirVf.incSize();
+    vf.updateHash(dirVfr);
+    dirVf.updateHash(dirVfr);
 
     return true;
 }
@@ -334,7 +342,6 @@ bool Vvfs::changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &n
     removeVfRelation(vf, false);
     vf.setDirPath(newDirPath);
     pushbackVf(newDirVfr, vf);
-    vf.updateHash(newDirVfr);
     return true;
 }
 
@@ -461,17 +468,20 @@ bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err)
     int newIdx = pushVf2vFiles(srcVf.getName(), srcVf.getType(), dstDirPath, srcVf.getSize(), srcVf.getMtime());
     VFile &newVf = vFiles[newIdx];
     vRelations[dstPath] = VFRelation(newIdx, dstDirVfr.idx, -1, -1, -1, -1);
+    VFRelation & newVfr = vRelations[dstPath];
     if(!pushbackVf(dstDirVfr, newVf))
     {
         err = "cp: err at create new VF";
         return false;
     }
-    
-    if(!copyDiskFile(srcDirVf.getDiskPath(), newVf.getDiskPath()))
+
+    // count use srcvf, pointer has changed
+    if(!copyDiskFile(getVFPhasicalPath(vFiles[srcVfr.idx]), getVFPhasicalPath(newVf)))
     {
         err = "cp: err at copy disk file";
         return false;
     }
+    newVf.active();
 
     return true;
 }
@@ -607,20 +617,20 @@ bool Vvfs::rmVF(const string &path, string &err)
     //first son
     else if(vfr.idx == vfrDir.first_son_idx)
     {
-        VFRelation &nextVfr = getNextVfrByVfr(vfr);
+        VFRelation &nextVfr  = getNextVfrByVfr(vfr);
         nextVfr.prev_bro_idx = -1;
         vfrDir.first_son_idx = nextVfr.idx;
     }
     // last son
     else if(vfr.idx == vfrDir.last_son_idx)
     {
-        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
+        VFRelation &prevVfr  = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = -1;
-        vfrDir.last_son_idx = prevVfr.idx;
+        vfrDir.last_son_idx  = prevVfr.idx;
     }else
     {
-        VFRelation &nextVfr = getNextVfrByVfr(vfr);
-        VFRelation &prevVfr = getPrevVfrByVfr(vfr);
+        VFRelation &nextVfr  = getNextVfrByVfr(vfr);
+        VFRelation &prevVfr  = getPrevVfrByVfr(vfr);
         prevVfr.next_bro_idx = nextVfr.idx;
         nextVfr.prev_bro_idx = prevVfr.idx;
     }

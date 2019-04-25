@@ -25,42 +25,43 @@ enum MsgType
   CpFile_Response = 0x15;
 }
 
-enum FileType{
+enum FileType
+{
     FT_FILE = 0x01;
-    FT_DIR = 0x02;
+    FT_DIR  = 0x02;
 }
 
 enum FileOpType
 {
     NEW_OP  = 0x01;
-    RM_OP  = 0x02;
-    MV_OP  = 0x03;
+    RM_OP   = 0x02;
+    MV_OP   = 0x03;
 }
 
 enum MsgResStatus
 {
-    MSG_RES_OK = 0x01;
+    MSG_RES_OK    = 0x01;
     MSG_RES_ERROR = 0x02;
 }
 
 message FileOp
 {
     required FileOpType type = 1;
-    required string path = 2;
-    // if FileOpType == MV_OP
-    optional string dstPath = 3;
-    required string newHash = 4;
+    required string path     = 2;
+    optional string dstPath  = 3;
+    required string newHash  = 4;
 }
 
 message JoinRequest
 {
     required string name = 1;
-    required string ip = 2;
+    required string ip   = 2;
+    required string port = 3;
 }
 
 message UpdateStatusRequest
 {
-    required string name = 1;
+    required string name  = 1;
     required int32 status = 2;
 }
 
@@ -78,7 +79,7 @@ message GetStateNodeRequest
 message GetStateNodeResponse
 {
     optional string name = 1;
-    optional string ip = 2;
+    optional string conn_string   = 2;
     optional string hash = 3;
 }
 
@@ -88,28 +89,32 @@ message GetStateNodeResponse
 //     required string hash = 3;
 // }
 
-message NewFileRequest{
-    required string name = 1;
-    required FileType type = 2;
+message NewFileRequest
+{
+    required string name           = 1;
+    required FileType type         = 2;
     required int32 total_pack_size = 3;
     required int32 total_file_size = 4;
 }
 
-message NewFileResponse{
+message NewFileResponse
+{
     optional int32 post_session_id = 1;
 }
 
-message RmFileRequest{
+message RmFileRequest
+{
     required string path = 1;
 }
 
-message FilePost{
-    required string name = 1;
+message FilePost
+{
+    required string name           = 1;
     required int64 post_session_id = 2;
-    required int32 pack_idx = 3;
-    required int32 file_idx = 4;
-    required bytes data = 5;
-    required int32 data_size = 6;
+    required int32 pack_idx        = 3;
+    required int32 file_idx        = 4;
+    required bytes data            = 5;
+    required int32 data_size       = 6;
     // required int32 total_size = 5;
     // required FileType type = 2;
 }
@@ -122,26 +127,27 @@ message EndFilePostRequest
 
 message EndFilePostResponse
 {
-    required bool ok = 1;
+    required bool ok             = 1;
     optional int32 lost_pack_idx = 2;
 }
 
-message LsFileRequest{
+message LsFileRequest
+{
     required string path = 1;
 }
 
-message FileAttribute{
-    required string name = 1;
+message FileAttribute
+{
+    required string name   = 1;
     required FileType type = 2;
-    required int32 size = 3;
-    required string time = 4;
+    required int32 size    = 3;
+    required string time   = 4;
 }
 
 message LsFileResponse
 {
     repeated FileAttribute files = 1;
 }
-
 
 message MvFileRequest
 {

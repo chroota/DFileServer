@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
@@ -44,9 +45,20 @@ bool urequest(const char * host, int port, const char sendbuf[], int send_len, c
 bool urequest(const string & host, int port, const char sendbuf[], int send_len, char recvbuf[], int & recv_len);
 bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len);
 
+
+
+
+/*
+ * file system ===========================================================================================================
+*/
+bool mkdirIfNotExist(const string &path, string &err);
+
+
+/*
+ * message package functions  =============================================================================== start
+*/
 // msg package
-Msg::Message JoinMsgReqInst(const char * name, const char * ip);
-Msg::Message JoinMsgReqInst(const string &name, const string & ip);
+Msg::Message JoinMsgReqInst(const string &name, const string & ip, const string &port);
 Msg::Message UpdateStatusMsgReqInst(const char * name, NODE_STATUS status);
 Msg::Message UpdateStatusMsgReqInst(const string &name, NODE_STATUS status);
 Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash);
@@ -55,12 +67,12 @@ bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const str
 Msg::Message GetStateNodeMsgReqInst(const char * name);
 
 // Msg::Message GetStateNodeMsgResInst(const char * name, const char * ip, const char * hash);
-bool GetStateNodeMsgResInst(Msg::Message & msg, const char * name, const char * ip, const char * hash);
-bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & ip, const string & hash);
+bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & connString, const string & hash);
 bool GetStateNodeMsgResErrorInst(Msg::Message & msg, const char * info);
 Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info);
 // common response
 bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info);
+
 
 
 // create new file, allocate a session id for VvfsTP client
