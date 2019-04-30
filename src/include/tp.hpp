@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <assert.h>
-#include "msg.pb.h"
+#include "msg.hpp"
 #include "defines.hpp"
 #include "logger.hpp"
 #include "common.hpp"

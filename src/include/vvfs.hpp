@@ -18,6 +18,7 @@
 #include <atomic>
 // #include <openssl/md5.h>
 #include "common.hpp"
+#include "msg.hpp"
 #include "md5pkg.hpp"
 
 using  namespace std;
@@ -233,6 +234,11 @@ public:
     string vfsPath;
     int getNum(){
         return num;
+    }
+
+    string getHash()
+    {
+        return hash;
     }
 
     int allocIdx();

@@ -7,12 +7,13 @@
 #include <time.h>
 #include "common.hpp"
 #include <vector>
-#include "msg.pb.h"
 #include <sstream>
 #include "defines.hpp"
+#include "msg.hpp"
 
+// state node
+#define DEFAULT_STATE_NODE "node1"
 using namespace std;
-
 class Node
 {
 private:
@@ -20,13 +21,16 @@ private:
     string ip;
     string port;
     string name;
+    string datakey;
+    string pubkey;
 public:
     Node(){};
-    Node(const string &name, const string &ip, const string &port)
+    Node(const string &name, const string &ip, const string &port, const string &datakey)
     {
         this->ip = ip;
         this->name = name;
         this->port = port;
+        this->datakey = datakey;
         status = NODE_STATUS_CREATE;
     }
     ~Node(){};
@@ -46,6 +50,17 @@ public:
         return ip + ":" + port;
     }
 
+    bool setPubkey(const string &pubkey)
+    {
+        this->pubkey = pubkey;
+        return true;
+    }
+    
+    string getPubkey()
+    {
+        return pubkey;
+    }
+
     int getStatus();
 
     bool changeStatus(NODE_STATUS status)
@@ -53,7 +68,6 @@ public:
         this->status = status;
     }
 };
-
 
 class Master:UdpServer
 {
@@ -66,7 +80,8 @@ private:
     string listenIp;
     string clusterIp;
     int listenPort;
-    long long stateTimestamp;
+    long long stateTimeStamp;
+    string keypairDir;
 
 public:
     Master(){};
@@ -75,23 +90,22 @@ public:
     bool initConfig();
     bool initConfig(int argc, char *argv[]);
     // recvbuf: buffer from client, sendbuf: buffer to be sent
-    // bool handle(char recvbuf[], int recv_len, char sendbuf[], int &sendLen);
-    bool handle(char recvbuf[], int recv_len, char sendbuf[], int &sendLen, bool &isResponse);
+    bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool &isResponse);
     // join 
-    bool join(const string & name, const string & ip, const string &port, char sendbuf[], int &sendLen);
+    bool join(Msg::Message & resMsg, const string & name, const string & ip, const string &port, const string &auth);
     // set status of node
-    bool updateStatus(const string & name, NODE_STATUS status, char sendbuf[], int &sendLen);
+    bool updateStatus(Msg::Message & resMsg, const string & name, NODE_STATUS status);
     // update state
-    bool updateState(const string & name, const string & hash, char sendbuf[], int &sendLen);
+    bool updateState(Msg::Message &resMsg, const string & name, const string & hash, const string &auth);
     // get state of specify node
-    bool getStateNode(const string & name, char sendbuf[], int &sendLen);
+    bool getStateNode(Msg::Message &resMsg, const string & names);
     // get ip&port master node
     string getMasterNodeConnString(const string &name, char sendbuf[], int &sendLen);
-    bool setState(const string &name, const string &hash)
+    bool setState(const string &hash)
     {
-        this->stateName = name;
         this->stateHash = hash;
-        this->stateTimestamp = getSystemTime();
+        this->stateTimeStamp = getSystemTime();
+        return true;
     }
     bool listen(int port);
     bool forever(int argc, char *argv[]);

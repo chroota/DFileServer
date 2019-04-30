@@ -1,69 +1,21 @@
 #pragma once
-#include <stdio.h>
-#include <sys/timeb.h>
-#include <sys/types.h>
-#include <string>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <stdlib.h>
-#include <strings.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <iostream>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include "defines.hpp"
 #include "msg.pb.h"
-#include "md5.hpp"
-#include <memory.h>
-#include <time.h>
-#include <sstream>
-
+#include <string>
+#include "defines.hpp"
 
 using namespace std;
-
-/*
- * time
-*/
-struct timespec getTimeSpec();
-long long getSystemTime();
-string getTimeStringFromTvSec(int tv_sec);
-
-/*
- * string
-*/
-void ssplit(const string& s, vector<string>& sv, const char flag = ' ');
-
-/*
- *   md5 
-*/
-string getBufMD5(const void * buf, int len);
-string getMD5string(unsigned char buf[], int len);
-
-bool urequest(const char * host, int port, const char sendbuf[], int send_len, char recvbuf[], int & recv_len);
-bool urequest(const string & host, int port, const char sendbuf[], int send_len, char recvbuf[], int & recv_len);
-bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len);
-
-
-
-
-/*
- * file system ===========================================================================================================
-*/
-bool mkdirIfNotExist(const string &path, string &err);
-
-
 /*
  * message package functions  =============================================================================== start
 */
 // msg package
-Msg::Message JoinMsgReqInst(const string &name, const string & ip, const string &port);
+Msg::Message JoinMsgReqInst(const string &name, const string & ip, const string &port, const string &auth);
+bool JoinMsgReqInst(Msg::Message &msg, const string &name, const string & ip, const string &port, const string &auth);
+bool JoinMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info, const string &encryptedEcryptKey);
+
 Msg::Message UpdateStatusMsgReqInst(const char * name, NODE_STATUS status);
 Msg::Message UpdateStatusMsgReqInst(const string &name, NODE_STATUS status);
-Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash);
-Msg::Message UpdateStateHashMsgReqInst(const string & name, const string & hash);
-bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash);
+Msg::Message UpdateStateMsgReqInst(const string & name, const string & hash, const string &auth);
+// bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash);
 Msg::Message GetStateNodeMsgReqInst(const char * name);
 
 // Msg::Message GetStateNodeMsgResInst(const char * name, const char * ip, const char * hash);
@@ -72,7 +24,7 @@ bool GetStateNodeMsgResErrorInst(Msg::Message & msg, const char * info);
 Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info);
 // common response
 bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info);
-
+bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string & info);
 
 
 // create new file, allocate a session id for VvfsTP client

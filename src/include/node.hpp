@@ -10,7 +10,7 @@
 #include <string.h>
 #include "common.hpp"
 #include "defines.hpp"
-#include "msg.pb.h"
+#include "msg.hpp"
 // #include "node_server.hpp"
 #include "udp_server.hpp"
 #include "vvfs.hpp"
@@ -122,11 +122,15 @@ private:
     bool handle(char recvbuf[], int recv_len, char sendbuf[], int &send_len);
     bool createVFS();
     bool createFileServer();
+    string encryptKey;
     int aliveSyncTime;
     int checkFileSyncTime;
     bool isStateNode = false;
     string masterIp, nodeIp;
     int masterPort, nodePort, pushFileServerPort, pullFileServerPort;
+    string keypairDir;
+    string privkey;
+    string pubkey;
 
     string state_hash;
     Logger logger;

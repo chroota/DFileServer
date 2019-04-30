@@ -2,6 +2,7 @@
 
 //socket buf size
 #define MAXBUFSIZE 256
+#define MAXMSGSIZE 2048
 
 // msg type
 #define MSG_JOIN 0x01
@@ -13,9 +14,6 @@
 #define ALIVE_SYNC_TIME 3
 // sync time for update state
 #define STATE_SYNC_TIME 3
-
-// state node
-#define DEFAULT_STATE_NODE "node1"
 
 //check file sync time
 #define CHECK_FILE_SYNC_TIME
@@ -76,3 +74,5 @@ enum NODE_STATUS{
 #define MAX_LOG_INFO_BUF_SIZE 1024
 
 #define VFRELATIONS_BACKEND_INTERVAL 10
+
+#define ENC_KEY_LENGTH 10

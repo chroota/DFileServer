@@ -1,152 +1,36 @@
-#include "common.hpp"
-
-
-
-string getTimeStringFromTvSec(int tv_sec)
-{
-    struct tm *t;
-    time_t tt = tv_sec;
-    t = localtime(&tt);
-    char buf[MAXBUFSIZE];
-    sprintf(buf, "%4d-%02d-%02d %02d:%02d:%02d", t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
-    return string(buf);
-}
-
-struct timespec getTimeSpec()
-{
-    struct timespec ts;
-    memset(&ts, 0, sizeof(ts));
-    clock_gettime(CLOCK_REALTIME, &ts);
-    return ts;
-}
-
-
-long long getSystemTime()
-{
-	struct timeb t;
-	ftime(&t);
-	return 1000*t.time + t.millitm;
-}
-
-void ssplit(const string& s, vector<string>& sv, const char flag) 
-{
-    sv.clear();
-    istringstream iss(s);
-    string temp;
-
-    while (getline(iss, temp, flag)) {
-        if(temp.size() == 0) continue;
-        sv.push_back(temp);
-    }
-    return;
-}
-
-
-// 
-string getBufMD5(const void * buf, int len)
-{
-    MD5_CTX md5Context;
-    MD5Init(&md5Context);
-    MD5Update(&md5Context, (unsigned char *)buf, len);
-    unsigned char result[MD5_DIGEST_LENGTH];
-    MD5Final(&md5Context, result);
-    return getMD5string(result, MD5_DIGEST_LENGTH);
-}
-
-string getMD5string(unsigned char buf[], int len = MD5_DIGEST_LENGTH)
-{
-    char hex[35];
-    memset(hex, 0, sizeof(hex));
-    for (int i = 0; i < len; ++i)
-    {
-        sprintf(hex + i * 2, "%02x", buf[i]);
-    }
-    hex[32] = '\0';
-    return string(hex);
-}
-
-
-// udp client
-bool urequest(const char * host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
-{
-	int sockfd = socket(AF_INET,SOCK_DGRAM,0);
-    if(sockfd < 0) return false;
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr(host);
-    socklen_t len = sizeof(addr);
-
-    //todo resend & time limit to send
-    if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
-        return false;
-    }
-    recv_len = recvfrom(sockfd, recvbuf, MAXBUFSIZE, 0, (struct sockaddr*)&addr,&len);
-    close(sockfd);
-	return true;
-}
-
-
-bool urequest(const string  & host, int port,const char sendbuf[], int send_len, char recvbuf[], int &recv_len)
-{
-    return urequest(host.c_str(), port, sendbuf, send_len, recvbuf, recv_len);
-}
-
-bool urequestNoResponse(const char * host, int port, const char sendbuf[], int send_len)
-{
-    int sockfd = socket(AF_INET,SOCK_DGRAM,0);
-    if(sockfd < 0) return false;
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr(host);
-    socklen_t len = sizeof(addr);
-    if(sendto(sockfd, sendbuf, send_len, 0, (struct sockaddr*)&addr,len) < 0){
-        return false;
-    }
-    close(sockfd);
-    return true;
-}
-
-
-/*
- * file
-*/
-bool mkdirIfNotExist(const string &path, string &err)
-{
-    struct stat statbuf;
-    stat(path.c_str(), &statbuf);
-    if(stat(path.c_str(), &statbuf) == -1)
-    {
-        if(mkdir(path.c_str(),  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH))
-        {
-            err = "mkdir err";
-            return false;
-        }
-        return true;
-    }
-    if(!S_ISDIR(statbuf.st_mode))
-    {
-        err = "target path is not a dir";
-        return false;
-    }
-    return true;
-}
-
+#include "msg.hpp"
 
 /*
  * message package functions  =============================================================================== start
 */
-
-
-Msg::Message JoinMsgReqInst(const string & name, const string & ip, const string &port)
+Msg::Message JoinMsgReqInst(const string & name, const string & ip, const string &port, const string &auth)
 {
     Msg::Message msg;
     msg.set_type(Msg::Join_Request);
     msg.mutable_request()->mutable_join()->set_ip(ip);
     msg.mutable_request()->mutable_join()->set_name(name);
     msg.mutable_request()->mutable_join()->set_port(port);
+    msg.mutable_request()->mutable_join()->set_auth(auth);
     return msg;
+}
+
+bool JoinMsgReqInst(Msg::Message &msg, const string &name, const string & ip, const string &port, const string &auth)
+{
+    msg.set_type(Msg::Join_Request);
+    msg.mutable_request()->mutable_join()->set_ip(ip);
+    msg.mutable_request()->mutable_join()->set_name(name);
+    msg.mutable_request()->mutable_join()->set_port(port);
+    msg.mutable_request()->mutable_join()->set_auth(auth);
+    return true;
+}
+
+bool JoinMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info, const string &encryptedEcryptKey)
+{
+    msg.set_type(Msg::Join_Response);
+    msg.mutable_response()->set_status(status);
+    msg.mutable_response()->set_info(info);
+    msg.mutable_response()->mutable_join_res()->set_encrypedencryptkey(encryptedEcryptKey);
+    return true;
 }
 
 //update status
@@ -164,29 +48,18 @@ Msg::Message UpdateStatusMsgReqInst(const string & name, NODE_STATUS status)
     return UpdateStatusMsgReqInst(name.c_str(), status);
 }
 
-bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash)
-{
-    msg.set_type(Msg::UpdateStateHash_Request);
-    msg.mutable_request()->mutable_state_hash()->set_name(name);
-    msg.mutable_request()->mutable_state_hash()->set_hash(hash);
-}
-
-//update state hash
-Msg::Message UpdateStateHashMsgReqInst(const char * name, const char * hash)
+Msg::Message UpdateStateMsgReqInst(const string & name, const string & hash, const string &auth)
 {
     Msg::Message msg;
-    UpdateStateHashMsgReqInst(msg, name, hash);
+    msg.set_type(Msg::UpdateState_Request);
+    msg.mutable_request()->mutable_state()->set_name(name);
+    msg.mutable_request()->mutable_state()->set_hash(hash);
+    msg.mutable_request()->mutable_state()->set_auth(auth);
     return msg;
-}
-
-Msg::Message UpdateStateHashMsgReqInst(const string & name, const string & hash)
-{
-    return UpdateStateHashMsgReqInst(name.c_str(), hash.c_str());
 }
 
 Msg::Message GetStateNodeMsgReqInst(string & name)
 {
-
 }
 
 
@@ -234,9 +107,15 @@ Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info)
 
 bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const char * info)
 {
+    msg.set_type(Msg::Common_Response);
     msg.mutable_response()->set_info(info);
     msg.mutable_response()->set_status(status);
     return true;
+}
+
+bool CommonMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string & info)
+{
+    return CommonMsgResInst(msg, status, info.c_str());
 }
 
 

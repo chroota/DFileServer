@@ -1,3 +1,4 @@
 .vscode
 test_dir/
 build/
+src/build/

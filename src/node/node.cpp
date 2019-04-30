@@ -52,7 +52,7 @@ bool FileSaver::writeChunk(const string &data, int fileIdx, int packIdx, string 
 
 bool FileSaver::isComplete()
 {
-    //todo verify file hash
+    // todo verify file hash
     // cout<<recvChunkCount<<"/"<<totalPackSize<<endl;
     // if(recvChunkCount == totalPackSize)
     if(recvChunkCount == totalPackSize && recvFileSizeCount == totalFileSize)
@@ -132,19 +132,22 @@ bool PushFileServer::cpFile(const string &srcPath, const string & dstPath, char 
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
+        // sendLen = msg.ByteSize();
         return false;
     }
     if(!pVvfs->cpVF(srcPath, dstPath, err))
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        // sendLen = msg.ByteSize();
+        sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    // sendLen = msg.ByteSize();
+    sendLen = msg.ByteSize();
     return true;
 }
 
@@ -160,19 +163,22 @@ bool PushFileServer::mvFile(const string &srcPath, const string & dstPath, char 
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
+        // sendLen = msg.ByteSize();
         return false;
     }
     if(!pVvfs->mvVF(srcPath, dstPath, err))
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
+        // sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    sendLen = msg.ByteSize();
+    // sendLen = msg.ByteSize();
     return true;    
 }
 
@@ -188,7 +194,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -199,12 +205,12 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
             logger.log(err);
             NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
             msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-            sendLen = strlen(sendbuf);
+            sendLen = msg.ByteSize();
             return false;
         }
         NewFileMsgResInst(msg, Msg::MSG_RES_OK, -1, "ok");
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return true;
     }
     
@@ -215,7 +221,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -228,7 +234,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -240,7 +246,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -253,7 +259,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
     sessions[path] = sessionId;
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, sessionId, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    sendLen = msg.ByteSize();
     return true;
 }
 
@@ -269,7 +275,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
         logger.debug(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -280,7 +286,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
         logger.debug(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
 
@@ -293,7 +299,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
 
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, -1, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    sendLen = msg.ByteSize();
     
     return true;
 }
@@ -324,12 +330,12 @@ bool PushFileServer::rmFile(const string &path, char sendbuf[], int &sendLen)
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    sendLen = strlen(sendbuf);
+    sendLen = msg.ByteSize();
     return true;
 }
 
@@ -343,12 +349,12 @@ bool PushFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen)
         logger.log(err);
         //NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
         msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-        sendLen = strlen(sendbuf);
+        sendLen = msg.ByteSize();
         return false;
     }
     bool ret = pVvfs->lsVF(path, msg);
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    // sendLen = strlen(sendbuf);
+    // sendLen = msg.ByteSize();
     sendLen = MAXBUFSIZE;
     return ret;
 }
@@ -424,21 +430,6 @@ void Node::forever(int argc, char *argv[])
         exit(-1);
     }
 
-    // if(!updateState("test hash")){
-    //     logger.log("update state hash error");
-    //     exit(-1);
-    // }
-
-    // if(!getStateNode()){
-    //     logger.log("get state node error");
-    //     exit(-1);
-    // }
-    
-    // std::thread keepAliveThd(&Node::keepAliveFn, this);
-    // std::thread fileSyncThd(&Node::syncFileFn, this);
-    // keepAliveThd.join();bool initConfig(const string &name, const string &ip, int &port, const string &syncDir);
-    // fileSyncThd.join();
-
     if(!createVFS())
     {
         logger.log("build VFS failed");
@@ -455,6 +446,17 @@ void Node::forever(int argc, char *argv[])
         logger.log("join error");
         exit(-1);
     }
+
+
+    /*
+     * for test
+    */
+    if(!updateState(pVvfs->getHash()))
+    {
+        logger.log("update hash error");
+        exit(-1);
+    }
+
     pPushFileServer->listen(pushFileServerPort);
 }
 
@@ -462,13 +464,13 @@ void Node::forever(int argc, char *argv[])
 bool Node::getStateNode()
 {
     char recvbuf[MAXBUFSIZE];
-    int recv_len;
+    int recvLen;
     char sendbuf[MAXBUFSIZE];
 
     Msg::Message msg = GetStateNodeMsgReqInst(name.c_str());
     msg.SerializeToArray(sendbuf, MAXBUFSIZE);
     //todo catch error
-    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recv_len);
+    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recvLen);
     Msg::Message recvMsg;
     // printf("%d\n", strlen(recvbuf));
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
@@ -477,28 +479,25 @@ bool Node::getStateNode()
         logger.log(recvMsg.response().info());
         return false;
     }
-    // logger.log(recvMsg.response().info());
-    // cout<<"name:" << recvMsg.response().state_node().name()
-    //     <<"ip:" << recvMsg.response().state_node().ip()
-    //     <<"hash:" << recvMsg.response().state_node().hash()
-    //     <<endl;
     return true;
 }
 
 // update hash
 bool Node::updateState(const string &hash)
 {
-    char recvbuf[MAXBUFSIZE];
-    int recv_len;
-    char sendbuf[MAXBUFSIZE];
-    Msg::Message msg = UpdateStateHashMsgReqInst(name.c_str(), hash);
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    logger.debug("update state");
+    char recvbuf[MAXMSGSIZE];
+    int recvLen;
+    char sendbuf[MAXMSGSIZE];
+    string auth = rsaEncryptByPrivkey(name, privkey);
+    Msg::Message sendMsg = UpdateStateMsgReqInst(name, hash, auth);
+
+    sendMsg.SerializeToArray(sendbuf, MAXMSGSIZE);
     //todo catch error
-    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recv_len);
+    urequest(masterIp, masterPort, sendbuf, sendMsg.ByteSize(), recvbuf, recvLen);
     Msg::Message recvMsg;
-    // printf("%d\n", strlen(recvbuf));
-    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
+    recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
+    if (recvMsg.response().status() == Msg::MSG_RES_ERROR)
     {
         logger.log(recvMsg.response().info());
         return false;
@@ -531,22 +530,30 @@ bool Node::updateStatus(NODE_STATUS status)
 
 bool Node::join()
 {
-    char recvbuf[MAXBUFSIZE];
-    int recv_len;
-    char sendbuf[MAXBUFSIZE];
-    Msg::Message msg = JoinMsgReqInst(name, nodeIp, to_string(nodePort));
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-
+    char recvbuf[MAXMSGSIZE];
+    int recvLen;
+    char sendbuf[MAXMSGSIZE];
+    string auth = rsaEncryptByPrivkey(name, privkey);
+    Msg::Message msg = JoinMsgReqInst(name, nodeIp, to_string(nodePort), auth);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     //todo catch error recvMsg
-    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recv_len);
+    urequest(masterIp, masterPort, sendbuf, msg.ByteSize(), recvbuf, recvLen);
     
     Msg::Message recvMsg;
-    recvMsg.ParseFromArray(recvbuf, recv_len);
+    if(!recvMsg.ParseFromArray(recvbuf, recvLen))
+    {
+        logger.fatal("fail to join, parse msg error");
+        return false;
+    }
     if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
     {
         logger.log(recvMsg.response().info());
         return false;
     }
+    string encryptedEncryptKey = recvMsg.response().join_res().encrypedencryptkey();
+    encryptKey = rsaDecryptByPrivkey(encryptedEncryptKey, privkey);
+    
+    logger.debug("encrypt key:"+encryptKey);
     // logger.log(recvMsg.response().info());
     logger.log("success join");
     return true;
@@ -564,25 +571,28 @@ bool Node::initConfig(int argc, char *argv[])
     aliveSyncTime = ALIVE_SYNC_TIME;
     name = "node1";
     syncDir = "./test_dir/remote";
+    // catchSegmentFaultError();
+    keypairDir = "./test_dir/nodes_dir/" + name;
 
     int ch;
     opterr = 0;
-    while ((ch = getopt(argc, argv,"i:p:n:d:h:q:l:s:"))!= -1)
+    while ((ch = getopt(argc, argv,"i:p:n:d:h:q:l:s:k:"))!= -1)
     {
         switch(ch)
         {
             case 'i': nodeIp = optarg;  break;
             case 'p': nodePort = atoi(optarg); break;
-            case 'n': name = optarg; break;
+            case 'n': name = optarg; keypairDir = "./test_dir/nodes_dir/" + name; break;
             case 'd': syncDir = optarg;  break;
             case 'h': masterIp = optarg;  break;
             case 'q': masterPort = atoi(optarg);  break;
             case 'l': pullFileServerPort = atoi(optarg);  break;
             case 's': pushFileServerPort = atoi(optarg);  break;
+            case 'k': keypairDir = optarg;  break;
             default: printf("unkown option :%c\n",ch); exit(EXIT_FAILURE);
         }
     }
-    cout << "args:"                <<endl
+    cout << "args:"                << endl
          << "node ip:"             << nodeIp << endl
          << "master ip:"           << masterIp << endl
          << "node port:"           << nodePort << endl
@@ -591,8 +601,36 @@ bool Node::initConfig(int argc, char *argv[])
          << "pushFileServer port:" << pushFileServerPort << endl
          << "name:"                << name << endl
          << "syncDir:"             << syncDir << endl
+         << "keypairDir:"          << keypairDir << endl
          << "------------------------------------------------------------------"
          << endl;
+
+    string privkeyPath = keypairDir + "/" + "privkey.pem";
+    string pubkeyPath = keypairDir + "/" + "pubkey.pem";
+    
+    ifstream privkeyIfs(privkeyPath);
+    ifstream pubkeyIfs(pubkeyPath);
+    if(privkeyIfs.fail() || pubkeyIfs.fail())
+    {
+        logger.log("no rsa key pair for master, now create new pairs");
+        string strKey[2];
+        string err;
+        mkdirIfNotExist(keypairDir, err);
+        generateRSAKey(strKey, pubkeyPath, privkeyPath);
+    }else
+    {
+        string privkey((std::istreambuf_iterator<char>(privkeyIfs)),
+                    std::istreambuf_iterator<char>());
+        string pubkey((std::istreambuf_iterator<char>(pubkeyIfs)),
+                    std::istreambuf_iterator<char>());
+        this->privkey = privkey;
+        this->pubkey = pubkey;
+        if(!inspectRsaKeyPair(pubkey, privkey))
+        {
+            logger.fatal("rsa key pair not correct!");
+            return false;
+        }
+    }
 
     return true;
 }
