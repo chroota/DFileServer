@@ -19,8 +19,8 @@
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CpFileRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FileAttribute_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FilePost_msg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateNodeRequest_msg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateNodeResponse_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateRequest_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateResponse_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_JoinRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_JoinResponse_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_LsFileRequest_msg_2eproto;
@@ -54,14 +54,14 @@ class UpdateStateHashRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdateStateHashRequest> _instance;
 } _UpdateStateHashRequest_default_instance_;
-class GetStateNodeRequestDefaultTypeInternal {
+class GetStateRequestDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetStateNodeRequest> _instance;
-} _GetStateNodeRequest_default_instance_;
-class GetStateNodeResponseDefaultTypeInternal {
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetStateRequest> _instance;
+} _GetStateRequest_default_instance_;
+class GetStateResponseDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetStateNodeResponse> _instance;
-} _GetStateNodeResponse_default_instance_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetStateResponse> _instance;
+} _GetStateResponse_default_instance_;
 class NewFileRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NewFileRequest> _instance;
@@ -189,33 +189,33 @@ static void InitDefaultsUpdateStateHashRequest_msg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdateStateHashRequest_msg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsUpdateStateHashRequest_msg_2eproto}, {}};
 
-static void InitDefaultsGetStateNodeRequest_msg_2eproto() {
+static void InitDefaultsGetStateRequest_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::Msg::_GetStateNodeRequest_default_instance_;
-    new (ptr) ::Msg::GetStateNodeRequest();
+    void* ptr = &::Msg::_GetStateRequest_default_instance_;
+    new (ptr) ::Msg::GetStateRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::Msg::GetStateNodeRequest::InitAsDefaultInstance();
+  ::Msg::GetStateRequest::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateNodeRequest_msg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetStateNodeRequest_msg_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateRequest_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetStateRequest_msg_2eproto}, {}};
 
-static void InitDefaultsGetStateNodeResponse_msg_2eproto() {
+static void InitDefaultsGetStateResponse_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::Msg::_GetStateNodeResponse_default_instance_;
-    new (ptr) ::Msg::GetStateNodeResponse();
+    void* ptr = &::Msg::_GetStateResponse_default_instance_;
+    new (ptr) ::Msg::GetStateResponse();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::Msg::GetStateNodeResponse::InitAsDefaultInstance();
+  ::Msg::GetStateResponse::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateNodeResponse_msg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetStateNodeResponse_msg_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateResponse_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetStateResponse_msg_2eproto}, {}};
 
 static void InitDefaultsNewFileRequest_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -387,7 +387,7 @@ static void InitDefaultsRequest_msg_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 9, InitDefaultsRequest_msg_2eproto}, {
       &scc_info_JoinRequest_msg_2eproto.base,
       &scc_info_UpdateStatusRequest_msg_2eproto.base,
-      &scc_info_GetStateNodeRequest_msg_2eproto.base,
+      &scc_info_GetStateRequest_msg_2eproto.base,
       &scc_info_UpdateStateHashRequest_msg_2eproto.base,
       &scc_info_NewFileRequest_msg_2eproto.base,
       &scc_info_RmFileRequest_msg_2eproto.base,
@@ -408,7 +408,7 @@ static void InitDefaultsResponse_msg_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_Response_msg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, InitDefaultsResponse_msg_2eproto}, {
-      &scc_info_GetStateNodeResponse_msg_2eproto.base,
+      &scc_info_GetStateResponse_msg_2eproto.base,
       &scc_info_NewFileResponse_msg_2eproto.base,
       &scc_info_LsFileResponse_msg_2eproto.base,
       &scc_info_JoinResponse_msg_2eproto.base,}};
@@ -436,8 +436,8 @@ void InitDefaults_msg_2eproto() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_JoinResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UpdateStatusRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UpdateStateHashRequest_msg_2eproto.base);
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateNodeRequest_msg_2eproto.base);
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateNodeResponse_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateRequest_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RmFileRequest_msg_2eproto.base);
@@ -512,24 +512,22 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   0,
   1,
   2,
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeRequest, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeRequest, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeRequest, name_),
-  0,
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, name_),
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, conn_string_),
-  PROTOBUF_FIELD_OFFSET(::Msg::GetStateNodeResponse, hash_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateRequest, name_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateRequest, auth_),
   0,
   1,
-  2,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetStateResponse, hash_),
+  0,
   PROTOBUF_FIELD_OFFSET(::Msg::NewFileRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::NewFileRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -642,7 +640,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::Request, join_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, update_status_),
-  PROTOBUF_FIELD_OFFSET(::Msg::Request, get_state_node_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Request, get_state_req_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, state_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, file_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, rm_op_),
@@ -665,7 +663,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::Response, status_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, info_),
-  PROTOBUF_FIELD_OFFSET(::Msg::Response, state_node_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Response, get_state_res_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, new_file_response_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, ls_file_res_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, join_res_),
@@ -695,22 +693,22 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 26, 32, sizeof(::Msg::JoinResponse)},
   { 33, 40, sizeof(::Msg::UpdateStatusRequest)},
   { 42, 50, sizeof(::Msg::UpdateStateHashRequest)},
-  { 53, 59, sizeof(::Msg::GetStateNodeRequest)},
-  { 60, 68, sizeof(::Msg::GetStateNodeResponse)},
-  { 71, 80, sizeof(::Msg::NewFileRequest)},
-  { 84, 90, sizeof(::Msg::NewFileResponse)},
-  { 91, 97, sizeof(::Msg::RmFileRequest)},
-  { 98, 109, sizeof(::Msg::FilePost)},
-  { 115, 121, sizeof(::Msg::EndFilePostRequest)},
-  { 122, 129, sizeof(::Msg::EndFilePostResponse)},
-  { 131, 137, sizeof(::Msg::LsFileRequest)},
-  { 138, 147, sizeof(::Msg::FileAttribute)},
-  { 151, 157, sizeof(::Msg::LsFileResponse)},
-  { 158, 165, sizeof(::Msg::MvFileRequest)},
-  { 167, 174, sizeof(::Msg::CpFileRequest)},
-  { 176, 190, sizeof(::Msg::Request)},
-  { 199, 210, sizeof(::Msg::Response)},
-  { 216, 225, sizeof(::Msg::Message)},
+  { 53, 60, sizeof(::Msg::GetStateRequest)},
+  { 62, 68, sizeof(::Msg::GetStateResponse)},
+  { 69, 78, sizeof(::Msg::NewFileRequest)},
+  { 82, 88, sizeof(::Msg::NewFileResponse)},
+  { 89, 95, sizeof(::Msg::RmFileRequest)},
+  { 96, 107, sizeof(::Msg::FilePost)},
+  { 113, 119, sizeof(::Msg::EndFilePostRequest)},
+  { 120, 127, sizeof(::Msg::EndFilePostResponse)},
+  { 129, 135, sizeof(::Msg::LsFileRequest)},
+  { 136, 145, sizeof(::Msg::FileAttribute)},
+  { 149, 155, sizeof(::Msg::LsFileResponse)},
+  { 156, 163, sizeof(::Msg::MvFileRequest)},
+  { 165, 172, sizeof(::Msg::CpFileRequest)},
+  { 174, 188, sizeof(::Msg::Request)},
+  { 197, 208, sizeof(::Msg::Response)},
+  { 214, 223, sizeof(::Msg::Message)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -719,8 +717,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_JoinResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_UpdateStatusRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_UpdateStateHashRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateNodeRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateNodeResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_RmFileRequest_default_instance_),
@@ -752,66 +750,65 @@ const char descriptor_table_protodef_msg_2eproto[] =
   "edEncryptKey\030\001 \002(\014\"3\n\023UpdateStatusReques"
   "t\022\014\n\004name\030\001 \002(\t\022\016\n\006status\030\002 \002(\005\"B\n\026Updat"
   "eStateHashRequest\022\014\n\004name\030\001 \002(\t\022\014\n\004hash\030"
-  "\002 \002(\t\022\014\n\004auth\030\003 \002(\t\"#\n\023GetStateNodeReque"
-  "st\022\014\n\004name\030\001 \002(\t\"G\n\024GetStateNodeResponse"
-  "\022\014\n\004name\030\001 \001(\t\022\023\n\013conn_string\030\002 \001(\t\022\014\n\004h"
-  "ash\030\003 \001(\t\"m\n\016NewFileRequest\022\014\n\004name\030\001 \002("
-  "\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\027\n\017total_"
-  "pack_size\030\003 \002(\005\022\027\n\017total_file_size\030\004 \002(\005"
-  "\"*\n\017NewFileResponse\022\027\n\017post_session_id\030\001"
-  " \001(\005\"\035\n\rRmFileRequest\022\014\n\004path\030\001 \002(\t\"v\n\010F"
-  "ilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017post_session_id"
-  "\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020\n\010file_idx\030\004 \002"
-  "(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size\030\006 \002(\005\"\"\n\022E"
-  "ndFilePostRequest\022\014\n\004name\030\001 \002(\t\"8\n\023EndFi"
-  "lePostResponse\022\n\n\002ok\030\001 \002(\010\022\025\n\rlost_pack_"
-  "idx\030\002 \001(\005\"\035\n\rLsFileRequest\022\014\n\004path\030\001 \002(\t"
-  "\"V\n\rFileAttribute\022\014\n\004name\030\001 \002(\t\022\033\n\004type\030"
-  "\002 \002(\0162\r.Msg.FileType\022\014\n\004size\030\003 \002(\005\022\014\n\004ti"
-  "me\030\004 \002(\t\"3\n\016LsFileResponse\022!\n\005files\030\001 \003("
-  "\0132\022.Msg.FileAttribute\"1\n\rMvFileRequest\022\017"
-  "\n\007srcPath\030\001 \002(\t\022\017\n\007dstPath\030\002 \002(\t\"1\n\rCpFi"
+  "\002 \002(\t\022\014\n\004auth\030\003 \002(\014\"-\n\017GetStateRequest\022\014"
+  "\n\004name\030\001 \002(\t\022\014\n\004auth\030\002 \002(\014\" \n\020GetStateRe"
+  "sponse\022\014\n\004hash\030\002 \001(\t\"m\n\016NewFileRequest\022\014"
+  "\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileTyp"
+  "e\022\027\n\017total_pack_size\030\003 \002(\005\022\027\n\017total_file"
+  "_size\030\004 \002(\005\"*\n\017NewFileResponse\022\027\n\017post_s"
+  "ession_id\030\001 \001(\005\"\035\n\rRmFileRequest\022\014\n\004path"
+  "\030\001 \002(\t\"v\n\010FilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017post"
+  "_session_id\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020\n\010f"
+  "ile_idx\030\004 \002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size"
+  "\030\006 \002(\005\"\"\n\022EndFilePostRequest\022\014\n\004name\030\001 \002"
+  "(\t\"8\n\023EndFilePostResponse\022\n\n\002ok\030\001 \002(\010\022\025\n"
+  "\rlost_pack_idx\030\002 \001(\005\"\035\n\rLsFileRequest\022\014\n"
+  "\004path\030\001 \002(\t\"V\n\rFileAttribute\022\014\n\004name\030\001 \002"
+  "(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\014\n\004size\030"
+  "\003 \002(\005\022\014\n\004time\030\004 \002(\t\"3\n\016LsFileResponse\022!\n"
+  "\005files\030\001 \003(\0132\022.Msg.FileAttribute\"1\n\rMvFi"
   "leRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n\007dstPath\030\002 "
-  "\002(\t\"\371\002\n\007Request\022\036\n\004join\030\001 \001(\0132\020.Msg.Join"
-  "Request\022/\n\rupdate_status\030\002 \001(\0132\030.Msg.Upd"
-  "ateStatusRequest\0220\n\016get_state_node\030\003 \001(\013"
-  "2\030.Msg.GetStateNodeRequest\022*\n\005state\030\004 \001("
-  "\0132\033.Msg.UpdateStateHashRequest\022!\n\004file\030\005"
-  " \001(\0132\023.Msg.NewFileRequest\022!\n\005rm_op\030\006 \001(\013"
-  "2\022.Msg.RmFileRequest\022\'\n\013ls_file_req\030\007 \001("
-  "\0132\022.Msg.LsFileRequest\022\'\n\013mv_file_req\030\010 \001"
-  "(\0132\022.Msg.MvFileRequest\022\'\n\013cp_file_req\030\t "
-  "\001(\0132\022.Msg.CpFileRequest\"\352\001\n\010Response\022!\n\006"
-  "status\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n\004info\030"
-  "\002 \001(\t\022-\n\nstate_node\030\003 \001(\0132\031.Msg.GetState"
-  "NodeResponse\022/\n\021new_file_response\030\004 \001(\0132"
-  "\024.Msg.NewFileResponse\022(\n\013ls_file_res\030\005 \001"
-  "(\0132\023.Msg.LsFileResponse\022#\n\010join_res\030\006 \001("
-  "\0132\021.Msg.JoinResponse\"\207\001\n\007Message\022\032\n\004type"
-  "\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007request\030\002 \001(\0132\014."
-  "Msg.Request\022\037\n\010response\030\003 \001(\0132\r.Msg.Resp"
-  "onse\022 \n\tfile_post\030\004 \001(\0132\r.Msg.FilePost*\335"
-  "\003\n\007MsgType\022\020\n\014Join_Request\020\001\022\021\n\rJoin_Res"
-  "ponse\020\002\022\030\n\024UpdateStatus_Request\020\003\022\027\n\023Upd"
-  "ateState_Request\020\004\022\030\n\024GetStateNode_Reque"
-  "st\020\005\022\031\n\025GetStateNode_Response\020\006\022\023\n\017Commo"
-  "n_Response\020\007\022\033\n\027MasterNotifyCmd_Request\020"
-  "\010\022\023\n\017NewFile_Request\020\t\022\024\n\020NewFile_Respon"
-  "se\020\n\022\r\n\tFile_Post\020\013\022\031\n\025End_File_Post_Req"
-  "uest\020\014\022\032\n\026End_File_Post_Response\020\r\022\023\n\017Rm"
-  "_File_Request\020\016\022\022\n\016FileOp_Request\020\017\022\022\n\016L"
-  "sFile_Request\020\020\022\023\n\017LsFile_Response\020\021\022\022\n\016"
-  "MvFile_Request\020\022\022\023\n\017MvFile_Response\020\023\022\022\n"
-  "\016CpFile_Request\020\024\022\023\n\017CpFile_Response\020\025*#"
-  "\n\010FileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR\020\002*.\n\nF"
-  "ileOpType\022\n\n\006NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_O"
-  "P\020\003*1\n\014MsgResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rM"
-  "SG_RES_ERROR\020\002"
+  "\002(\t\"1\n\rCpFileRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n"
+  "\007dstPath\030\002 \002(\t\"\364\002\n\007Request\022\036\n\004join\030\001 \001(\013"
+  "2\020.Msg.JoinRequest\022/\n\rupdate_status\030\002 \001("
+  "\0132\030.Msg.UpdateStatusRequest\022+\n\rget_state"
+  "_req\030\003 \001(\0132\024.Msg.GetStateRequest\022*\n\005stat"
+  "e\030\004 \001(\0132\033.Msg.UpdateStateHashRequest\022!\n\004"
+  "file\030\005 \001(\0132\023.Msg.NewFileRequest\022!\n\005rm_op"
+  "\030\006 \001(\0132\022.Msg.RmFileRequest\022\'\n\013ls_file_re"
+  "q\030\007 \001(\0132\022.Msg.LsFileRequest\022\'\n\013mv_file_r"
+  "eq\030\010 \001(\0132\022.Msg.MvFileRequest\022\'\n\013cp_file_"
+  "req\030\t \001(\0132\022.Msg.CpFileRequest\"\351\001\n\010Respon"
+  "se\022!\n\006status\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n"
+  "\004info\030\002 \001(\t\022,\n\rget_state_res\030\003 \001(\0132\025.Msg"
+  ".GetStateResponse\022/\n\021new_file_response\030\004"
+  " \001(\0132\024.Msg.NewFileResponse\022(\n\013ls_file_re"
+  "s\030\005 \001(\0132\023.Msg.LsFileResponse\022#\n\010join_res"
+  "\030\006 \001(\0132\021.Msg.JoinResponse\"\207\001\n\007Message\022\032\n"
+  "\004type\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007request\030\002 \001"
+  "(\0132\014.Msg.Request\022\037\n\010response\030\003 \001(\0132\r.Msg"
+  ".Response\022 \n\tfile_post\030\004 \001(\0132\r.Msg.FileP"
+  "ost*\325\003\n\007MsgType\022\020\n\014Join_Request\020\001\022\021\n\rJoi"
+  "n_Response\020\002\022\030\n\024UpdateStatus_Request\020\003\022\027"
+  "\n\023UpdateState_Request\020\004\022\024\n\020GetState_Requ"
+  "est\020\005\022\025\n\021GetState_Response\020\006\022\023\n\017Common_R"
+  "esponse\020\007\022\033\n\027MasterNotifyCmd_Request\020\010\022\023"
+  "\n\017NewFile_Request\020\t\022\024\n\020NewFile_Response\020"
+  "\n\022\r\n\tFile_Post\020\013\022\031\n\025End_File_Post_Reques"
+  "t\020\014\022\032\n\026End_File_Post_Response\020\r\022\023\n\017Rm_Fi"
+  "le_Request\020\016\022\022\n\016FileOp_Request\020\017\022\022\n\016LsFi"
+  "le_Request\020\020\022\023\n\017LsFile_Response\020\021\022\022\n\016MvF"
+  "ile_Request\020\022\022\023\n\017MvFile_Response\020\023\022\022\n\016Cp"
+  "File_Request\020\024\022\023\n\017CpFile_Response\020\025*#\n\010F"
+  "ileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR\020\002*.\n\nFile"
+  "OpType\022\n\n\006NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003"
+  "*1\n\014MsgResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_"
+  "RES_ERROR\020\002"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {
   false, InitDefaults_msg_2eproto, 
   descriptor_table_protodef_msg_2eproto,
-  "msg.proto", &assign_descriptors_table_msg_2eproto, 2494,
+  "msg.proto", &assign_descriptors_table_msg_2eproto, 2451,
 };
 
 void AddDescriptors_msg_2eproto() {
@@ -2687,10 +2684,10 @@ const char* UpdateStateHashRequest::_InternalParse(const char* ptr, ::PROTOBUF_N
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
-      // required string auth = 3;
+      // required bytes auth = 3;
       case 3: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_auth(), ptr, ctx, "Msg.UpdateStateHashRequest.auth");
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_auth(), ptr, ctx);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -2750,15 +2747,11 @@ bool UpdateStateHashRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required string auth = 3;
+      // required bytes auth = 3;
       case 3: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_auth()));
-          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->auth().data(), static_cast<int>(this->auth().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.UpdateStateHashRequest.auth");
         } else {
           goto handle_unusual;
         }
@@ -2813,13 +2806,9 @@ void UpdateStateHashRequest::SerializeWithCachedSizes(
       2, this->hash(), output);
   }
 
-  // required string auth = 3;
+  // required bytes auth = 3;
   if (cached_has_bits & 0x00000004u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->auth().data(), static_cast<int>(this->auth().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.UpdateStateHashRequest.auth");
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
       3, this->auth(), output);
   }
 
@@ -2859,14 +2848,10 @@ void UpdateStateHashRequest::SerializeWithCachedSizes(
         2, this->hash(), target);
   }
 
-  // required string auth = 3;
+  // required bytes auth = 3;
   if (cached_has_bits & 0x00000004u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->auth().data(), static_cast<int>(this->auth().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.UpdateStateHashRequest.auth");
     target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
         3, this->auth(), target);
   }
 
@@ -2897,9 +2882,9 @@ size_t UpdateStateHashRequest::RequiredFieldsByteSizeFallback() const {
   }
 
   if (has_auth()) {
-    // required string auth = 3;
+    // required bytes auth = 3;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->auth());
   }
 
@@ -2925,9 +2910,9 @@ size_t UpdateStateHashRequest::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->hash());
 
-    // required string auth = 3;
+    // required bytes auth = 3;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->auth());
 
   } else {
@@ -3024,25 +3009,29 @@ void UpdateStateHashRequest::InternalSwap(UpdateStateHashRequest* other) {
 
 // ===================================================================
 
-void GetStateNodeRequest::InitAsDefaultInstance() {
+void GetStateRequest::InitAsDefaultInstance() {
 }
-class GetStateNodeRequest::HasBitSetters {
+class GetStateRequest::HasBitSetters {
  public:
-  static void set_has_name(GetStateNodeRequest* msg) {
+  static void set_has_name(GetStateRequest* msg) {
     msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_auth(GetStateRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
   }
 };
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int GetStateNodeRequest::kNameFieldNumber;
+const int GetStateRequest::kNameFieldNumber;
+const int GetStateRequest::kAuthFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-GetStateNodeRequest::GetStateNodeRequest()
+GetStateRequest::GetStateRequest()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(constructor:Msg.GetStateRequest)
 }
-GetStateNodeRequest::GetStateNodeRequest(const GetStateNodeRequest& from)
+GetStateRequest::GetStateRequest(const GetStateRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
@@ -3051,49 +3040,60 @@ GetStateNodeRequest::GetStateNodeRequest(const GetStateNodeRequest& from)
   if (from.has_name()) {
     name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
-  // @@protoc_insertion_point(copy_constructor:Msg.GetStateNodeRequest)
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_auth()) {
+    auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Msg.GetStateRequest)
 }
 
-void GetStateNodeRequest::SharedCtor() {
+void GetStateRequest::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
-      &scc_info_GetStateNodeRequest_msg_2eproto.base);
+      &scc_info_GetStateRequest_msg_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-GetStateNodeRequest::~GetStateNodeRequest() {
-  // @@protoc_insertion_point(destructor:Msg.GetStateNodeRequest)
+GetStateRequest::~GetStateRequest() {
+  // @@protoc_insertion_point(destructor:Msg.GetStateRequest)
   SharedDtor();
 }
 
-void GetStateNodeRequest::SharedDtor() {
+void GetStateRequest::SharedDtor() {
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void GetStateNodeRequest::SetCachedSize(int size) const {
+void GetStateRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const GetStateNodeRequest& GetStateNodeRequest::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetStateNodeRequest_msg_2eproto.base);
+const GetStateRequest& GetStateRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetStateRequest_msg_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void GetStateNodeRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:Msg.GetStateNodeRequest)
+void GetStateRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetStateRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    name_.ClearNonDefaultToEmptyNoArena();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      auth_.ClearNonDefaultToEmptyNoArena();
+    }
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
 #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-const char* GetStateNodeRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* GetStateRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
   ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
@@ -3103,7 +3103,14 @@ const char* GetStateNodeRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAME
       // required string name = 1;
       case 1: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.GetStateNodeRequest.name");
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.GetStateRequest.name");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required bytes auth = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_auth(), ptr, ctx);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -3123,11 +3130,11 @@ const char* GetStateNodeRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAME
   return ptr;
 }
 #else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool GetStateNodeRequest::MergePartialFromCodedStream(
+bool GetStateRequest::MergePartialFromCodedStream(
     ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
   ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(parse_start:Msg.GetStateRequest)
   for (;;) {
     ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -3141,7 +3148,18 @@ bool GetStateNodeRequest::MergePartialFromCodedStream(
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), static_cast<int>(this->name().length()),
             ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateNodeRequest.name");
+            "Msg.GetStateRequest.name");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required bytes auth = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_auth()));
         } else {
           goto handle_unusual;
         }
@@ -3160,18 +3178,18 @@ bool GetStateNodeRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(parse_success:Msg.GetStateRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(parse_failure:Msg.GetStateRequest)
   return false;
 #undef DO_
 }
 #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 
-void GetStateNodeRequest::SerializeWithCachedSizes(
+void GetStateRequest::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(serialize_start:Msg.GetStateRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3181,21 +3199,27 @@ void GetStateNodeRequest::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), static_cast<int>(this->name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeRequest.name");
+      "Msg.GetStateRequest.name");
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
+  }
+
+  // required bytes auth = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      2, this->auth(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(serialize_end:Msg.GetStateRequest)
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* GetStateNodeRequest::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* GetStateRequest::InternalSerializeWithCachedSizesToArray(
     ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetStateRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3205,22 +3229,49 @@ void GetStateNodeRequest::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), static_cast<int>(this->name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeRequest.name");
+      "Msg.GetStateRequest.name");
     target =
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
+  }
+
+  // required bytes auth = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        2, this->auth(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetStateRequest)
   return target;
 }
 
-size_t GetStateNodeRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Msg.GetStateNodeRequest)
+size_t GetStateRequest::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.GetStateRequest)
+  size_t total_size = 0;
+
+  if (has_name()) {
+    // required string name = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  if (has_auth()) {
+    // required bytes auth = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->auth());
+  }
+
+  return total_size;
+}
+size_t GetStateRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetStateRequest)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3228,11 +3279,19 @@ size_t GetStateNodeRequest::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  // required string name = 1;
-  if (has_name()) {
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required string name = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->name());
+
+    // required bytes auth = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->auth());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -3243,66 +3302,75 @@ size_t GetStateNodeRequest::ByteSizeLong() const {
   return total_size;
 }
 
-void GetStateNodeRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetStateNodeRequest)
+void GetStateRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetStateRequest)
   GOOGLE_DCHECK_NE(&from, this);
-  const GetStateNodeRequest* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetStateNodeRequest>(
+  const GetStateRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetStateRequest>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetStateRequest)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetStateNodeRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetStateRequest)
     MergeFrom(*source);
   }
 }
 
-void GetStateNodeRequest::MergeFrom(const GetStateNodeRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetStateNodeRequest)
+void GetStateRequest::MergeFrom(const GetStateRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetStateRequest)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_name()) {
-    _has_bits_[0] |= 0x00000001u;
-    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+    }
   }
 }
 
-void GetStateNodeRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetStateNodeRequest)
+void GetStateRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetStateRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void GetStateNodeRequest::CopyFrom(const GetStateNodeRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetStateNodeRequest)
+void GetStateRequest::CopyFrom(const GetStateRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetStateRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool GetStateNodeRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+bool GetStateRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   return true;
 }
 
-void GetStateNodeRequest::Swap(GetStateNodeRequest* other) {
+void GetStateRequest::Swap(GetStateRequest* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void GetStateNodeRequest::InternalSwap(GetStateNodeRequest* other) {
+void GetStateRequest::InternalSwap(GetStateRequest* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GetStateNodeRequest::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata GetStateRequest::GetMetadata() const {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
   return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
 }
@@ -3310,128 +3378,86 @@ void GetStateNodeRequest::InternalSwap(GetStateNodeRequest* other) {
 
 // ===================================================================
 
-void GetStateNodeResponse::InitAsDefaultInstance() {
+void GetStateResponse::InitAsDefaultInstance() {
 }
-class GetStateNodeResponse::HasBitSetters {
+class GetStateResponse::HasBitSetters {
  public:
-  static void set_has_name(GetStateNodeResponse* msg) {
+  static void set_has_hash(GetStateResponse* msg) {
     msg->_has_bits_[0] |= 0x00000001u;
-  }
-  static void set_has_conn_string(GetStateNodeResponse* msg) {
-    msg->_has_bits_[0] |= 0x00000002u;
-  }
-  static void set_has_hash(GetStateNodeResponse* msg) {
-    msg->_has_bits_[0] |= 0x00000004u;
   }
 };
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int GetStateNodeResponse::kNameFieldNumber;
-const int GetStateNodeResponse::kConnStringFieldNumber;
-const int GetStateNodeResponse::kHashFieldNumber;
+const int GetStateResponse::kHashFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-GetStateNodeResponse::GetStateNodeResponse()
+GetStateResponse::GetStateResponse()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(constructor:Msg.GetStateResponse)
 }
-GetStateNodeResponse::GetStateNodeResponse(const GetStateNodeResponse& from)
+GetStateResponse::GetStateResponse(const GetStateResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name()) {
-    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
-  }
-  conn_string_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from.has_conn_string()) {
-    conn_string_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.conn_string_);
-  }
   hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from.has_hash()) {
     hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.hash_);
   }
-  // @@protoc_insertion_point(copy_constructor:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(copy_constructor:Msg.GetStateResponse)
 }
 
-void GetStateNodeResponse::SharedCtor() {
+void GetStateResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
-      &scc_info_GetStateNodeResponse_msg_2eproto.base);
-  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  conn_string_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+      &scc_info_GetStateResponse_msg_2eproto.base);
   hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-GetStateNodeResponse::~GetStateNodeResponse() {
-  // @@protoc_insertion_point(destructor:Msg.GetStateNodeResponse)
+GetStateResponse::~GetStateResponse() {
+  // @@protoc_insertion_point(destructor:Msg.GetStateResponse)
   SharedDtor();
 }
 
-void GetStateNodeResponse::SharedDtor() {
-  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  conn_string_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+void GetStateResponse::SharedDtor() {
   hash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void GetStateNodeResponse::SetCachedSize(int size) const {
+void GetStateResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const GetStateNodeResponse& GetStateNodeResponse::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetStateNodeResponse_msg_2eproto.base);
+const GetStateResponse& GetStateResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetStateResponse_msg_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void GetStateNodeResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:Msg.GetStateNodeResponse)
+void GetStateResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetStateResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    if (cached_has_bits & 0x00000001u) {
-      name_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      conn_string_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000004u) {
-      hash_.ClearNonDefaultToEmptyNoArena();
-    }
+  if (cached_has_bits & 0x00000001u) {
+    hash_.ClearNonDefaultToEmptyNoArena();
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
 #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-const char* GetStateNodeResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* GetStateResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
   ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
     switch (tag >> 3) {
-      // optional string name = 1;
-      case 1: {
-        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.GetStateNodeResponse.name");
-        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
-        break;
-      }
-      // optional string conn_string = 2;
+      // optional string hash = 2;
       case 2: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_conn_string(), ptr, ctx, "Msg.GetStateNodeResponse.conn_string");
-        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
-        break;
-      }
-      // optional string hash = 3;
-      case 3: {
-        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_hash(), ptr, ctx, "Msg.GetStateNodeResponse.hash");
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_hash(), ptr, ctx, "Msg.GetStateResponse.hash");
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -3451,55 +3477,25 @@ const char* GetStateNodeResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAM
   return ptr;
 }
 #else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool GetStateNodeResponse::MergePartialFromCodedStream(
+bool GetStateResponse::MergePartialFromCodedStream(
     ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
   ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(parse_start:Msg.GetStateResponse)
   for (;;) {
     ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string name = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->mutable_name()));
-          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name().data(), static_cast<int>(this->name().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateNodeResponse.name");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string conn_string = 2;
+      // optional string hash = 2;
       case 2: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->mutable_conn_string()));
-          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->conn_string().data(), static_cast<int>(this->conn_string().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateNodeResponse.conn_string");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string hash = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
                 input, this->mutable_hash()));
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
             this->hash().data(), static_cast<int>(this->hash().length()),
             ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateNodeResponse.hash");
+            "Msg.GetStateResponse.hash");
         } else {
           goto handle_unusual;
         }
@@ -3518,109 +3514,67 @@ bool GetStateNodeResponse::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(parse_success:Msg.GetStateResponse)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(parse_failure:Msg.GetStateResponse)
   return false;
 #undef DO_
 }
 #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 
-void GetStateNodeResponse::SerializeWithCachedSizes(
+void GetStateResponse::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(serialize_start:Msg.GetStateResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional string name = 1;
+  // optional string hash = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name().data(), static_cast<int>(this->name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.name");
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->name(), output);
-  }
-
-  // optional string conn_string = 2;
-  if (cached_has_bits & 0x00000002u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->conn_string().data(), static_cast<int>(this->conn_string().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.conn_string");
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->conn_string(), output);
-  }
-
-  // optional string hash = 3;
-  if (cached_has_bits & 0x00000004u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->hash().data(), static_cast<int>(this->hash().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.hash");
+      "Msg.GetStateResponse.hash");
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
-      3, this->hash(), output);
+      2, this->hash(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(serialize_end:Msg.GetStateResponse)
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* GetStateNodeResponse::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* GetStateResponse::InternalSerializeWithCachedSizesToArray(
     ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetStateResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional string name = 1;
+  // optional string hash = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name().data(), static_cast<int>(this->name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.name");
-    target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string conn_string = 2;
-  if (cached_has_bits & 0x00000002u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->conn_string().data(), static_cast<int>(this->conn_string().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.conn_string");
-    target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
-        2, this->conn_string(), target);
-  }
-
-  // optional string hash = 3;
-  if (cached_has_bits & 0x00000004u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->hash().data(), static_cast<int>(this->hash().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateNodeResponse.hash");
+      "Msg.GetStateResponse.hash");
     target =
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
-        3, this->hash(), target);
+        2, this->hash(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetStateResponse)
   return target;
 }
 
-size_t GetStateNodeResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Msg.GetStateNodeResponse)
+size_t GetStateResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetStateResponse)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3632,109 +3586,78 @@ size_t GetStateNodeResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // optional string hash = 2;
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    // optional string name = 1;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->name());
-    }
-
-    // optional string conn_string = 2;
-    if (cached_has_bits & 0x00000002u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->conn_string());
-    }
-
-    // optional string hash = 3;
-    if (cached_has_bits & 0x00000004u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->hash());
-    }
-
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->hash());
   }
+
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
 }
 
-void GetStateNodeResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetStateNodeResponse)
+void GetStateResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetStateResponse)
   GOOGLE_DCHECK_NE(&from, this);
-  const GetStateNodeResponse* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetStateNodeResponse>(
+  const GetStateResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetStateResponse>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetStateResponse)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetStateResponse)
     MergeFrom(*source);
   }
 }
 
-void GetStateNodeResponse::MergeFrom(const GetStateNodeResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetStateNodeResponse)
+void GetStateResponse::MergeFrom(const GetStateResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetStateResponse)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    if (cached_has_bits & 0x00000001u) {
-      _has_bits_[0] |= 0x00000001u;
-      name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      _has_bits_[0] |= 0x00000002u;
-      conn_string_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.conn_string_);
-    }
-    if (cached_has_bits & 0x00000004u) {
-      _has_bits_[0] |= 0x00000004u;
-      hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.hash_);
-    }
+  if (from.has_hash()) {
+    _has_bits_[0] |= 0x00000001u;
+    hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.hash_);
   }
 }
 
-void GetStateNodeResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetStateNodeResponse)
+void GetStateResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetStateResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void GetStateNodeResponse::CopyFrom(const GetStateNodeResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetStateNodeResponse)
+void GetStateResponse::CopyFrom(const GetStateResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetStateResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool GetStateNodeResponse::IsInitialized() const {
+bool GetStateResponse::IsInitialized() const {
   return true;
 }
 
-void GetStateNodeResponse::Swap(GetStateNodeResponse* other) {
+void GetStateResponse::Swap(GetStateResponse* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void GetStateNodeResponse::InternalSwap(GetStateNodeResponse* other) {
+void GetStateResponse::InternalSwap(GetStateResponse* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  conn_string_.Swap(&other->conn_string_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
   hash_.Swap(&other->hash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GetStateNodeResponse::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata GetStateResponse::GetMetadata() const {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
   return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
 }
@@ -7781,8 +7704,8 @@ void Request::InitAsDefaultInstance() {
       ::Msg::JoinRequest::internal_default_instance());
   ::Msg::_Request_default_instance_._instance.get_mutable()->update_status_ = const_cast< ::Msg::UpdateStatusRequest*>(
       ::Msg::UpdateStatusRequest::internal_default_instance());
-  ::Msg::_Request_default_instance_._instance.get_mutable()->get_state_node_ = const_cast< ::Msg::GetStateNodeRequest*>(
-      ::Msg::GetStateNodeRequest::internal_default_instance());
+  ::Msg::_Request_default_instance_._instance.get_mutable()->get_state_req_ = const_cast< ::Msg::GetStateRequest*>(
+      ::Msg::GetStateRequest::internal_default_instance());
   ::Msg::_Request_default_instance_._instance.get_mutable()->state_ = const_cast< ::Msg::UpdateStateHashRequest*>(
       ::Msg::UpdateStateHashRequest::internal_default_instance());
   ::Msg::_Request_default_instance_._instance.get_mutable()->file_ = const_cast< ::Msg::NewFileRequest*>(
@@ -7806,8 +7729,8 @@ class Request::HasBitSetters {
   static void set_has_update_status(Request* msg) {
     msg->_has_bits_[0] |= 0x00000002u;
   }
-  static const ::Msg::GetStateNodeRequest& get_state_node(const Request* msg);
-  static void set_has_get_state_node(Request* msg) {
+  static const ::Msg::GetStateRequest& get_state_req(const Request* msg);
+  static void set_has_get_state_req(Request* msg) {
     msg->_has_bits_[0] |= 0x00000004u;
   }
   static const ::Msg::UpdateStateHashRequest& state(const Request* msg);
@@ -7844,9 +7767,9 @@ const ::Msg::UpdateStatusRequest&
 Request::HasBitSetters::update_status(const Request* msg) {
   return *msg->update_status_;
 }
-const ::Msg::GetStateNodeRequest&
-Request::HasBitSetters::get_state_node(const Request* msg) {
-  return *msg->get_state_node_;
+const ::Msg::GetStateRequest&
+Request::HasBitSetters::get_state_req(const Request* msg) {
+  return *msg->get_state_req_;
 }
 const ::Msg::UpdateStateHashRequest&
 Request::HasBitSetters::state(const Request* msg) {
@@ -7875,7 +7798,7 @@ Request::HasBitSetters::cp_file_req(const Request* msg) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Request::kJoinFieldNumber;
 const int Request::kUpdateStatusFieldNumber;
-const int Request::kGetStateNodeFieldNumber;
+const int Request::kGetStateReqFieldNumber;
 const int Request::kStateFieldNumber;
 const int Request::kFileFieldNumber;
 const int Request::kRmOpFieldNumber;
@@ -7904,10 +7827,10 @@ Request::Request(const Request& from)
   } else {
     update_status_ = nullptr;
   }
-  if (from.has_get_state_node()) {
-    get_state_node_ = new ::Msg::GetStateNodeRequest(*from.get_state_node_);
+  if (from.has_get_state_req()) {
+    get_state_req_ = new ::Msg::GetStateRequest(*from.get_state_req_);
   } else {
-    get_state_node_ = nullptr;
+    get_state_req_ = nullptr;
   }
   if (from.has_state()) {
     state_ = new ::Msg::UpdateStateHashRequest(*from.state_);
@@ -7958,7 +7881,7 @@ Request::~Request() {
 void Request::SharedDtor() {
   if (this != internal_default_instance()) delete join_;
   if (this != internal_default_instance()) delete update_status_;
-  if (this != internal_default_instance()) delete get_state_node_;
+  if (this != internal_default_instance()) delete get_state_req_;
   if (this != internal_default_instance()) delete state_;
   if (this != internal_default_instance()) delete file_;
   if (this != internal_default_instance()) delete rm_op_;
@@ -7993,8 +7916,8 @@ void Request::Clear() {
       update_status_->Clear();
     }
     if (cached_has_bits & 0x00000004u) {
-      GOOGLE_DCHECK(get_state_node_ != nullptr);
-      get_state_node_->Clear();
+      GOOGLE_DCHECK(get_state_req_ != nullptr);
+      get_state_req_->Clear();
     }
     if (cached_has_bits & 0x00000008u) {
       GOOGLE_DCHECK(state_ != nullptr);
@@ -8047,10 +7970,10 @@ const char* Request::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
-      // optional .Msg.GetStateNodeRequest get_state_node = 3;
+      // optional .Msg.GetStateRequest get_state_req = 3;
       case 3: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
-        ptr = ctx->ParseMessage(mutable_get_state_node(), ptr);
+        ptr = ctx->ParseMessage(mutable_get_state_req(), ptr);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -8144,11 +8067,11 @@ bool Request::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .Msg.GetStateNodeRequest get_state_node = 3;
+      // optional .Msg.GetStateRequest get_state_req = 3;
       case 3: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_get_state_node()));
+               input, mutable_get_state_req()));
         } else {
           goto handle_unusual;
         }
@@ -8261,10 +8184,10 @@ void Request::SerializeWithCachedSizes(
       2, HasBitSetters::update_status(this), output);
   }
 
-  // optional .Msg.GetStateNodeRequest get_state_node = 3;
+  // optional .Msg.GetStateRequest get_state_req = 3;
   if (cached_has_bits & 0x00000004u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, HasBitSetters::get_state_node(this), output);
+      3, HasBitSetters::get_state_req(this), output);
   }
 
   // optional .Msg.UpdateStateHashRequest state = 4;
@@ -8331,11 +8254,11 @@ void Request::SerializeWithCachedSizes(
         2, HasBitSetters::update_status(this), target);
   }
 
-  // optional .Msg.GetStateNodeRequest get_state_node = 3;
+  // optional .Msg.GetStateRequest get_state_req = 3;
   if (cached_has_bits & 0x00000004u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        3, HasBitSetters::get_state_node(this), target);
+        3, HasBitSetters::get_state_req(this), target);
   }
 
   // optional .Msg.UpdateStateHashRequest state = 4;
@@ -8417,11 +8340,11 @@ size_t Request::ByteSizeLong() const {
           *update_status_);
     }
 
-    // optional .Msg.GetStateNodeRequest get_state_node = 3;
+    // optional .Msg.GetStateRequest get_state_req = 3;
     if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *get_state_node_);
+          *get_state_req_);
     }
 
     // optional .Msg.UpdateStateHashRequest state = 4;
@@ -8503,7 +8426,7 @@ void Request::MergeFrom(const Request& from) {
       mutable_update_status()->::Msg::UpdateStatusRequest::MergeFrom(from.update_status());
     }
     if (cached_has_bits & 0x00000004u) {
-      mutable_get_state_node()->::Msg::GetStateNodeRequest::MergeFrom(from.get_state_node());
+      mutable_get_state_req()->::Msg::GetStateRequest::MergeFrom(from.get_state_req());
     }
     if (cached_has_bits & 0x00000008u) {
       mutable_state()->::Msg::UpdateStateHashRequest::MergeFrom(from.state());
@@ -8547,8 +8470,8 @@ bool Request::IsInitialized() const {
   if (has_update_status()) {
     if (!this->update_status_->IsInitialized()) return false;
   }
-  if (has_get_state_node()) {
-    if (!this->get_state_node_->IsInitialized()) return false;
+  if (has_get_state_req()) {
+    if (!this->get_state_req_->IsInitialized()) return false;
   }
   if (has_state()) {
     if (!this->state_->IsInitialized()) return false;
@@ -8581,7 +8504,7 @@ void Request::InternalSwap(Request* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   swap(join_, other->join_);
   swap(update_status_, other->update_status_);
-  swap(get_state_node_, other->get_state_node_);
+  swap(get_state_req_, other->get_state_req_);
   swap(state_, other->state_);
   swap(file_, other->file_);
   swap(rm_op_, other->rm_op_);
@@ -8599,8 +8522,8 @@ void Request::InternalSwap(Request* other) {
 // ===================================================================
 
 void Response::InitAsDefaultInstance() {
-  ::Msg::_Response_default_instance_._instance.get_mutable()->state_node_ = const_cast< ::Msg::GetStateNodeResponse*>(
-      ::Msg::GetStateNodeResponse::internal_default_instance());
+  ::Msg::_Response_default_instance_._instance.get_mutable()->get_state_res_ = const_cast< ::Msg::GetStateResponse*>(
+      ::Msg::GetStateResponse::internal_default_instance());
   ::Msg::_Response_default_instance_._instance.get_mutable()->new_file_response_ = const_cast< ::Msg::NewFileResponse*>(
       ::Msg::NewFileResponse::internal_default_instance());
   ::Msg::_Response_default_instance_._instance.get_mutable()->ls_file_res_ = const_cast< ::Msg::LsFileResponse*>(
@@ -8616,8 +8539,8 @@ class Response::HasBitSetters {
   static void set_has_info(Response* msg) {
     msg->_has_bits_[0] |= 0x00000001u;
   }
-  static const ::Msg::GetStateNodeResponse& state_node(const Response* msg);
-  static void set_has_state_node(Response* msg) {
+  static const ::Msg::GetStateResponse& get_state_res(const Response* msg);
+  static void set_has_get_state_res(Response* msg) {
     msg->_has_bits_[0] |= 0x00000002u;
   }
   static const ::Msg::NewFileResponse& new_file_response(const Response* msg);
@@ -8634,9 +8557,9 @@ class Response::HasBitSetters {
   }
 };
 
-const ::Msg::GetStateNodeResponse&
-Response::HasBitSetters::state_node(const Response* msg) {
-  return *msg->state_node_;
+const ::Msg::GetStateResponse&
+Response::HasBitSetters::get_state_res(const Response* msg) {
+  return *msg->get_state_res_;
 }
 const ::Msg::NewFileResponse&
 Response::HasBitSetters::new_file_response(const Response* msg) {
@@ -8653,7 +8576,7 @@ Response::HasBitSetters::join_res(const Response* msg) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Response::kStatusFieldNumber;
 const int Response::kInfoFieldNumber;
-const int Response::kStateNodeFieldNumber;
+const int Response::kGetStateResFieldNumber;
 const int Response::kNewFileResponseFieldNumber;
 const int Response::kLsFileResFieldNumber;
 const int Response::kJoinResFieldNumber;
@@ -8673,10 +8596,10 @@ Response::Response(const Response& from)
   if (from.has_info()) {
     info_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.info_);
   }
-  if (from.has_state_node()) {
-    state_node_ = new ::Msg::GetStateNodeResponse(*from.state_node_);
+  if (from.has_get_state_res()) {
+    get_state_res_ = new ::Msg::GetStateResponse(*from.get_state_res_);
   } else {
-    state_node_ = nullptr;
+    get_state_res_ = nullptr;
   }
   if (from.has_new_file_response()) {
     new_file_response_ = new ::Msg::NewFileResponse(*from.new_file_response_);
@@ -8701,9 +8624,9 @@ void Response::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
       &scc_info_Response_msg_2eproto.base);
   info_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&state_node_, 0, static_cast<size_t>(
+  ::memset(&get_state_res_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&join_res_) -
-      reinterpret_cast<char*>(&state_node_)) + sizeof(join_res_));
+      reinterpret_cast<char*>(&get_state_res_)) + sizeof(join_res_));
   status_ = 1;
 }
 
@@ -8714,7 +8637,7 @@ Response::~Response() {
 
 void Response::SharedDtor() {
   info_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (this != internal_default_instance()) delete state_node_;
+  if (this != internal_default_instance()) delete get_state_res_;
   if (this != internal_default_instance()) delete new_file_response_;
   if (this != internal_default_instance()) delete ls_file_res_;
   if (this != internal_default_instance()) delete join_res_;
@@ -8741,8 +8664,8 @@ void Response::Clear() {
       info_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
-      GOOGLE_DCHECK(state_node_ != nullptr);
-      state_node_->Clear();
+      GOOGLE_DCHECK(get_state_res_ != nullptr);
+      get_state_res_->Clear();
     }
     if (cached_has_bits & 0x00000004u) {
       GOOGLE_DCHECK(new_file_response_ != nullptr);
@@ -8789,10 +8712,10 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
-      // optional .Msg.GetStateNodeResponse state_node = 3;
+      // optional .Msg.GetStateResponse get_state_res = 3;
       case 3: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
-        ptr = ctx->ParseMessage(mutable_state_node(), ptr);
+        ptr = ctx->ParseMessage(mutable_get_state_res(), ptr);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -8877,11 +8800,11 @@ bool Response::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .Msg.GetStateNodeResponse state_node = 3;
+      // optional .Msg.GetStateResponse get_state_res = 3;
       case 3: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_state_node()));
+               input, mutable_get_state_res()));
         } else {
           goto handle_unusual;
         }
@@ -8965,10 +8888,10 @@ void Response::SerializeWithCachedSizes(
       2, this->info(), output);
   }
 
-  // optional .Msg.GetStateNodeResponse state_node = 3;
+  // optional .Msg.GetStateResponse get_state_res = 3;
   if (cached_has_bits & 0x00000002u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, HasBitSetters::state_node(this), output);
+      3, HasBitSetters::get_state_res(this), output);
   }
 
   // optional .Msg.NewFileResponse new_file_response = 4;
@@ -9020,11 +8943,11 @@ void Response::SerializeWithCachedSizes(
         2, this->info(), target);
   }
 
-  // optional .Msg.GetStateNodeResponse state_node = 3;
+  // optional .Msg.GetStateResponse get_state_res = 3;
   if (cached_has_bits & 0x00000002u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        3, HasBitSetters::state_node(this), target);
+        3, HasBitSetters::get_state_res(this), target);
   }
 
   // optional .Msg.NewFileResponse new_file_response = 4;
@@ -9083,11 +9006,11 @@ size_t Response::ByteSizeLong() const {
           this->info());
     }
 
-    // optional .Msg.GetStateNodeResponse state_node = 3;
+    // optional .Msg.GetStateResponse get_state_res = 3;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *state_node_);
+          *get_state_res_);
     }
 
     // optional .Msg.NewFileResponse new_file_response = 4;
@@ -9146,7 +9069,7 @@ void Response::MergeFrom(const Response& from) {
       info_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.info_);
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_state_node()->::Msg::GetStateNodeResponse::MergeFrom(from.state_node());
+      mutable_get_state_res()->::Msg::GetStateResponse::MergeFrom(from.get_state_res());
     }
     if (cached_has_bits & 0x00000004u) {
       mutable_new_file_response()->::Msg::NewFileResponse::MergeFrom(from.new_file_response());
@@ -9199,7 +9122,7 @@ void Response::InternalSwap(Response* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   info_.Swap(&other->info_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(state_node_, other->state_node_);
+  swap(get_state_res_, other->get_state_res_);
   swap(new_file_response_, other->new_file_response_);
   swap(ls_file_res_, other->ls_file_res_);
   swap(join_res_, other->join_res_);
@@ -9717,11 +9640,11 @@ template<> PROTOBUF_NOINLINE ::Msg::UpdateStatusRequest* Arena::CreateMaybeMessa
 template<> PROTOBUF_NOINLINE ::Msg::UpdateStateHashRequest* Arena::CreateMaybeMessage< ::Msg::UpdateStateHashRequest >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::UpdateStateHashRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Msg::GetStateNodeRequest* Arena::CreateMaybeMessage< ::Msg::GetStateNodeRequest >(Arena* arena) {
-  return Arena::CreateInternal< ::Msg::GetStateNodeRequest >(arena);
+template<> PROTOBUF_NOINLINE ::Msg::GetStateRequest* Arena::CreateMaybeMessage< ::Msg::GetStateRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetStateRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Msg::GetStateNodeResponse* Arena::CreateMaybeMessage< ::Msg::GetStateNodeResponse >(Arena* arena) {
-  return Arena::CreateInternal< ::Msg::GetStateNodeResponse >(arena);
+template<> PROTOBUF_NOINLINE ::Msg::GetStateResponse* Arena::CreateMaybeMessage< ::Msg::GetStateResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetStateResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Msg::NewFileRequest* Arena::CreateMaybeMessage< ::Msg::NewFileRequest >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::NewFileRequest >(arena);

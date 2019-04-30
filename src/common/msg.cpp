@@ -58,37 +58,35 @@ Msg::Message UpdateStateMsgReqInst(const string & name, const string & hash, con
     return msg;
 }
 
-Msg::Message GetStateNodeMsgReqInst(string & name)
-{
-}
-
-
-Msg::Message GetStateNodeMsgReqInst(const char * name)
+Msg::Message GetStateMsgReqInst(const string & name, const string &auth)
 {
     Msg::Message msg;
-    msg.set_type(Msg::GetStateNode_Request);
-    msg.mutable_request()->mutable_get_state_node()->set_name(name);
+    msg.set_type(Msg::GetState_Request);
+    // msg.mutable_request()->mutable_get_state_node()->set_name(name);
+    msg.mutable_request()->mutable_get_state_req()->set_name(name);
+    msg.mutable_request()->mutable_get_state_req()->set_auth(auth);
     return msg;
 }
 
 
-bool GetStateNodeMsgResInst(Msg::Message & msg, const string & name, const string & connString, const string & hash)
-{
-    msg.mutable_response()->set_status(Msg::MSG_RES_OK);
-    msg.mutable_response()->set_info("ok");
-    msg.mutable_response()->mutable_state_node()->set_name(name);
-    msg.mutable_response()->mutable_state_node()->set_hash(hash);
-    msg.mutable_response()->mutable_state_node()->set_conn_string(connString);
-    return true;
-}
+// bool GetStateMsgResInst(Msg::Message & msg, const string & hash)
+// {
+//     msg.mutable_response()->set_status(Msg::MSG_RES_OK);
+//     msg.mutable_response()->set_info("ok");
+//     // msg.mutable_response()->mutable_state_node()->set_name(name);
+//     // msg.mutable_response()->mutable_state_node()->set_hash(hash);
+//     // msg.mutable_response()->mutable_state_node()->set_conn_string(connString);
+//     msg.mutable_response()->mutable_get_state_res()->set_hash(hash);
+//     return true;
+// }
 
 
-bool GetStateNodeMsgResErrorInst(Msg::Message &msg, const char * info)
-{
-    msg.mutable_response()->set_status(Msg::MSG_RES_OK);
-    msg.mutable_response()->set_info(info);
-    return true;
-}
+// bool GetStateNodeMsgResErrorInst(Msg::Message &msg, const char * info)
+// {
+//     msg.mutable_response()->set_status(Msg::MSG_RES_OK);
+//     msg.mutable_response()->set_info(info);
+//     return true;
+// }
 
 
 Msg::Message GetStateNodeMsgResInst(string & name, string &ip, string &hash)

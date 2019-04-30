@@ -73,12 +73,12 @@ extern FileOpDefaultTypeInternal _FileOp_default_instance_;
 class FilePost;
 class FilePostDefaultTypeInternal;
 extern FilePostDefaultTypeInternal _FilePost_default_instance_;
-class GetStateNodeRequest;
-class GetStateNodeRequestDefaultTypeInternal;
-extern GetStateNodeRequestDefaultTypeInternal _GetStateNodeRequest_default_instance_;
-class GetStateNodeResponse;
-class GetStateNodeResponseDefaultTypeInternal;
-extern GetStateNodeResponseDefaultTypeInternal _GetStateNodeResponse_default_instance_;
+class GetStateRequest;
+class GetStateRequestDefaultTypeInternal;
+extern GetStateRequestDefaultTypeInternal _GetStateRequest_default_instance_;
+class GetStateResponse;
+class GetStateResponseDefaultTypeInternal;
+extern GetStateResponseDefaultTypeInternal _GetStateResponse_default_instance_;
 class JoinRequest;
 class JoinRequestDefaultTypeInternal;
 extern JoinRequestDefaultTypeInternal _JoinRequest_default_instance_;
@@ -126,8 +126,8 @@ template<> ::Msg::EndFilePostResponse* Arena::CreateMaybeMessage<::Msg::EndFileP
 template<> ::Msg::FileAttribute* Arena::CreateMaybeMessage<::Msg::FileAttribute>(Arena*);
 template<> ::Msg::FileOp* Arena::CreateMaybeMessage<::Msg::FileOp>(Arena*);
 template<> ::Msg::FilePost* Arena::CreateMaybeMessage<::Msg::FilePost>(Arena*);
-template<> ::Msg::GetStateNodeRequest* Arena::CreateMaybeMessage<::Msg::GetStateNodeRequest>(Arena*);
-template<> ::Msg::GetStateNodeResponse* Arena::CreateMaybeMessage<::Msg::GetStateNodeResponse>(Arena*);
+template<> ::Msg::GetStateRequest* Arena::CreateMaybeMessage<::Msg::GetStateRequest>(Arena*);
+template<> ::Msg::GetStateResponse* Arena::CreateMaybeMessage<::Msg::GetStateResponse>(Arena*);
 template<> ::Msg::JoinRequest* Arena::CreateMaybeMessage<::Msg::JoinRequest>(Arena*);
 template<> ::Msg::JoinResponse* Arena::CreateMaybeMessage<::Msg::JoinResponse>(Arena*);
 template<> ::Msg::LsFileRequest* Arena::CreateMaybeMessage<::Msg::LsFileRequest>(Arena*);
@@ -149,8 +149,8 @@ enum MsgType {
   Join_Response = 2,
   UpdateStatus_Request = 3,
   UpdateState_Request = 4,
-  GetStateNode_Request = 5,
-  GetStateNode_Response = 6,
+  GetState_Request = 5,
+  GetState_Response = 6,
   Common_Response = 7,
   MasterNotifyCmd_Request = 8,
   NewFile_Request = 9,
@@ -978,7 +978,7 @@ class UpdateStateHashRequest final :
   std::string* release_hash();
   void set_allocated_hash(std::string* hash);
 
-  // required string auth = 3;
+  // required bytes auth = 3;
   bool has_auth() const;
   void clear_auth();
   static const int kAuthFieldNumber = 3;
@@ -986,7 +986,7 @@ class UpdateStateHashRequest final :
   void set_auth(const std::string& value);
   void set_auth(std::string&& value);
   void set_auth(const char* value);
-  void set_auth(const char* value, size_t size);
+  void set_auth(const void* value, size_t size);
   std::string* mutable_auth();
   std::string* release_auth();
   void set_allocated_auth(std::string* auth);
@@ -1008,23 +1008,23 @@ class UpdateStateHashRequest final :
 };
 // -------------------------------------------------------------------
 
-class GetStateNodeRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.GetStateNodeRequest) */ {
+class GetStateRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.GetStateRequest) */ {
  public:
-  GetStateNodeRequest();
-  virtual ~GetStateNodeRequest();
+  GetStateRequest();
+  virtual ~GetStateRequest();
 
-  GetStateNodeRequest(const GetStateNodeRequest& from);
-  GetStateNodeRequest(GetStateNodeRequest&& from) noexcept
-    : GetStateNodeRequest() {
+  GetStateRequest(const GetStateRequest& from);
+  GetStateRequest(GetStateRequest&& from) noexcept
+    : GetStateRequest() {
     *this = ::std::move(from);
   }
 
-  inline GetStateNodeRequest& operator=(const GetStateNodeRequest& from) {
+  inline GetStateRequest& operator=(const GetStateRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline GetStateNodeRequest& operator=(GetStateNodeRequest&& from) noexcept {
+  inline GetStateRequest& operator=(GetStateRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1043,34 +1043,34 @@ class GetStateNodeRequest final :
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
     return default_instance().GetDescriptor();
   }
-  static const GetStateNodeRequest& default_instance();
+  static const GetStateRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const GetStateNodeRequest* internal_default_instance() {
-    return reinterpret_cast<const GetStateNodeRequest*>(
-               &_GetStateNodeRequest_default_instance_);
+  static inline const GetStateRequest* internal_default_instance() {
+    return reinterpret_cast<const GetStateRequest*>(
+               &_GetStateRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     5;
 
-  void Swap(GetStateNodeRequest* other);
-  friend void swap(GetStateNodeRequest& a, GetStateNodeRequest& b) {
+  void Swap(GetStateRequest* other);
+  friend void swap(GetStateRequest& a, GetStateRequest& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline GetStateNodeRequest* New() const final {
-    return CreateMaybeMessage<GetStateNodeRequest>(nullptr);
+  inline GetStateRequest* New() const final {
+    return CreateMaybeMessage<GetStateRequest>(nullptr);
   }
 
-  GetStateNodeRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<GetStateNodeRequest>(arena);
+  GetStateRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetStateRequest>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const GetStateNodeRequest& from);
-  void MergeFrom(const GetStateNodeRequest& from);
+  void CopyFrom(const GetStateRequest& from);
+  void MergeFrom(const GetStateRequest& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -1091,10 +1091,10 @@ class GetStateNodeRequest final :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GetStateNodeRequest* other);
+  void InternalSwap(GetStateRequest* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Msg.GetStateNodeRequest";
+    return "Msg.GetStateRequest";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -1124,35 +1124,52 @@ class GetStateNodeRequest final :
   std::string* release_name();
   void set_allocated_name(std::string* name);
 
-  // @@protoc_insertion_point(class_scope:Msg.GetStateNodeRequest)
+  // required bytes auth = 2;
+  bool has_auth() const;
+  void clear_auth();
+  static const int kAuthFieldNumber = 2;
+  const std::string& auth() const;
+  void set_auth(const std::string& value);
+  void set_auth(std::string&& value);
+  void set_auth(const char* value);
+  void set_auth(const void* value, size_t size);
+  std::string* mutable_auth();
+  std::string* release_auth();
+  void set_allocated_auth(std::string* auth);
+
+  // @@protoc_insertion_point(class_scope:Msg.GetStateRequest)
  private:
   class HasBitSetters;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
   friend struct ::TableStruct_msg_2eproto;
 };
 // -------------------------------------------------------------------
 
-class GetStateNodeResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.GetStateNodeResponse) */ {
+class GetStateResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Msg.GetStateResponse) */ {
  public:
-  GetStateNodeResponse();
-  virtual ~GetStateNodeResponse();
+  GetStateResponse();
+  virtual ~GetStateResponse();
 
-  GetStateNodeResponse(const GetStateNodeResponse& from);
-  GetStateNodeResponse(GetStateNodeResponse&& from) noexcept
-    : GetStateNodeResponse() {
+  GetStateResponse(const GetStateResponse& from);
+  GetStateResponse(GetStateResponse&& from) noexcept
+    : GetStateResponse() {
     *this = ::std::move(from);
   }
 
-  inline GetStateNodeResponse& operator=(const GetStateNodeResponse& from) {
+  inline GetStateResponse& operator=(const GetStateResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline GetStateNodeResponse& operator=(GetStateNodeResponse&& from) noexcept {
+  inline GetStateResponse& operator=(GetStateResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1171,34 +1188,34 @@ class GetStateNodeResponse final :
   static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
     return default_instance().GetDescriptor();
   }
-  static const GetStateNodeResponse& default_instance();
+  static const GetStateResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const GetStateNodeResponse* internal_default_instance() {
-    return reinterpret_cast<const GetStateNodeResponse*>(
-               &_GetStateNodeResponse_default_instance_);
+  static inline const GetStateResponse* internal_default_instance() {
+    return reinterpret_cast<const GetStateResponse*>(
+               &_GetStateResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  void Swap(GetStateNodeResponse* other);
-  friend void swap(GetStateNodeResponse& a, GetStateNodeResponse& b) {
+  void Swap(GetStateResponse* other);
+  friend void swap(GetStateResponse& a, GetStateResponse& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline GetStateNodeResponse* New() const final {
-    return CreateMaybeMessage<GetStateNodeResponse>(nullptr);
+  inline GetStateResponse* New() const final {
+    return CreateMaybeMessage<GetStateResponse>(nullptr);
   }
 
-  GetStateNodeResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<GetStateNodeResponse>(arena);
+  GetStateResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetStateResponse>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const GetStateNodeResponse& from);
-  void MergeFrom(const GetStateNodeResponse& from);
+  void CopyFrom(const GetStateResponse& from);
+  void MergeFrom(const GetStateResponse& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -1219,10 +1236,10 @@ class GetStateNodeResponse final :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GetStateNodeResponse* other);
+  void InternalSwap(GetStateResponse* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Msg.GetStateNodeResponse";
+    return "Msg.GetStateResponse";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -1239,36 +1256,10 @@ class GetStateNodeResponse final :
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
-  bool has_name() const;
-  void clear_name();
-  static const int kNameFieldNumber = 1;
-  const std::string& name() const;
-  void set_name(const std::string& value);
-  void set_name(std::string&& value);
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  std::string* mutable_name();
-  std::string* release_name();
-  void set_allocated_name(std::string* name);
-
-  // optional string conn_string = 2;
-  bool has_conn_string() const;
-  void clear_conn_string();
-  static const int kConnStringFieldNumber = 2;
-  const std::string& conn_string() const;
-  void set_conn_string(const std::string& value);
-  void set_conn_string(std::string&& value);
-  void set_conn_string(const char* value);
-  void set_conn_string(const char* value, size_t size);
-  std::string* mutable_conn_string();
-  std::string* release_conn_string();
-  void set_allocated_conn_string(std::string* conn_string);
-
-  // optional string hash = 3;
+  // optional string hash = 2;
   bool has_hash() const;
   void clear_hash();
-  static const int kHashFieldNumber = 3;
+  static const int kHashFieldNumber = 2;
   const std::string& hash() const;
   void set_hash(const std::string& value);
   void set_hash(std::string&& value);
@@ -1278,15 +1269,13 @@ class GetStateNodeResponse final :
   std::string* release_hash();
   void set_allocated_hash(std::string* hash);
 
-  // @@protoc_insertion_point(class_scope:Msg.GetStateNodeResponse)
+  // @@protoc_insertion_point(class_scope:Msg.GetStateResponse)
  private:
   class HasBitSetters;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr conn_string_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
   friend struct ::TableStruct_msg_2eproto;
 };
@@ -2959,14 +2948,14 @@ class Request final :
   ::Msg::UpdateStatusRequest* mutable_update_status();
   void set_allocated_update_status(::Msg::UpdateStatusRequest* update_status);
 
-  // optional .Msg.GetStateNodeRequest get_state_node = 3;
-  bool has_get_state_node() const;
-  void clear_get_state_node();
-  static const int kGetStateNodeFieldNumber = 3;
-  const ::Msg::GetStateNodeRequest& get_state_node() const;
-  ::Msg::GetStateNodeRequest* release_get_state_node();
-  ::Msg::GetStateNodeRequest* mutable_get_state_node();
-  void set_allocated_get_state_node(::Msg::GetStateNodeRequest* get_state_node);
+  // optional .Msg.GetStateRequest get_state_req = 3;
+  bool has_get_state_req() const;
+  void clear_get_state_req();
+  static const int kGetStateReqFieldNumber = 3;
+  const ::Msg::GetStateRequest& get_state_req() const;
+  ::Msg::GetStateRequest* release_get_state_req();
+  ::Msg::GetStateRequest* mutable_get_state_req();
+  void set_allocated_get_state_req(::Msg::GetStateRequest* get_state_req);
 
   // optional .Msg.UpdateStateHashRequest state = 4;
   bool has_state() const;
@@ -3031,7 +3020,7 @@ class Request final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::Msg::JoinRequest* join_;
   ::Msg::UpdateStatusRequest* update_status_;
-  ::Msg::GetStateNodeRequest* get_state_node_;
+  ::Msg::GetStateRequest* get_state_req_;
   ::Msg::UpdateStateHashRequest* state_;
   ::Msg::NewFileRequest* file_;
   ::Msg::RmFileRequest* rm_op_;
@@ -3158,14 +3147,14 @@ class Response final :
   std::string* release_info();
   void set_allocated_info(std::string* info);
 
-  // optional .Msg.GetStateNodeResponse state_node = 3;
-  bool has_state_node() const;
-  void clear_state_node();
-  static const int kStateNodeFieldNumber = 3;
-  const ::Msg::GetStateNodeResponse& state_node() const;
-  ::Msg::GetStateNodeResponse* release_state_node();
-  ::Msg::GetStateNodeResponse* mutable_state_node();
-  void set_allocated_state_node(::Msg::GetStateNodeResponse* state_node);
+  // optional .Msg.GetStateResponse get_state_res = 3;
+  bool has_get_state_res() const;
+  void clear_get_state_res();
+  static const int kGetStateResFieldNumber = 3;
+  const ::Msg::GetStateResponse& get_state_res() const;
+  ::Msg::GetStateResponse* release_get_state_res();
+  ::Msg::GetStateResponse* mutable_get_state_res();
+  void set_allocated_get_state_res(::Msg::GetStateResponse* get_state_res);
 
   // optional .Msg.NewFileResponse new_file_response = 4;
   bool has_new_file_response() const;
@@ -3209,7 +3198,7 @@ class Response final :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr info_;
-  ::Msg::GetStateNodeResponse* state_node_;
+  ::Msg::GetStateResponse* get_state_res_;
   ::Msg::NewFileResponse* new_file_response_;
   ::Msg::LsFileResponse* ls_file_res_;
   ::Msg::JoinResponse* join_res_;
@@ -4070,7 +4059,7 @@ inline void UpdateStateHashRequest::set_allocated_hash(std::string* hash) {
   // @@protoc_insertion_point(field_set_allocated:Msg.UpdateStateHashRequest.hash)
 }
 
-// required string auth = 3;
+// required bytes auth = 3;
 inline bool UpdateStateHashRequest::has_auth() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -4099,7 +4088,7 @@ inline void UpdateStateHashRequest::set_auth(const char* value) {
   auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:Msg.UpdateStateHashRequest.auth)
 }
-inline void UpdateStateHashRequest::set_auth(const char* value, size_t size) {
+inline void UpdateStateHashRequest::set_auth(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000004u;
   auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4130,242 +4119,184 @@ inline void UpdateStateHashRequest::set_allocated_auth(std::string* auth) {
 
 // -------------------------------------------------------------------
 
-// GetStateNodeRequest
+// GetStateRequest
 
 // required string name = 1;
-inline bool GetStateNodeRequest::has_name() const {
+inline bool GetStateRequest::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void GetStateNodeRequest::clear_name() {
+inline void GetStateRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& GetStateNodeRequest::name() const {
-  // @@protoc_insertion_point(field_get:Msg.GetStateNodeRequest.name)
+inline const std::string& GetStateRequest::name() const {
+  // @@protoc_insertion_point(field_get:Msg.GetStateRequest.name)
   return name_.GetNoArena();
 }
-inline void GetStateNodeRequest::set_name(const std::string& value) {
+inline void GetStateRequest::set_name(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_set:Msg.GetStateRequest.name)
 }
-inline void GetStateNodeRequest::set_name(std::string&& value) {
+inline void GetStateRequest::set_name(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
   name_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateRequest.name)
 }
-inline void GetStateNodeRequest::set_name(const char* value) {
+inline void GetStateRequest::set_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
   name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_set_char:Msg.GetStateRequest.name)
 }
-inline void GetStateNodeRequest::set_name(const char* value, size_t size) {
+inline void GetStateRequest::set_name(const char* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateRequest.name)
 }
-inline std::string* GetStateNodeRequest::mutable_name() {
+inline std::string* GetStateRequest::mutable_name() {
   _has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_mutable:Msg.GetStateRequest.name)
   return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* GetStateNodeRequest::release_name() {
-  // @@protoc_insertion_point(field_release:Msg.GetStateNodeRequest.name)
+inline std::string* GetStateRequest::release_name() {
+  // @@protoc_insertion_point(field_release:Msg.GetStateRequest.name)
   if (!has_name()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
   return name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void GetStateNodeRequest::set_allocated_name(std::string* name) {
+inline void GetStateRequest::set_allocated_name(std::string* name) {
   if (name != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
   name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateRequest.name)
 }
 
-// -------------------------------------------------------------------
-
-// GetStateNodeResponse
-
-// optional string name = 1;
-inline bool GetStateNodeResponse::has_name() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void GetStateNodeResponse::clear_name() {
-  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline const std::string& GetStateNodeResponse::name() const {
-  // @@protoc_insertion_point(field_get:Msg.GetStateNodeResponse.name)
-  return name_.GetNoArena();
-}
-inline void GetStateNodeResponse::set_name(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Msg.GetStateNodeResponse.name)
-}
-inline void GetStateNodeResponse::set_name(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
-  name_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeResponse.name)
-}
-inline void GetStateNodeResponse::set_name(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeResponse.name)
-}
-inline void GetStateNodeResponse::set_name(const char* value, size_t size) {
-  _has_bits_[0] |= 0x00000001u;
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeResponse.name)
-}
-inline std::string* GetStateNodeResponse::mutable_name() {
-  _has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeResponse.name)
-  return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* GetStateNodeResponse::release_name() {
-  // @@protoc_insertion_point(field_release:Msg.GetStateNodeResponse.name)
-  if (!has_name()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  return name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void GetStateNodeResponse::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.name)
-}
-
-// optional string conn_string = 2;
-inline bool GetStateNodeResponse::has_conn_string() const {
+// required bytes auth = 2;
+inline bool GetStateRequest::has_auth() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GetStateNodeResponse::clear_conn_string() {
-  conn_string_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void GetStateRequest::clear_auth() {
+  auth_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& GetStateNodeResponse::conn_string() const {
-  // @@protoc_insertion_point(field_get:Msg.GetStateNodeResponse.conn_string)
-  return conn_string_.GetNoArena();
+inline const std::string& GetStateRequest::auth() const {
+  // @@protoc_insertion_point(field_get:Msg.GetStateRequest.auth)
+  return auth_.GetNoArena();
 }
-inline void GetStateNodeResponse::set_conn_string(const std::string& value) {
+inline void GetStateRequest::set_auth(const std::string& value) {
   _has_bits_[0] |= 0x00000002u;
-  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Msg.GetStateNodeResponse.conn_string)
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Msg.GetStateRequest.auth)
 }
-inline void GetStateNodeResponse::set_conn_string(std::string&& value) {
+inline void GetStateRequest::set_auth(std::string&& value) {
   _has_bits_[0] |= 0x00000002u;
-  conn_string_.SetNoArena(
+  auth_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeResponse.conn_string)
+  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateRequest.auth)
 }
-inline void GetStateNodeResponse::set_conn_string(const char* value) {
+inline void GetStateRequest::set_auth(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000002u;
-  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeResponse.conn_string)
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Msg.GetStateRequest.auth)
 }
-inline void GetStateNodeResponse::set_conn_string(const char* value, size_t size) {
+inline void GetStateRequest::set_auth(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000002u;
-  conn_string_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  auth_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeResponse.conn_string)
+  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateRequest.auth)
 }
-inline std::string* GetStateNodeResponse::mutable_conn_string() {
+inline std::string* GetStateRequest::mutable_auth() {
   _has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeResponse.conn_string)
-  return conn_string_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:Msg.GetStateRequest.auth)
+  return auth_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* GetStateNodeResponse::release_conn_string() {
-  // @@protoc_insertion_point(field_release:Msg.GetStateNodeResponse.conn_string)
-  if (!has_conn_string()) {
+inline std::string* GetStateRequest::release_auth() {
+  // @@protoc_insertion_point(field_release:Msg.GetStateRequest.auth)
+  if (!has_auth()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000002u;
-  return conn_string_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return auth_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void GetStateNodeResponse::set_allocated_conn_string(std::string* conn_string) {
-  if (conn_string != nullptr) {
+inline void GetStateRequest::set_allocated_auth(std::string* auth) {
+  if (auth != nullptr) {
     _has_bits_[0] |= 0x00000002u;
   } else {
     _has_bits_[0] &= ~0x00000002u;
   }
-  conn_string_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), conn_string);
-  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.conn_string)
+  auth_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), auth);
+  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateRequest.auth)
 }
 
-// optional string hash = 3;
-inline bool GetStateNodeResponse::has_hash() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+// -------------------------------------------------------------------
+
+// GetStateResponse
+
+// optional string hash = 2;
+inline bool GetStateResponse::has_hash() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void GetStateNodeResponse::clear_hash() {
+inline void GetStateResponse::clear_hash() {
   hash_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& GetStateNodeResponse::hash() const {
-  // @@protoc_insertion_point(field_get:Msg.GetStateNodeResponse.hash)
+inline const std::string& GetStateResponse::hash() const {
+  // @@protoc_insertion_point(field_get:Msg.GetStateResponse.hash)
   return hash_.GetNoArena();
 }
-inline void GetStateNodeResponse::set_hash(const std::string& value) {
-  _has_bits_[0] |= 0x00000004u;
+inline void GetStateResponse::set_hash(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
   hash_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Msg.GetStateNodeResponse.hash)
+  // @@protoc_insertion_point(field_set:Msg.GetStateResponse.hash)
 }
-inline void GetStateNodeResponse::set_hash(std::string&& value) {
-  _has_bits_[0] |= 0x00000004u;
+inline void GetStateResponse::set_hash(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
   hash_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateNodeResponse.hash)
+  // @@protoc_insertion_point(field_set_rvalue:Msg.GetStateResponse.hash)
 }
-inline void GetStateNodeResponse::set_hash(const char* value) {
+inline void GetStateResponse::set_hash(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000001u;
   hash_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Msg.GetStateNodeResponse.hash)
+  // @@protoc_insertion_point(field_set_char:Msg.GetStateResponse.hash)
 }
-inline void GetStateNodeResponse::set_hash(const char* value, size_t size) {
-  _has_bits_[0] |= 0x00000004u;
+inline void GetStateResponse::set_hash(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
   hash_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateNodeResponse.hash)
+  // @@protoc_insertion_point(field_set_pointer:Msg.GetStateResponse.hash)
 }
-inline std::string* GetStateNodeResponse::mutable_hash() {
-  _has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_mutable:Msg.GetStateNodeResponse.hash)
+inline std::string* GetStateResponse::mutable_hash() {
+  _has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_mutable:Msg.GetStateResponse.hash)
   return hash_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* GetStateNodeResponse::release_hash() {
-  // @@protoc_insertion_point(field_release:Msg.GetStateNodeResponse.hash)
+inline std::string* GetStateResponse::release_hash() {
+  // @@protoc_insertion_point(field_release:Msg.GetStateResponse.hash)
   if (!has_hash()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000001u;
   return hash_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void GetStateNodeResponse::set_allocated_hash(std::string* hash) {
+inline void GetStateResponse::set_allocated_hash(std::string* hash) {
   if (hash != nullptr) {
-    _has_bits_[0] |= 0x00000004u;
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    _has_bits_[0] &= ~0x00000004u;
+    _has_bits_[0] &= ~0x00000001u;
   }
   hash_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), hash);
-  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateNodeResponse.hash)
+  // @@protoc_insertion_point(field_set_allocated:Msg.GetStateResponse.hash)
 }
 
 // -------------------------------------------------------------------
@@ -5458,53 +5389,53 @@ inline void Request::set_allocated_update_status(::Msg::UpdateStatusRequest* upd
   // @@protoc_insertion_point(field_set_allocated:Msg.Request.update_status)
 }
 
-// optional .Msg.GetStateNodeRequest get_state_node = 3;
-inline bool Request::has_get_state_node() const {
+// optional .Msg.GetStateRequest get_state_req = 3;
+inline bool Request::has_get_state_req() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Request::clear_get_state_node() {
-  if (get_state_node_ != nullptr) get_state_node_->Clear();
+inline void Request::clear_get_state_req() {
+  if (get_state_req_ != nullptr) get_state_req_->Clear();
   _has_bits_[0] &= ~0x00000004u;
 }
-inline const ::Msg::GetStateNodeRequest& Request::get_state_node() const {
-  const ::Msg::GetStateNodeRequest* p = get_state_node_;
-  // @@protoc_insertion_point(field_get:Msg.Request.get_state_node)
-  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::GetStateNodeRequest*>(
-      &::Msg::_GetStateNodeRequest_default_instance_);
+inline const ::Msg::GetStateRequest& Request::get_state_req() const {
+  const ::Msg::GetStateRequest* p = get_state_req_;
+  // @@protoc_insertion_point(field_get:Msg.Request.get_state_req)
+  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::GetStateRequest*>(
+      &::Msg::_GetStateRequest_default_instance_);
 }
-inline ::Msg::GetStateNodeRequest* Request::release_get_state_node() {
-  // @@protoc_insertion_point(field_release:Msg.Request.get_state_node)
+inline ::Msg::GetStateRequest* Request::release_get_state_req() {
+  // @@protoc_insertion_point(field_release:Msg.Request.get_state_req)
   _has_bits_[0] &= ~0x00000004u;
-  ::Msg::GetStateNodeRequest* temp = get_state_node_;
-  get_state_node_ = nullptr;
+  ::Msg::GetStateRequest* temp = get_state_req_;
+  get_state_req_ = nullptr;
   return temp;
 }
-inline ::Msg::GetStateNodeRequest* Request::mutable_get_state_node() {
+inline ::Msg::GetStateRequest* Request::mutable_get_state_req() {
   _has_bits_[0] |= 0x00000004u;
-  if (get_state_node_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Msg::GetStateNodeRequest>(GetArenaNoVirtual());
-    get_state_node_ = p;
+  if (get_state_req_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Msg::GetStateRequest>(GetArenaNoVirtual());
+    get_state_req_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:Msg.Request.get_state_node)
-  return get_state_node_;
+  // @@protoc_insertion_point(field_mutable:Msg.Request.get_state_req)
+  return get_state_req_;
 }
-inline void Request::set_allocated_get_state_node(::Msg::GetStateNodeRequest* get_state_node) {
+inline void Request::set_allocated_get_state_req(::Msg::GetStateRequest* get_state_req) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
-    delete get_state_node_;
+    delete get_state_req_;
   }
-  if (get_state_node) {
+  if (get_state_req) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
     if (message_arena != submessage_arena) {
-      get_state_node = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, get_state_node, submessage_arena);
+      get_state_req = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, get_state_req, submessage_arena);
     }
     _has_bits_[0] |= 0x00000004u;
   } else {
     _has_bits_[0] &= ~0x00000004u;
   }
-  get_state_node_ = get_state_node;
-  // @@protoc_insertion_point(field_set_allocated:Msg.Request.get_state_node)
+  get_state_req_ = get_state_req;
+  // @@protoc_insertion_point(field_set_allocated:Msg.Request.get_state_req)
 }
 
 // optional .Msg.UpdateStateHashRequest state = 4;
@@ -5882,53 +5813,53 @@ inline void Response::set_allocated_info(std::string* info) {
   // @@protoc_insertion_point(field_set_allocated:Msg.Response.info)
 }
 
-// optional .Msg.GetStateNodeResponse state_node = 3;
-inline bool Response::has_state_node() const {
+// optional .Msg.GetStateResponse get_state_res = 3;
+inline bool Response::has_get_state_res() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Response::clear_state_node() {
-  if (state_node_ != nullptr) state_node_->Clear();
+inline void Response::clear_get_state_res() {
+  if (get_state_res_ != nullptr) get_state_res_->Clear();
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const ::Msg::GetStateNodeResponse& Response::state_node() const {
-  const ::Msg::GetStateNodeResponse* p = state_node_;
-  // @@protoc_insertion_point(field_get:Msg.Response.state_node)
-  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::GetStateNodeResponse*>(
-      &::Msg::_GetStateNodeResponse_default_instance_);
+inline const ::Msg::GetStateResponse& Response::get_state_res() const {
+  const ::Msg::GetStateResponse* p = get_state_res_;
+  // @@protoc_insertion_point(field_get:Msg.Response.get_state_res)
+  return p != nullptr ? *p : *reinterpret_cast<const ::Msg::GetStateResponse*>(
+      &::Msg::_GetStateResponse_default_instance_);
 }
-inline ::Msg::GetStateNodeResponse* Response::release_state_node() {
-  // @@protoc_insertion_point(field_release:Msg.Response.state_node)
+inline ::Msg::GetStateResponse* Response::release_get_state_res() {
+  // @@protoc_insertion_point(field_release:Msg.Response.get_state_res)
   _has_bits_[0] &= ~0x00000002u;
-  ::Msg::GetStateNodeResponse* temp = state_node_;
-  state_node_ = nullptr;
+  ::Msg::GetStateResponse* temp = get_state_res_;
+  get_state_res_ = nullptr;
   return temp;
 }
-inline ::Msg::GetStateNodeResponse* Response::mutable_state_node() {
+inline ::Msg::GetStateResponse* Response::mutable_get_state_res() {
   _has_bits_[0] |= 0x00000002u;
-  if (state_node_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Msg::GetStateNodeResponse>(GetArenaNoVirtual());
-    state_node_ = p;
+  if (get_state_res_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Msg::GetStateResponse>(GetArenaNoVirtual());
+    get_state_res_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:Msg.Response.state_node)
-  return state_node_;
+  // @@protoc_insertion_point(field_mutable:Msg.Response.get_state_res)
+  return get_state_res_;
 }
-inline void Response::set_allocated_state_node(::Msg::GetStateNodeResponse* state_node) {
+inline void Response::set_allocated_get_state_res(::Msg::GetStateResponse* get_state_res) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
-    delete state_node_;
+    delete get_state_res_;
   }
-  if (state_node) {
+  if (get_state_res) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
     if (message_arena != submessage_arena) {
-      state_node = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, state_node, submessage_arena);
+      get_state_res = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, get_state_res, submessage_arena);
     }
     _has_bits_[0] |= 0x00000002u;
   } else {
     _has_bits_[0] &= ~0x00000002u;
   }
-  state_node_ = state_node;
-  // @@protoc_insertion_point(field_set_allocated:Msg.Response.state_node)
+  get_state_res_ = get_state_res;
+  // @@protoc_insertion_point(field_set_allocated:Msg.Response.get_state_res)
 }
 
 // optional .Msg.NewFileResponse new_file_response = 4;

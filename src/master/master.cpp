@@ -137,17 +137,17 @@ bool Master::updateState(Msg::Message &resMsg, const string &name, const string 
 
 bool Master::getStateNode(Msg::Message &resMsg, const string &name)
 {
-    logger.log("get state");
+    // logger.log("get state");
 
-    //todo exception to deal
-    if (!nodes.count(name)) 
-    {
-        logger.log("node not exist!");
-        GetStateNodeMsgResErrorInst(resMsg, "node not exist!");
-    }else
-    {
-        GetStateNodeMsgResInst(resMsg, stateName, nodes[stateName].getConnstring(), stateHash);
-    }
+    // //todo exception to deal
+    // if (!nodes.count(name)) 
+    // {
+    //     logger.log("node not exist!");
+    //     GetStateNodeMsgResErrorInst(resMsg, "node not exist!");
+    // }else
+    // {
+    //     GetStateNodeMsgResInst(resMsg, stateName, nodes[stateName].getConnstring(), stateHash);
+    // }
 
     return false;
 }
@@ -158,7 +158,6 @@ bool Master::handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, b
     Msg::Message recvMsg;
     Msg::Message resMsg;
     recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
-    cout<<recvMsg.type()<<endl;
     // node join
     if (recvMsg.type() == Msg::Join_Request)
     {
@@ -188,12 +187,12 @@ bool Master::handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, b
         );
     }
     // get stateNode for update
-    else if(recvMsg.type() == Msg::GetStateNode_Request)
+    else if(recvMsg.type() == Msg::GetState_Request)
     {
-        getStateNode(
-            resMsg,
-            recvMsg.request().get_state_node().name()
-        );
+        // getStateNode(
+        //     resMsg,
+        //     recvMsg.request().get_state_node().name()
+        // );
     }
 
     resMsg.SerializeToArray(sendbuf, MAXMSGSIZE);

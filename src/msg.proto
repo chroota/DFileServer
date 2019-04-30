@@ -6,8 +6,8 @@ enum MsgType
   Join_Response = 0x02;
   UpdateStatus_Request = 0x03;
   UpdateState_Request = 0x04;
-  GetStateNode_Request = 0x05;
-  GetStateNode_Response = 0x06;
+  GetState_Request = 0x05;
+  GetState_Response = 0x06;
   Common_Response = 0x07;
   MasterNotifyCmd_Request = 0x08;
   NewFile_Request = 0x09;
@@ -75,19 +75,18 @@ message UpdateStateHashRequest
 {
     required string name = 1;
     required string hash = 2;
-    required string auth = 3;
+    required bytes auth = 3;
 }
 
-message GetStateNodeRequest
+message GetStateRequest
 {
     required string name = 1;
+    required bytes auth = 2;
 }
 
-message GetStateNodeResponse
+message GetStateResponse
 {
-    optional string name = 1;
-    optional string conn_string   = 2;
-    optional string hash = 3;
+    optional string hash = 2;
 }
 
 // message MasterNotifyCmdRequest{
@@ -125,7 +124,6 @@ message FilePost
     // required int32 total_size = 5;
     // required FileType type = 2;
 }
-
 
 message EndFilePostRequest
 {
@@ -173,7 +171,7 @@ message Request
 {
     optional JoinRequest join = 1;
     optional UpdateStatusRequest update_status = 2;
-    optional GetStateNodeRequest get_state_node = 3;
+    optional GetStateRequest get_state_req = 3;
     optional UpdateStateHashRequest state = 4;
     optional NewFileRequest file = 5;
     optional RmFileRequest rm_op = 6;
@@ -187,7 +185,7 @@ message Response
 {
   required MsgResStatus status = 1;
   optional string info = 2;
-  optional GetStateNodeResponse state_node = 3;
+  optional GetStateResponse get_state_res = 3;
   optional NewFileResponse new_file_response = 4;
   optional LsFileResponse ls_file_res = 5;
   optional JoinResponse join_res = 6;
