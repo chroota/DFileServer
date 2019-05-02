@@ -30,7 +30,6 @@ $(OBJ_DIR)/md5.o: common/md5.cpp $(INCLUDE_DIR)/md5.hpp
 	$(CXX) $(INCLUDE_FLAG) ./common/md5.cpp $(LIBS) $(CXXFLAGS)  -c -o $@
 
 $(OBJ_DIR)/common.o: common/common.cpp $(INCLUDE_DIR)/common.hpp
-	@cp ./common/msg.pb.h $(INCLUDE_DIR)
 	$(CXX) $(INCLUDE_FLAG) ./common/common.cpp $(LIBS) $(CXXFLAGS) -c -o $@
 
 $(OBJ_DIR)/msg.o: common/msg.cpp $(INCLUDE_DIR)/msg.hpp

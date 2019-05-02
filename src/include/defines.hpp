@@ -2,7 +2,7 @@
 
 //socket buf size
 #define MAXBUFSIZE 256
-#define MAXMSGSIZE 2048
+#define MAXMSGSIZE 5120
 
 // msg type
 #define MSG_JOIN 0x01
@@ -36,21 +36,6 @@
  * notify events
 */
 #define EVENT_NUM 12
-// const char *event_str[EVENT_NUM] =
-// {
-// 	"IN_ACCESS",
-// 	"IN_MODIFY",
-// 	"IN_ATTRIB",
-// 	"IN_CLOSE_WRITE",
-// 	"IN_CLOSE_NOWRITE",
-// 	"IN_OPEN",
-// 	"IN_MOVED_FROM",
-// 	"IN_MOVED_TO",
-// 	"IN_CREATE",
-// 	"IN_DELETE",
-// 	"IN_DELETE_SELF",
-// 	"IN_MOVE_SELF"
-// };
 
 enum NODE_STATUS{
     NODE_STATUS_CREATE,

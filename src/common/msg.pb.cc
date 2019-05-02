@@ -752,7 +752,7 @@ const char descriptor_table_protodef_msg_2eproto[] =
   "eStateHashRequest\022\014\n\004name\030\001 \002(\t\022\014\n\004hash\030"
   "\002 \002(\t\022\014\n\004auth\030\003 \002(\014\"-\n\017GetStateRequest\022\014"
   "\n\004name\030\001 \002(\t\022\014\n\004auth\030\002 \002(\014\" \n\020GetStateRe"
-  "sponse\022\014\n\004hash\030\002 \001(\t\"m\n\016NewFileRequest\022\014"
+  "sponse\022\014\n\004hash\030\002 \001(\014\"m\n\016NewFileRequest\022\014"
   "\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileTyp"
   "e\022\027\n\017total_pack_size\030\003 \002(\005\022\027\n\017total_file"
   "_size\030\004 \002(\005\"*\n\017NewFileResponse\022\027\n\017post_s"
@@ -3454,10 +3454,10 @@ const char* GetStateResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
     switch (tag >> 3) {
-      // optional string hash = 2;
+      // optional bytes hash = 2;
       case 2: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
-        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_hash(), ptr, ctx, "Msg.GetStateResponse.hash");
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_hash(), ptr, ctx);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -3487,15 +3487,11 @@ bool GetStateResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string hash = 2;
+      // optional bytes hash = 2;
       case 2: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_hash()));
-          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->hash().data(), static_cast<int>(this->hash().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
-            "Msg.GetStateResponse.hash");
         } else {
           goto handle_unusual;
         }
@@ -3530,13 +3526,9 @@ void GetStateResponse::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional string hash = 2;
+  // optional bytes hash = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->hash().data(), static_cast<int>(this->hash().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateResponse.hash");
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
       2, this->hash(), output);
   }
 
@@ -3554,14 +3546,10 @@ void GetStateResponse::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional string hash = 2;
+  // optional bytes hash = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->hash().data(), static_cast<int>(this->hash().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "Msg.GetStateResponse.hash");
     target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
         2, this->hash(), target);
   }
 
@@ -3586,11 +3574,11 @@ size_t GetStateResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional string hash = 2;
+  // optional bytes hash = 2;
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->hash());
   }
 

@@ -344,13 +344,12 @@ void onSIGSEGV(int signum, siginfo_t *info, void *ptr)
 
 bool catchSegmentFaultError()
 {
-    struct sigaction act;
+    struct sigaction action;
     int sig = SIGSEGV;
-    sigemptyset(&act.sa_mask);
-    act.sa_sigaction = onSIGSEGV;
-    act.sa_flags = SA_SIGINFO;
-    if(sigaction(sig, &act, NULL) < 0)
+    sigemptyset(&action.sa_mask);
+    action.sa_sigaction = onSIGSEGV;
+    action.sa_flags = SA_SIGINFO;
+    if(sigaction(sig, &action, NULL) < 0)
         perror("SIGEGV sigaction register error:");
-
     return true;
 }

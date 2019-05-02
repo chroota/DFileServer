@@ -16,10 +16,12 @@
 #include <thread>
 #include <chrono>
 #include <atomic>
+#include <list>
 // #include <openssl/md5.h>
 #include "common.hpp"
-#include "msg.hpp"
-#include "md5pkg.hpp"
+#include <msg.hpp>
+#include <md5pkg.hpp>
+
 
 using  namespace std;
 
@@ -34,7 +36,7 @@ enum FileType{
 enum VvFsMode{
     VFM_CMD,
     VFM_WATCH,
-    VFM_BOTH    
+    VFM_BOTH
 };
 
 struct VFRelation{
@@ -43,7 +45,7 @@ struct VFRelation{
     int next_bro_idx = -1;  //next brother idx
     int prev_bro_idx = -1;  //previous brother idx
     int first_son_idx = -1; //first son idx
-    int last_son_idx = -1;  //id of last son idx     
+    int last_son_idx = -1;  //id of last son idx
 
     VFRelation(){}
     VFRelation(int idx, int fa_idx, int prev_bro_idx, int next_bro_idx, int first_son_idx, int last_son_idx)
@@ -206,13 +208,32 @@ public:
 };
 
 
-struct FileOp
+/*
+ * representation of file operation
+ * 1. create new file
+ * 2. rm file
+ * 3. mv file
+ * 4. copy file
+*/
+struct FileOperation
 {
     Msg::FileOpType type;
-    string path;
+    string srcPath;
     string dstPath;
-};
 
+    FileOperation()
+    {
+
+    }
+
+    FileOperation(Msg::FileOpType type, const string & srcPath, const string &dstPath)
+    {
+        this->type = type;
+        this->srcPath = srcPath;
+        this->dstPath = dstPath;
+    }
+    ~FileOperation(){}
+};
 
 class Vvfs
 {
@@ -230,9 +251,11 @@ private:
     ofstream *pVFOpLogFileFstream = nullptr;
     bool writeOpLog(Msg::FileOpType op, const string & pathString);
     atomic<bool> isVFRelationsStored;
+    list<FileOperation> operationList;
 public:
     string vfsPath;
-    int getNum(){
+    int getNum()
+    {
         return num;
     }
 
@@ -266,7 +289,6 @@ public:
         const string & vFRLogFile = "./test_dir/remote/vfr.txt", 
         const string & vFOpLogFile="./test_dir/remote/oplog.txt"
     );
-
 
     /*
      * access vfile & vfrelation mutual
@@ -314,29 +336,40 @@ public:
     string getVFPhasicalPath(string &vfDiskPath);
     bool getDirPathAndName(const string &path, string &dirPath, string &name, string &err);
 
-
     /*
      * create root vf
     */
     bool createRootVF();
 
+    // operation event fired
+    bool newFileEndingWork(const string &path);
+    bool rmFileEndingWork(const string &path);
+    bool mvFileEndingWork(const string &srcPath, const string &dstPath);
+    bool cpFileEndingWork(const string &srcPath, const string &dstPath);
+
+    // append new operation to file operation list
+    bool appenNewFileOperation(FileOperation && op);
+
     /*
      * update hash when file operation event fired
-     * Vvfs state hash: Hash(old_hash, op+path+now_time)
+     * Vvfs state hash: Hash(old_hash, op+path + now_time)
     */
     bool updateHashByNewFileOp(const string &path);
     bool updateHashByNewFileOp(const string &path, long long opTime);
-    bool updateHashByRMFileOp(const string &path);
-    bool updateHashByRMFileOp(const string &path, long long opTime);
+    bool updateHashByRmFileOp(const string &path);
+    bool updateHashByRmFileOp(const string &path, long long opTime);
     bool updateHashByMvFileOp(const string &srcPath, const string &dstPath);
     bool updateHashByMvFileOp(const string &srcPath, const string &dstPath, long long opTime);
+    bool updateHashByCpFileOp(const string &srcPath, const string &dstPath);
+    bool updateHashByCpFileOp(const string &srcPath, const string &dstPath, long long opTime);
 
     /*
      * op log writter
     */
     bool writeNewFileOpLog(const string &path);
-    bool writeRMFileOpLog(const string &path);
+    bool writeRmFileOpLog(const string &path);
     bool writeMvFileOpLog(const string &srcPath, const string &dstPath);
+    bool writeCpFileOpLog(const string &srcPath, const string &dstPath);
     bool writeMvFileOpLogTest();
 
     // demaon for Vvfs operations of backend

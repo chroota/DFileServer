@@ -17,6 +17,7 @@ Msg::Message UpdateStatusMsgReqInst(const string &name, NODE_STATUS status);
 Msg::Message UpdateStateMsgReqInst(const string & name, const string & hash, const string &auth);
 // bool UpdateStateHashMsgReqInst(Msg::Message &msg, const string & name, const string & hash);
 Msg::Message GetStateMsgReqInst(const string & name, const string &auth);
+bool GetStateMsgResInst(Msg::Message &resMsg, Msg::MsgResStatus status, const string &info, const string &hash);
 
 // bool GetStateMsgResInst(Msg::Message & msg, Msg::MsgResStatus status, const string & hash);
 Msg::Message CommonMsgResInst(Msg::MsgResStatus status, const char * info);

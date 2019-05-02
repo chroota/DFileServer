@@ -1256,7 +1256,7 @@ class GetStateResponse final :
 
   // accessors -------------------------------------------------------
 
-  // optional string hash = 2;
+  // optional bytes hash = 2;
   bool has_hash() const;
   void clear_hash();
   static const int kHashFieldNumber = 2;
@@ -1264,7 +1264,7 @@ class GetStateResponse final :
   void set_hash(const std::string& value);
   void set_hash(std::string&& value);
   void set_hash(const char* value);
-  void set_hash(const char* value, size_t size);
+  void set_hash(const void* value, size_t size);
   std::string* mutable_hash();
   std::string* release_hash();
   void set_allocated_hash(std::string* hash);
@@ -4241,7 +4241,7 @@ inline void GetStateRequest::set_allocated_auth(std::string* auth) {
 
 // GetStateResponse
 
-// optional string hash = 2;
+// optional bytes hash = 2;
 inline bool GetStateResponse::has_hash() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4270,7 +4270,7 @@ inline void GetStateResponse::set_hash(const char* value) {
   hash_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:Msg.GetStateResponse.hash)
 }
-inline void GetStateResponse::set_hash(const char* value, size_t size) {
+inline void GetStateResponse::set_hash(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   hash_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

@@ -67,7 +67,7 @@ string getBufMD5(const void * buf, int len);
 string getMD5string(unsigned char buf[], int len);
 
 // random key
-string getRandomKey(int size);
+string getRandomKey(int size = 7);
 
 /*
  * linux sig action

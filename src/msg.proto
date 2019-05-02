@@ -36,6 +36,7 @@ enum FileOpType
     NEW_OP  = 0x01;
     RM_OP   = 0x02;
     MV_OP   = 0x03;
+    CP_OP   = 0x04;
 }
 
 enum MsgResStatus
@@ -75,25 +76,19 @@ message UpdateStateHashRequest
 {
     required string name = 1;
     required string hash = 2;
-    required bytes auth = 3;
+    required bytes  auth = 3;
 }
 
 message GetStateRequest
 {
     required string name = 1;
-    required bytes auth = 2;
+    required bytes  auth = 2;
 }
 
 message GetStateResponse
 {
-    optional string hash = 2;
+    optional bytes hash = 2;
 }
-
-// message MasterNotifyCmdRequest{
-//     // required FileCMDType operation = 1;
-//     required string file_path = 2;
-//     required string hash = 3;
-// }
 
 message NewFileRequest
 {

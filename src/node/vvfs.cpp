@@ -17,7 +17,8 @@ bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const s
 bool VFile::updateHash(VFRelation &vfr)
 {
     ostringstream oss;
-    oss<<_type << getFullPath() <<_size<<_mtime.tv_sec<<_mtime.tv_nsec<<vfr.fa_idx<<vfr.idx<<vfr.prev_bro_idx<<vfr.next_bro_idx<<vfr.first_son_idx<<vfr.last_son_idx;
+    oss << _type << getFullPath() <<_size << _mtime.tv_sec << _mtime.tv_nsec << vfr.fa_idx
+        << vfr.idx << vfr.prev_bro_idx << vfr.next_bro_idx << vfr.first_son_idx << vfr.last_son_idx;
     _hash = getBufMD5(oss.str().c_str(), oss.str().size());
     return true;
 }
@@ -56,7 +57,7 @@ bool Vvfs::updateHashFromVFOpLogFile()
             if(op == Msg::NEW_OP) 
                 updateHashByNewFileOp(path, opTime);
             else if(op == Msg::RM_OP) 
-                updateHashByRMFileOp(path, opTime);
+                updateHashByRmFileOp(path, opTime);
         }
     }
     ifs.close();
@@ -162,7 +163,11 @@ bool Vvfs::buildVFS()
     while(i++ < count)
     {
         //idx; name; dirPath; fa_idx; prev_bro_idx; next_bro_idx; first_son_idx; last_son_idx; type:0 file 1 dir; tv_sec; tv_nsec; size; hash
-        ifs>>idx>>name>>dirPath>>fa_idx>>prev_bro_idx>>next_bro_idx>>first_son_idx>>last_son_idx>>type>>tv_sec>>tv_nsec>>size>>readHash;
+        ifs >> idx >> name >> dirPath >> fa_idx 
+            >> prev_bro_idx >> next_bro_idx >> first_son_idx 
+            >> last_son_idx >> type >> tv_sec >> tv_nsec 
+            >> size >> readHash;
+            
         if(ifs.fail())
         {
             logger.fatal("read VFRelations error");
@@ -640,12 +645,12 @@ bool Vvfs::rmVF(const string &path, string &err)
     vfDir.decSize();
 
     err = "";
-    if(!updateHashByRMFileOp(path))
+    if(!updateHashByRmFileOp(path))
     {
         logger.fatal("rm hash update error");
     }
 
-    if(!writeRMFileOpLog(path))
+    if(!writeRmFileOpLog(path))
     {
         logger.fatal("rm log write error");
     }
@@ -654,6 +659,38 @@ bool Vvfs::rmVF(const string &path, string &err)
     logger.log(LDEBUG, "rm op ok, path:%s, new hash:%s", path.c_str(), hash.c_str());
     return true;
 }
+
+bool Vvfs::newFileEndingWork(const string &path)
+{
+    appenNewFileOperation(move(FileOperation(Msg::NEW_OP, path, "")));
+    updateHashByNewFileOp(path);
+    writeNewFileOpLog(path);
+    return true;
+}
+
+bool Vvfs::rmFileEndingWork(const string &path)
+{
+    appenNewFileOperation(move(FileOperation(Msg::RM_OP, path, "")));
+    updateHashByRmFileOp(path);
+    writeRmFileOpLog(path);
+    return true;
+}
+
+
+bool Vvfs::mvFileEndingWork(const string &srcPath, const string &dstPath)
+{
+    appenNewFileOperation(move(FileOperation(Msg::MV_OP, srcPath, dstPath)));
+    updateHashByMvFileOp(srcPath, dstPath);
+    writeMvFileOpLog(srcPath, dstPath);
+    return true;
+}
+
+bool Vvfs::cpFileEndingWork(const string &srcPath, const string &dstPath)
+{
+
+}
+
+
 
 
 VFile & Vvfs::getVFByVfr(VFRelation & vfr)
@@ -788,12 +825,12 @@ bool Vvfs::updateHashByNewFileOp(const string &path, long long opTime)
     return true;
 }
 
-bool Vvfs::updateHashByRMFileOp(const string &path)
+bool Vvfs::updateHashByRmFileOp(const string &path)
 {
-    return updateHashByRMFileOp(path, getSystemTime());
+    return updateHashByRmFileOp(path, getSystemTime());
 }
 
-bool Vvfs::updateHashByRMFileOp(const string &path, long long opTime)
+bool Vvfs::updateHashByRmFileOp(const string &path, long long opTime)
 {
     ostringstream oss;
     oss << Msg::RM_OP << path << opTime;
@@ -849,7 +886,7 @@ bool Vvfs::writeNewFileOpLog(const string &path)
     }
     return true;
 }
-bool Vvfs::writeRMFileOpLog(const string &path)
+bool Vvfs::writeRmFileOpLog(const string &path)
 {
     if(!writeOpLog(Msg::RM_OP, path))
     {
@@ -868,6 +905,20 @@ bool Vvfs::writeMvFileOpLog(const string &srcPath, const string &dstPath)
         return false;
     }
     return true;
+}
+
+bool Vvfs::appenNewFileOperation(FileOperation && op)
+{
+    try
+    {
+        operationList.push_back(op);
+        return true;
+    }
+    catch(const std::exception& e)
+    {
+        logger.fatal(e.what());
+        return false;
+    }
 }
 
 

@@ -28,8 +28,7 @@ bool Node::createFileServer()
 
 
 void Node::checkFileSync()
-{
-    
+{   
 }
 
 void Node::syncFileFn()
@@ -42,24 +41,89 @@ void Node::syncFileFn()
     }
 }
 
-void Node::serverFn()
+bool Node::cacheNodeData(const string &name, const string &pubkey)
 {
-    int i = 0;
-    while(i++ < 100)
-    {
-        std::cout<<"server fn"<<std::endl;
-        sleep(1);
-    }
+    // cout << name << endl << pubkey << endl;
+    if(name.size() == 0 || pubkey.size() == 0 || nodesDataCache.count(name) != 0) 
+        return false;
+    
+    nodesDataCache.emplace(
+        piecewise_construct,
+        forward_as_tuple(name), 
+        forward_as_tuple(name, pubkey, getRandomKey())
+    );
+    return true;
 }
 
-void Node::keepAliveFn(){
-    logger.log("test");
-    while(true)
+NodeData *Node::getNodeDataFromcache(const string &name, string  &err)
+{
+    if(nodesDataCache.count(name) != 0)
+        return &nodesDataCache[name];
+
+    string pubkeyPath = keypairDir + "/" + name + "/pubkey.pem";
+    ifstream pubkeyIfs(pubkeyPath);
+    if(pubkeyIfs.fail())
     {
-        // std::cout<<"request fn"<<std::endl;
-        updateStatus(NODE_STATUS_ALIVE);
-        this_thread::sleep_for(chrono::seconds(aliveSyncTime));
+        err = name + " pubkey not existed";
+        return nullptr;
     }
+
+    string pubkey((std::istreambuf_iterator<char>(pubkeyIfs)),  
+        std::istreambuf_iterator<char>());
+    if(!cacheNodeData(name, pubkey))
+    {
+        err = "cache node data err";
+        return nullptr;
+    }
+    return &nodesDataCache[name];
+}
+
+
+string Node::encryptByMyPrivKey(const string &data)
+{
+    return rsaEncryptByPrivkey(data, privkey);
+}
+
+
+string Node::encryptByOtherNodePubKey(const string & name, 
+    const string &data)
+{
+    string err;
+    NodeData *pNodeData = getNodeDataFromcache(name, err);
+    if(pNodeData == nullptr)
+        return "";
+    return rsaEncryptByPubkey(data, pNodeData->pubkey);
+}
+
+string Node::decryptByOtherNodePubKey(const string & name, 
+    const string &data)
+{
+    string err;
+    NodeData *pNodeData = getNodeDataFromcache(name, err);
+    if(pNodeData == nullptr)
+        return "";
+    return rsaDecryptByPubkey(data, pNodeData->pubkey);
+}
+
+string Node::decryptByMyPrivKey(const string &data)
+{
+    return rsaDecryptByPrivkey(data, privkey);
+}
+
+string Node::getEncryptedAuthkey()
+{
+    return encryptByMyPrivKey(myName);
+}
+
+
+bool Node::authenticateNode(const string &name, const string &auth, string &err)
+{
+    NodeData *pNodeData = getNodeDataFromcache(name, err);
+    if(pNodeData == nullptr)
+        return false;
+    
+    string decryptedAuth = decryptByOtherNodePubKey(name, auth);
+    return name == decryptedAuth;
 }
 
 void Node::forever(int argc, char *argv[])
@@ -96,25 +160,26 @@ void Node::forever(int argc, char *argv[])
     //     exit(-1);
     // }
 
-    if(!isStateNode && !getStateRequest())
+    if(!isStateNode && !requestState())
     {
         logger.log("get state error");
         exit(-1);
     }
 
-    pPushFileServer->listen(pushFileServerPort);
+    this->listen(nodePort);
+
+    // pPushFileServer->listen(pushFileServerPort);
 }
 
-bool Node::getStateRequest()
+bool Node::requestState()
 {
     char recvbuf[MAXMSGSIZE];
     int recvLen;
     char sendbuf[MAXMSGSIZE];
-    string auth = rsaEncryptByPrivkey(name, privkey);
-    Msg::Message msg = GetStateMsgReqInst(name, auth);
-    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
+    Msg::Message sendMsg = GetStateMsgReqInst(myName, myAuth);
+    sendMsg.SerializeToArray(sendbuf, MAXMSGSIZE);
     //todo catch error
-    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recvLen);
+    urequest(masterIp, masterPort, sendbuf, sendMsg.ByteSize(), recvbuf, recvLen);
     Msg::Message recvMsg;
     recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
     if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
@@ -122,13 +187,14 @@ bool Node::getStateRequest()
         logger.log(recvMsg.response().info());
         return false;
     }
-    stateHash = recvMsg.response().info();
-    cout<<"recv state hash:"<<endl;
+    string encryptedHash = recvMsg.response().get_state_res().hash();
+    string decryptedHash = decryptByMyPrivKey(encryptedHash);
+    cout << "recv state hash:" << decryptedHash << endl;
     return true;
 }
 
 
-bool Node::getStateResponse(Msg::Message & recvMsg, Msg::Message & resMsg)
+bool Node::responseState(Msg::Message & recvMsg, Msg::Message & resMsg)
 {
     logger.log("request new state");
     string name = recvMsg.request().get_state_req().name();
@@ -139,87 +205,41 @@ bool Node::getStateResponse(Msg::Message & recvMsg, Msg::Message & resMsg)
     {
         err = name + " auth error";
         logger.log(err);
-        CommonMsgResInst(resMsg, Msg::MSG_RES_ERROR, err);
+        GetStateMsgResInst(resMsg, Msg::MSG_RES_ERROR, err, "None");
         return false;
     }
 
+    if(!authenticateNode(name, auth, err))
+    {
+        logger.log(err);
+        err = name + " auth error";
+        logger.log(err);
+        GetStateMsgResInst(resMsg, Msg::MSG_RES_ERROR, err, "None");
+        return false;
+    }
+
+    string encryptedHash = encryptByOtherNodePubKey(name, stateHash);
+    GetStateMsgResInst(resMsg, Msg::MSG_RES_OK, "", encryptedHash);
     return true;
 }
 
 // update hash
 bool Node::updateState(const string &hash)
 {
-    logger.debug("update state");
-    char recvbuf[MAXMSGSIZE];
-    int recvLen;
-    char sendbuf[MAXMSGSIZE];
-    string auth = rsaEncryptByPrivkey(name, privkey);
-    Msg::Message sendMsg = UpdateStateMsgReqInst(name, hash, auth);
-
-    sendMsg.SerializeToArray(sendbuf, MAXMSGSIZE);
-    //todo catch error
-    urequest(masterIp, masterPort, sendbuf, sendMsg.ByteSize(), recvbuf, recvLen);
-    Msg::Message recvMsg;
-    recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR)
-    {
-        logger.log(recvMsg.response().info());
-        return false;
-    }
-    logger.log(recvMsg.response().info());
+    //todo
     return true;
 }
 
 // update status
 bool Node::updateStatus(NODE_STATUS status)
 {
-    char recvbuf[MAXBUFSIZE];
-    int recvLen;
-    char sendbuf[MAXBUFSIZE];
-    Msg::Message msg = UpdateStatusMsgReqInst(name.c_str(), status);
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
-    //todo catch error
-    urequest(masterIp, masterPort, sendbuf, strlen(sendbuf), recvbuf, recvLen);
-    Msg::Message recvMsg;
-    // printf("%d\n", strlen(recvbuf));
-    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
-    {
-        logger.log(recvMsg.response().info());
-        return false;
-    }
-    logger.log(recvMsg.response().info());
+    //todo
     return true;
 }
 
 bool Node::join()
 {
-    char recvbuf[MAXMSGSIZE];
-    int recvLen;
-    char sendbuf[MAXMSGSIZE];
-    string auth = rsaEncryptByPrivkey(name, privkey);
-    Msg::Message msg = JoinMsgReqInst(name, nodeIp, to_string(nodePort), auth);
-    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
-    //todo catch error recvMsg
-    urequest(masterIp, masterPort, sendbuf, msg.ByteSize(), recvbuf, recvLen);
-    
-    Msg::Message recvMsg;
-    if(!recvMsg.ParseFromArray(recvbuf, recvLen))
-    {
-        logger.fatal("fail to join, parse msg error");
-        return false;
-    }
-    if (recvMsg.response().status() == Msg::MSG_RES_ERROR) 
-    {
-        logger.log(recvMsg.response().info());
-        return false;
-    }
-    string encryptedEncryptKey = recvMsg.response().join_res().encrypedencryptkey();
-    encryptKey = rsaDecryptByPrivkey(encryptedEncryptKey, privkey);
-    
-    logger.debug("encrypt key:"+encryptKey);
-    // logger.log(recvMsg.response().info());
-    logger.log("success join");
+    //todo
     return true;
 }
 
@@ -235,7 +255,7 @@ bool Node::listen(int port)
 
 bool Node::handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse)
 {
-    if (strlen(recvbuf) == 0 || recvLen <= 0) 
+    if (recvLen <= 0) 
     {
         logger.log("error: len = 0");
         //todo response
@@ -244,13 +264,13 @@ bool Node::handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, boo
 
     Msg::Message recvMsg;
     Msg::Message resMsg;
-    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
 
     switch (recvMsg.type())
     {
     case Msg::GetState_Request:
         // getStateRequest()
-        getStateResponse(recvMsg, resMsg);
+        responseState(recvMsg, resMsg);
         break;
     default:
         break;
@@ -284,11 +304,12 @@ bool Node::initConfig(int argc, char *argv[])
     masterIp = "127.0.0.1";
     masterPort = 8888;
     aliveSyncTime = ALIVE_SYNC_TIME;
-    name = "node1";
+    myName = "node1";
     masterNode = "node1";
     syncDir = "./test_dir/remote";
     // catchSegmentFaultError();
-    keypairDir = "./test_dir/nodes_dir/" + name;
+    keypairDir = "./test_dir/nodes_dir/";
+    stateHash = "init state";
 
     int ch;
     opterr = 0;
@@ -298,7 +319,7 @@ bool Node::initConfig(int argc, char *argv[])
         {
             case 'i': nodeIp = optarg;  break;
             case 'p': nodePort = atoi(optarg); break;
-            case 'n': name = optarg; keypairDir = "./test_dir/nodes_dir/" + name; break;
+            case 'n': myName = optarg; break;
             case 'd': syncDir = optarg;  break;
             case 'h': masterIp = optarg;  break;
             case 'q': masterPort = atoi(optarg);  break;
@@ -315,14 +336,15 @@ bool Node::initConfig(int argc, char *argv[])
          << "master port:"         << masterPort << endl
          << "pullFileServer port:" << pullFileServerPort << endl
          << "pushFileServer port:" << pushFileServerPort << endl
-         << "name:"                << name << endl
+         << "name:"                << myName << endl
          << "syncDir:"             << syncDir << endl
          << "keypairDir:"          << keypairDir << endl
          << "------------------------------------------------------------------"
          << endl;
 
-    string privkeyPath = keypairDir + "/" + "privkey.pem";
-    string pubkeyPath = keypairDir + "/" + "pubkey.pem";
+    string ownKeyPairDir = keypairDir + "/" + myName + "/";
+    string privkeyPath = ownKeyPairDir + "privkey.pem";
+    string pubkeyPath = ownKeyPairDir +"pubkey.pem";
     
     ifstream privkeyIfs(privkeyPath);
     ifstream pubkeyIfs(pubkeyPath);
@@ -331,7 +353,7 @@ bool Node::initConfig(int argc, char *argv[])
         logger.log("no rsa key pair for master, now create new pairs");
         string strKey[2];
         string err;
-        mkdirIfNotExist(keypairDir, err);
+        mkdirIfNotExist(ownKeyPairDir, err);
         generateRSAKey(strKey, pubkeyPath, privkeyPath);
     }else
     {
@@ -348,7 +370,8 @@ bool Node::initConfig(int argc, char *argv[])
         }
     }
 
-    if(masterNode == name)
+    myAuth = encryptByMyPrivKey(myName);
+    if(masterNode == myName)
         isStateNode = true;
 
     return true;

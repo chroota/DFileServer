@@ -206,24 +206,24 @@ bool Tp::lsVF(const string & remotePath)
     for (int i = 0; i < lsFileResponse.files_size(); i++)
     {
         const Msg::FileAttribute & file = lsFileResponse.files(i);
-        cout<<file.time()<<" ";
+        cout << file.time() << " ";
         cout.setf(ios::right);
         cout.width(4);
         if(file.type() == Msg::FT_DIR)
         {
-            cout<<"dir"<<" ";
+            cout << "dir" << " ";
         }else
         {
-            cout<<"file"<<" ";
+            cout << "file" << " ";
         }
         cout.setf(ios::right);
         cout.width(10);
-        cout<<file.size()<<" ";
-        cout<<file.name();
+        cout << file.size() << " ";
+        cout << file.name();
         if(i == 0){
-            cout<< "(.)";
+            cout << "(.)";
         }
-        cout<<endl;
+        cout << endl;
     }
     
     return true;
@@ -256,13 +256,13 @@ bool Tp::mvVF(const string & remoteSrcPath, const string & remoteDstPath)
         return true;
     }
 
-    cout<<"success move "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
+    cout << "success move " << remoteSrcPath << " to " << remoteDstPath << endl;
     return true;   
 }
 
 bool Tp::cpVF(const string & remoteSrcPath, const string & remoteDstPath)
 {
-    logger.debugAction("cp: src:"+remoteSrcPath+" dst:"+remoteDstPath);
+    logger.debugAction("cp: src:" + remoteSrcPath+" dst:" + remoteDstPath);
 
     char sendbuf[MAXBUFSIZE], recvbuf[MAXBUFSIZE];
     int recvLen;
@@ -270,7 +270,8 @@ bool Tp::cpVF(const string & remoteSrcPath, const string & remoteDstPath)
     CpFileMsgReqInst(sendMsg, remoteSrcPath, remoteDstPath);
     sendMsg.SerializeToArray(sendbuf, MAXBUFSIZE);
 
-    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen)){
+    if(!urequest(host.c_str(), port, sendbuf, MAXBUFSIZE, recvbuf, recvLen))
+    {
         cout<<"send data error, errorno:"<<errno<<" info:%s"<<strerror(errno);
         return false;
     }
@@ -278,11 +279,11 @@ bool Tp::cpVF(const string & remoteSrcPath, const string & remoteDstPath)
     recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
     if(recvMsg.response().status() == Msg::MSG_RES_ERROR)
     {
-        cout << "cp fail, "<<recvMsg.response().info()<<endl;
+        cout << "cp fail, " << recvMsg.response().info() << endl;
         return true;
     }
 
-    cout<<"success cp "<<remoteSrcPath<<" to "<<remoteDstPath<<endl;
+    cout<<"success cp " << remoteSrcPath << " to "<< remoteDstPath << endl;
     return true;   
 }
 

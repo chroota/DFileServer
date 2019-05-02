@@ -62,23 +62,19 @@ Msg::Message GetStateMsgReqInst(const string & name, const string &auth)
 {
     Msg::Message msg;
     msg.set_type(Msg::GetState_Request);
-    // msg.mutable_request()->mutable_get_state_node()->set_name(name);
     msg.mutable_request()->mutable_get_state_req()->set_name(name);
     msg.mutable_request()->mutable_get_state_req()->set_auth(auth);
     return msg;
 }
 
 
-// bool GetStateMsgResInst(Msg::Message & msg, const string & hash)
-// {
-//     msg.mutable_response()->set_status(Msg::MSG_RES_OK);
-//     msg.mutable_response()->set_info("ok");
-//     // msg.mutable_response()->mutable_state_node()->set_name(name);
-//     // msg.mutable_response()->mutable_state_node()->set_hash(hash);
-//     // msg.mutable_response()->mutable_state_node()->set_conn_string(connString);
-//     msg.mutable_response()->mutable_get_state_res()->set_hash(hash);
-//     return true;
-// }
+bool GetStateMsgResInst(Msg::Message &resMsg, Msg::MsgResStatus status, const string &info, const string &hash)
+{
+    resMsg.mutable_response()->set_status(status);
+    resMsg.mutable_response()->set_info(info);
+    resMsg.mutable_response()->mutable_get_state_res()->set_hash(hash);
+    return true;
+}
 
 
 // bool GetStateNodeMsgResErrorInst(Msg::Message &msg, const char * info)
