@@ -61,6 +61,35 @@ struct VFRelation{
     ~VFRelation(){}
 };
 
+
+/*
+ * representation of file operation
+ * 1. create new file
+ * 2. rm file
+ * 3. mv file
+ * 4. copy file
+*/
+struct FileOperation
+{
+    Msg::FileOpType type;
+    string srcPath;
+    string dstPath;
+    string stateHash;
+    long long opTime;
+
+    FileOperation(){}
+
+    FileOperation(Msg::FileOpType type, const string & srcPath, const string &dstPath, const string & stateHash, long long opTime)
+    {
+        this->type = type;
+        this->srcPath = srcPath;
+        this->dstPath = dstPath;
+        this->stateHash = stateHash;
+        this->opTime = opTime;
+    }
+    ~FileOperation(){}
+};
+
 class VFile
 {
 private:
@@ -68,22 +97,23 @@ private:
     string _name = "";
     string _disk_path = "";
     string _dirPath = "";
-    off_t _size = 0;       // for dir: number of chidren; for file: size of file
-    string _hash = "";       // todo
-    struct timespec _mtime;
+    off_t _size = 0;            // for dir: number of chidren; for file: size of file
+    string _hash = "";          // todo
+    // struct timespec _mtime;
+    time_t _tv_sec;              // tv_sec
     bool status = false;        // 1:active 0:dead
     string _ext = "";
 public:
     VFile(){};
     ~VFile(){};
-    VFile(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime)
-        :_name(name), _type(type), _dirPath(dirPath), _size(size), _mtime(mtime)
+    VFile(const string & name, FileType type, const string & dirPath, off_t size, time_t tv_sec)
+        :_name(name), _type(type), _dirPath(dirPath), _size(size), _tv_sec(tv_sec)
     {
         string fullPath = dirPath + name;
         if(type == VFT_FILE)
         {
             ostringstream oss;
-            oss<<dirPath<<name<<size<<mtime.tv_nsec<<mtime.tv_sec;
+            oss << dirPath << name << size << tv_sec;
             _disk_path = getBufMD5(oss.str().c_str(), oss.str().size());
             int extIdx = name.find_last_of(".");
             if(extIdx != -1) 
@@ -91,10 +121,10 @@ public:
         }
     };
 
-    struct timespec getMtime()
-    {
-        return _mtime;
-    }
+    // struct timespec getMtime()
+    // {
+    //     return _mtime;
+    // }
 
     bool setDirPath(const string &path)
     {
@@ -137,12 +167,13 @@ public:
 
     long getTvSec()
     {
-        return _mtime.tv_sec;
+        return _tv_sec;
     }
 
     long getTvNsec()
     {
-        return _mtime.tv_nsec;
+        return 0;
+        // return _mtime.tv_nsec;
     }
 
     bool active()
@@ -207,34 +238,6 @@ public:
     bool updateHash(VFRelation &vfr);
 };
 
-
-/*
- * representation of file operation
- * 1. create new file
- * 2. rm file
- * 3. mv file
- * 4. copy file
-*/
-struct FileOperation
-{
-    Msg::FileOpType type;
-    string srcPath;
-    string dstPath;
-
-    FileOperation()
-    {
-
-    }
-
-    FileOperation(Msg::FileOpType type, const string & srcPath, const string &dstPath)
-    {
-        this->type = type;
-        this->srcPath = srcPath;
-        this->dstPath = dstPath;
-    }
-    ~FileOperation(){}
-};
-
 class Vvfs
 {
 private:
@@ -249,9 +252,9 @@ private:
     Logger logger;
     MD5pkg hashpkg;
     ofstream *pVFOpLogFileFstream = nullptr;
-    bool writeOpLog(Msg::FileOpType op, const string & pathString);
     atomic<bool> isVFRelationsStored;
     list<FileOperation> operationList;
+
 public:
     string vfsPath;
     int getNum()
@@ -306,46 +309,50 @@ public:
     /*
      * vf control
     */
+    // create root vf
+    bool createRootVF(time_t opTime = -1);
     //create dir
-    bool mkVDir(const string &name, string &err);
+    bool mkVDir(const string &path, string &err, time_t opTime = -1);
     // create new vf
-    bool newVF(const string &name, off_t totalSize, string &err, string &diskPath, FileType type = VFT_FILE); //create file
+    bool newVF(const string &path, off_t totalSize, string &err, string &diskPath, FileType type = VFT_FILE, time_t opTime = -1); //create file
     // remove vf
-    bool rmVF(const string &name, string &err);
-    bool rmSubVFS(VFile &vf, string &err);
+    bool rmVF(const string &path, string &err, time_t opTime = -1);
+    bool rmSubfolder(VFile &vf, string &err);
     // move vf
-    bool mvVF(const string &srcPath, const string &dstPath, string &err);
+    bool mvVF(const string &srcPath, const string &dstPath, string &err, time_t opTime = -1);
     // cp vf
-    bool cpVF(const string &srcPath, const string &dstPath, string &err);
+    bool cpVF(const string &srcPath, const string &dstPath, string &err, time_t opTime = -1);
     // list vf info
     bool lsVF(const string & path, Msg::Message &msg);
     // active vf when new file is upload complete
-    bool activeVF(const string &name, string &err);
+    bool activeVF(const string &path, string &err);
+
+   
+    bool syncNewVfOp(const string &path, const string &hash, time_t opTime);
+    bool syncNewVDirOp(const string &path, const string &hash, time_t opTime);
+    bool syncRmVfOp(const string &path, const string &hash, time_t opTime);
+    bool syncMvVfOp(const string &srcPath, const string &dstPath, const string &hash, time_t opTime);
+    bool syncCpVfOp(const string &srcPath, const string &dstPath, const string &hash, time_t opTime);
 
     // copy disk path
     bool copyDiskFile(const string& srcPath, const string &dstPath);
 
     //
-    int pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime);
-
+    int pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, time_t opTime = -1);
     bool pushbackVf(VFRelation & dirVfr, VFile &vf);
     bool removeVfRelation(VFile &vf, bool isVfDestory=true);
-    bool changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &newDirPath, bool isVfDestory=true);
+    bool changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &newDirPath, bool isVfDestory = true);
 
     string getVFPhasicalPath(VFile & vf);
     string getVFPhasicalPath(string &vfDiskPath);
     bool getDirPathAndName(const string &path, string &dirPath, string &name, string &err);
 
-    /*
-     * create root vf
-    */
-    bool createRootVF();
-
     // operation event fired
-    bool newFileEndingWork(const string &path);
-    bool rmFileEndingWork(const string &path);
-    bool mvFileEndingWork(const string &srcPath, const string &dstPath);
-    bool cpFileEndingWork(const string &srcPath, const string &dstPath);
+    bool newFileEndingWork(const string &path, time_t opTime = -1);
+    bool newDirEndingWork(const string &path, time_t opTime = -1);
+    bool rmFileEndingWork(const string &path, time_t opTime = -1);
+    bool mvFileEndingWork(const string &srcPath, const string &dstPath, time_t opTime = -1);
+    bool cpFileEndingWork(const string &srcPath, const string &dstPath, time_t opTime = -1);
 
     // append new operation to file operation list
     bool appenNewFileOperation(FileOperation && op);
@@ -354,23 +361,34 @@ public:
      * update hash when file operation event fired
      * Vvfs state hash: Hash(old_hash, op+path + now_time)
     */
-    bool updateHashByNewFileOp(const string &path);
-    bool updateHashByNewFileOp(const string &path, long long opTime);
-    bool updateHashByRmFileOp(const string &path);
-    bool updateHashByRmFileOp(const string &path, long long opTime);
-    bool updateHashByMvFileOp(const string &srcPath, const string &dstPath);
-    bool updateHashByMvFileOp(const string &srcPath, const string &dstPath, long long opTime);
-    bool updateHashByCpFileOp(const string &srcPath, const string &dstPath);
-    bool updateHashByCpFileOp(const string &srcPath, const string &dstPath, long long opTime);
+    // string updateHashByNewFileOp(const string &path);
+    string updateHashByNewFileOp(const string &path, time_t opTime);
+    // string updateHashByRmFileOp(const string &path);
+    string updateHashByRmFileOp(const string &path, time_t opTime);
+    // string updateHashByMvFileOp(const string &srcPath, const string &dstPath);
+    string updateHashByMvFileOp(const string &srcPath, const string &dstPath, time_t opTime);
+    // string updateHashByCpFileOp(const string &srcPath, const string &dstPath);
+    string updateHashByCpFileOp(const string &srcPath, const string &dstPath, time_t opTime);
+    bool updateHash(const string &newestHash);
 
     /*
      * op log writter
     */
-    bool writeNewFileOpLog(const string &path);
-    bool writeRmFileOpLog(const string &path);
-    bool writeMvFileOpLog(const string &srcPath, const string &dstPath);
-    bool writeCpFileOpLog(const string &srcPath, const string &dstPath);
+    bool writeNewFileOpLog(const string &path, const string &hash);
+    bool writeRmFileOpLog(const string &path, const string &hash);
+    bool writeMvFileOpLog(const string &srcPath, const string &dstPath, const string &hash);
+    bool writeCpFileOpLog(const string &srcPath, const string &dstPath, const string &hash);
+    bool writeOpLog(Msg::FileOpType op, const string & pathString, const string &hash);
     bool writeMvFileOpLogTest();
+
+    // restore state from operation log file
+    bool restoreStateFromOpLog();
+
+    // get left file ops from given hash and iter
+    bool getLeftFileOpsToMsg(Msg::Message &msg, const string &hash);
+
+    // rollback to previous state
+    bool rollback();
 
     // demaon for Vvfs operations of backend
     bool deamon();

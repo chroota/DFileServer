@@ -6,7 +6,7 @@ string getTimeStringFromTvSec(int tv_sec)
     time_t tt = tv_sec;
     t = localtime(&tt);
     char buf[MAXBUFSIZE];
-    sprintf(buf, "%4d-%02d-%02d %02d:%02d:%02d", t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec);
+    sprintf(buf, "%4d-%02d-%02d %02d:%02d:%02d", t->tm_year+1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
     return string(buf);
 }
 
@@ -18,14 +18,20 @@ struct timespec getTimeSpec()
     return ts;
 }
 
-long long getSystemTime()
+long long getSystemLongTime()
 {
-	struct timeb t;
+    struct timeb t;
 	ftime(&t);
 	return 1000*t.time + t.millitm;
 }
 
-void ssplit(const string& s, vector<string>& sv, const char flag) 
+time_t getSystemTime()
+{
+    time_t t = time(NULL);
+    return t;
+}
+
+void ssplit(const string& s, vector<string>& sv, const char flag)
 {
     sv.clear();
     istringstream iss(s);
@@ -38,7 +44,7 @@ void ssplit(const string& s, vector<string>& sv, const char flag)
     return;
 }
 
-// 
+//
 string getBufMD5(const void * buf, int len)
 {
     MD5_CTX md5Context;

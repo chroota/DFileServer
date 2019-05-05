@@ -14,7 +14,7 @@ OBJS = $(OBJ_DIR)/md5.o $(OBJ_DIR)/common.o $(OBJ_DIR)/msg.o $(OBJ_DIR)/tcp_serv
 
 MASTER_OBJS = $(OBJ_DIR)/master.o
 
-NODE_OBJS = $(OBJ_DIR)/node.o $(OBJ_DIR)/vvfs.o $(OBJ_DIR)/pushfile_server.o
+NODE_OBJS = $(OBJ_DIR)/vvfs.o $(OBJ_DIR)/pushfile_server.o $(OBJ_DIR)/node.o
 
 TP_OBJS = $(OBJ_DIR)/tp.o
 
@@ -74,7 +74,7 @@ node: $(OBJS) $(NODE_OBJS)
 tp: $(OBJS) $(TP_OBJS)
 	$(CXX) $(INCLUDE_FLAG) $(OBJS) $(TP_OBJS) $(LIBS) $(CXXFLAGS) -o $(TARGET_DIR)/tp
 
-all: master node tp
+all: node tp
 	
 
 clean:

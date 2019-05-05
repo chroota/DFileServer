@@ -141,7 +141,7 @@ bool NewFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, int postSess
 
 
 // file transfer
-bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionid)
+bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], int fileIndx, int packIndx, int dataSize, int postSesionId)
 {
     msg.set_type(Msg::File_Post);
     msg.mutable_file_post()->set_name(name);
@@ -149,7 +149,7 @@ bool FileChunkPostMsgInst(Msg::Message & msg, const string &name, char buf[], in
     msg.mutable_file_post()->set_file_idx(fileIndx);
     msg.mutable_file_post()->set_pack_idx(packIndx);
     msg.mutable_file_post()->set_data_size(dataSize);
-    msg.mutable_file_post()->set_post_session_id(postSesionid);
+    msg.mutable_file_post()->set_post_session_id(postSesionId);
     return true;
 }
 
@@ -176,7 +176,7 @@ bool LsFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string 
     return true;
 }
 
-bool AddAttributeToFileMsg(Msg::Message &msg, const string name, int size, Msg::FileType type, const string &time)
+bool AddAttributeToLsFileMsg(Msg::Message &msg, const string name, int size, Msg::FileType type, const string &time)
 {
     Msg::FileAttribute *fattr;
     fattr = msg.mutable_response()->mutable_ls_file_res()->add_files();
@@ -203,6 +203,71 @@ bool CpFileMsgReqInst(Msg::Message &msg, const string &srcPath, const string &ds
     return true;
 }
 
-/*
- * message package functions  =============================================================================== end =====================================================
-*/
+
+Msg::Message GetFileOpsMsgReqInst(const string &name, const string & newestHash, const string &auth)
+{
+    Msg::Message msg;
+    msg.set_type(Msg::GetFileOps_Request);
+    msg.mutable_request()->mutable_get_file_ops_req()->set_name(name);
+    msg.mutable_request()->mutable_get_file_ops_req()->set_auth(auth);
+    msg.mutable_request()->mutable_get_file_ops_req()->set_newest_hash(newestHash);
+    return msg;
+}
+
+bool GetFileOpsMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info)
+{
+    msg.set_type(Msg::GetFileOps_Response);
+    msg.mutable_response()->set_status(status);
+    msg.mutable_response()->set_info(info);
+    return true;
+}
+
+bool AddOperationToOpsMsg(Msg::Message &msg, Msg::FileOpType type, const string &srcPath, const string &dstPath, const string &hash, time_t opTime)
+{
+    Msg::FileOperation *op;
+    op = msg.mutable_response()->mutable_get_file_ops_res()->add_ops();
+    op->set_type(type);
+    op->set_state_hash(hash);
+    op->set_src_path(srcPath);
+    op->set_dst_path(dstPath);
+    op->set_optime(opTime);
+    return true;
+}
+
+
+// get file
+Msg::Message GetFileMsgReqInst(const string &name, const string &path, const string &auth)
+{
+    Msg::Message msg;
+    msg.set_type(Msg::GetFile_Request);
+    msg.mutable_request()->mutable_get_file_req()->set_name(name);
+    msg.mutable_request()->mutable_get_file_req()->set_path(path);
+    msg.mutable_request()->mutable_get_file_req()->set_auth(auth);
+    return msg;
+}
+bool GetFileMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info, int totalFileSize, const string &sessionKey)
+{
+    msg.set_type(Msg::GetFile_Response);
+    msg.mutable_response()->set_status(status);
+    msg.mutable_response()->set_info(info);
+    msg.mutable_response()->mutable_get_file_res()->set_session_key(sessionKey);
+    msg.mutable_response()->mutable_get_file_res()->set_total_file_size(totalFileSize);
+    return true;
+}
+
+bool GetFileChunkMsgReqInst(Msg::Message &msg, const string &path, int fileIdx, const string &sessionKey)
+{
+    msg.set_type(Msg::GetFileChunk_Request);
+    msg.mutable_request()->mutable_get_file_chunk_req()->set_fileidx(fileIdx);
+    msg.mutable_request()->mutable_get_file_chunk_req()->set_session_key(sessionKey);
+    return true;
+}
+
+bool GetFileChunkMsgResInst(Msg::Message &msg, Msg::MsgResStatus status, const string &info, char data[], int dataSize)
+{
+    msg.set_type(Msg::GetFileChunk_Response);
+    msg.mutable_response()->set_status(status);
+    msg.mutable_response()->set_info(info);
+    msg.mutable_response()->mutable_get_file_chunk_res()->set_data(data, dataSize);
+    return true;
+}

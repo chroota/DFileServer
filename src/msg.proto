@@ -23,6 +23,12 @@ enum MsgType
   MvFile_Response = 0x13;
   CpFile_Request = 0x14;
   CpFile_Response = 0x15;
+  GetFileOps_Request = 0x016;
+  GetFileOps_Response = 0x017;
+  GetFile_Request = 0x18;
+  GetFile_Response = 0x19;
+  GetFileChunk_Request = 0x1a;
+  GetFileChunk_Response = 0x1b;
 }
 
 enum FileType
@@ -33,10 +39,11 @@ enum FileType
 
 enum FileOpType
 {
-    NEW_OP  = 0x01;
-    RM_OP   = 0x02;
-    MV_OP   = 0x03;
-    CP_OP   = 0x04;
+    NEW_OP     = 0x01;
+    NEW_DIR_OP = 0x02;
+    RM_OP      = 0x03;
+    MV_OP      = 0x04;
+    CP_OP      = 0x05;
 }
 
 enum MsgResStatus
@@ -53,12 +60,13 @@ message FileOp
     required string newHash  = 4;
 }
 
+
 message JoinRequest
 {
     required string name = 1;
     required string ip   = 2;
     required string port = 3;
-    required bytes auth = 4;
+    required bytes auth  = 4;
 }
 
 message JoinResponse
@@ -90,6 +98,27 @@ message GetStateResponse
     optional bytes hash = 2;
 }
 
+message FileOperation
+{
+    required FileOpType type   = 1;
+    required string src_path   = 2;
+    required string dst_path   = 3;
+    required string state_hash = 4;
+    required int64  opTime     = 5;
+}
+
+message GetFileOpsRequest
+{
+    required string name = 1;
+    required bytes  auth = 2;
+    required string newest_hash = 3;
+}
+
+message GetFileOpsResponse
+{
+    repeated FileOperation ops = 2;
+}
+
 message NewFileRequest
 {
     required string name           = 1;
@@ -101,6 +130,31 @@ message NewFileRequest
 message NewFileResponse
 {
     optional int32 post_session_id = 1;
+}
+
+message GetFileRequest
+{
+    required string name = 1;
+    required string path = 2;
+    optional bytes auth  = 3;
+}
+
+message GetFileResponse
+{
+    required string session_key = 2;
+    required int32 total_file_size = 3;
+}
+
+message GetFileChunkRequest
+{
+    required string path = 1;
+    required int32 fileIdx = 2;
+    required string session_key = 3;
+}
+
+message GetFileChunkResponse
+{
+    required bytes data = 1;
 }
 
 message RmFileRequest
@@ -173,6 +227,9 @@ message Request
     optional LsFileRequest ls_file_req = 7;
     optional MvFileRequest mv_file_req = 8;
     optional CpFileRequest cp_file_req = 9;
+    optional GetFileOpsRequest get_file_ops_req = 10;
+    optional GetFileRequest get_file_req = 11;
+    optional GetFileChunkRequest get_file_chunk_req = 12;
 }
 
 // message VFS
@@ -184,14 +241,17 @@ message Response
   optional NewFileResponse new_file_response = 4;
   optional LsFileResponse ls_file_res = 5;
   optional JoinResponse join_res = 6;
+  optional GetFileOpsResponse get_file_ops_res = 7;
+  optional GetFileResponse get_file_res = 8;
+  optional GetFileChunkResponse get_file_chunk_res = 9;
 }
 
 
 message Message
 {
-   required MsgType type = 1;
-   optional Request request = 2;
-   optional Response response = 3;
+   required MsgType  type      = 1;
+   optional Request  request   = 2;
+   optional Response response  = 3;
    optional FilePost file_post = 4;
 //    optional Command  command = 5;
 //    optional Indication indication = 6;

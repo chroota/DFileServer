@@ -1,4 +1,7 @@
 #pragma once
+#include <string>
+#include <msg.pb.h>
+using namespace std;
 
 //socket buf size
 #define MAXBUFSIZE 256

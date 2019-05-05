@@ -1,2 +1,2 @@
-# op path(srcPath) (dstPath) time
-1 /md5.cpp  14141341312
+# op path(srcPath) (dstPath)   hash          time
+  1  /md5.cpp      null        23jhb234uihw  14141341312

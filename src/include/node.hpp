@@ -15,6 +15,7 @@
 #include <udp_server.hpp>
 #include <vvfs.hpp>
 #include <pushfile_server.hpp>
+#include <pullfile_server.hpp>
 using namespace std;
 
 struct NodeData
@@ -24,8 +25,6 @@ public:
     string datakey;
     string pubkey;
     string stateHash;
-    // queue<FileOperation> opsQueue;
-    list<FileOperation>::iterator newestIt;
     NodeData(){};
     NodeData(const string &name, const string &pubkey, const string &datakey)
     {
@@ -49,12 +48,11 @@ private:
     bool updateState(const string &hash);
     void checkFileSync();
     bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen);
-    bool createVFS();
-    bool createFileServer();
+    bool createVfs();
+
     bool isMaster();
     string encryptKey;
     int aliveSyncTime;
-    int checkFileSyncTime;
     bool isStateNode = false;
     string masterIp, nodeIp;
     string masterNode;
@@ -67,13 +65,27 @@ private:
     Logger logger;
     std::mutex mutex_;
     //master host
-    string syncDir;
+    string vfsPath;
     string myName;
     // NodeServer server;
     Vvfs *pVvfs = nullptr;
-    PushFileServer *pPushFileServer = nullptr;
-    string getPubkeyByNodeName(const string &name, string &err);
 
+    /*
+     * push file server
+    */
+    PushFileServer *pPushFileServer = nullptr;
+    bool createPushFileServer();
+    // backend file server
+    void backendPushFileServerFunc();
+
+    /*
+     * pull file server
+    */
+    PullFileServer *pPullFileServer = nullptr;
+    bool createPullFileServer();
+    void backendPullFileServerFunc();
+
+    string getPubkeyByNodeName(const string &name, string &err);
     /*
      * cache node for
     */
@@ -90,19 +102,28 @@ private:
     string encryptByOtherNodePubKey(const string & name, const string &data);
     string decryptByOtherNodePubKey(const string & name, const string &data);
     bool authenticateNode(const string &name, const string &auth, string &err);
-    string getEncryptedAuthkey();
-
-    /*
-     * state request
-    */
-    bool requestState();
+    string getEncryptedAuthkey();   
 
     /*
      * state server & response
     */
     bool listen(int port);
-    bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse);
-    bool responseState(Msg::Message & recvMsg, Msg::Message & resMsg);
+    bool handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool &isResponse);
+    bool responseState(Msg::Message &recvMsg, Msg::Message &resMsg);
+    void backendStateServerFunc();
+    bool responseFileOps(Msg::Message &recvMsg, Msg::Message &resMsg);
+
+
+   /*
+    * backend request state for sync Vvfs
+   */
+  int syncStateInterval;
+  string requestState();
+  void backendSyncVvfsFunc();
+  bool requestUpdateFileOps();
+  // sync operation from state node
+  bool syncVfOperation(Msg::FileOpType type, const string &srcPath, const string &dstPath, const string &hash, time_t opTime);
+  bool syncFileFromOtherNode(const string &path, const string &ip, int port, string &err);
 
 public:
     enum sync_status

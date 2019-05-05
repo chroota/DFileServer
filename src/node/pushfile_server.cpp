@@ -65,7 +65,7 @@ bool FileSaver::isComplete()
 
 bool PushFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &sendLen, bool & isResponse)
 {
-    if (strlen(recvbuf) == 0 || recvLen <= 0) 
+    if (recvLen <= 0) 
     {
         logger.log("error: len = 0");
         //todo response
@@ -74,7 +74,8 @@ bool PushFileServer::handle(char recvbuf[], int recvLen, char sendbuf[], int &se
 
     Msg::Message recvMsg;
     Msg::Message sendMsg;
-    recvMsg.ParseFromArray(recvbuf, MAXBUFSIZE);
+    recvMsg.ParseFromArray(recvbuf, MAXMSGSIZE);
+    
     if(recvMsg.type() == Msg::NewFile_Request)
     {
         logger.debugAction("create file");
@@ -131,19 +132,19 @@ bool PushFileServer::cpFile(const string &srcPath, const string & dstPath, char 
         err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
     if(!pVvfs->cpVF(srcPath, dstPath, err))
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     sendLen = msg.ByteSize();
     return true;
 }
@@ -159,7 +160,7 @@ bool PushFileServer::mvFile(const string &srcPath, const string & dstPath, char 
         err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         // sendLen = msg.ByteSize();
         return false;
@@ -167,13 +168,13 @@ bool PushFileServer::mvFile(const string &srcPath, const string & dstPath, char 
     if(!pVvfs->mvVF(srcPath, dstPath, err))
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         // sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     sendLen = msg.ByteSize();
     // sendLen = msg.ByteSize();
     return true;    
@@ -190,7 +191,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         err = "error name path";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -201,12 +202,12 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         {
             logger.log(err);
             NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-            msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+            msg.SerializeToArray(sendbuf, MAXMSGSIZE);
             sendLen = msg.ByteSize();
             return false;
         }
         NewFileMsgResInst(msg, Msg::MSG_RES_OK, -1, "ok");
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return true;
     }
@@ -217,7 +218,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
     {
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -230,7 +231,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
         err = "exceeding max open file nums";
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -242,7 +243,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
     {
         logger.log(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -255,7 +256,7 @@ bool PushFileServer::createNewFile(const string &path, Msg::FileType type, int t
     logger.log(LDEBUG, "allocate session id:%d", sessionId);
     sessions[path] = sessionId;
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, sessionId, "ok");
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     sendLen = msg.ByteSize();
     return true;
 }
@@ -271,7 +272,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
         err = "file saver not exists";
         logger.debug(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -282,7 +283,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
     {
         logger.debug(err);
         NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
@@ -295,7 +296,7 @@ bool PushFileServer::recvChunk(const string &name, int sessionId, int fileIdx, i
     }
 
     NewFileMsgResInst(msg, Msg::MSG_RES_OK, -1, "ok");
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     sendLen = msg.ByteSize();
     
     return true;
@@ -326,12 +327,12 @@ bool PushFileServer::rmFile(const string &path, char sendbuf[], int &sendLen)
     if(!pVvfs->rmVF(path, err))
     {
         CommonMsgResInst(msg, Msg::MSG_RES_ERROR, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
     CommonMsgResInst(msg, Msg::MSG_RES_OK, "ok");
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     sendLen = msg.ByteSize();
     return true;
 }
@@ -345,13 +346,13 @@ bool PushFileServer::lsFiles(const string &path, char sendbuf[], int &sendLen)
         err = "error name path";
         logger.log(err);
         //NewFileMsgResInst(msg, Msg::MSG_RES_ERROR, -1, err.c_str());
-        msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+        msg.SerializeToArray(sendbuf, MAXMSGSIZE);
         sendLen = msg.ByteSize();
         return false;
     }
     bool ret = pVvfs->lsVF(path, msg);
-    msg.SerializeToArray(sendbuf, MAXBUFSIZE);
+    msg.SerializeToArray(sendbuf, MAXMSGSIZE);
     // sendLen = msg.ByteSize();
-    sendLen = MAXBUFSIZE;
+    sendLen = MAXMSGSIZE;
     return ret;
 }

@@ -17,62 +17,53 @@ bool Vvfs::initConfig(const string & vfsPath, const string & vFRLogFile, const s
 bool VFile::updateHash(VFRelation &vfr)
 {
     ostringstream oss;
-    oss << _type << getFullPath() <<_size << _mtime.tv_sec << _mtime.tv_nsec << vfr.fa_idx
-        << vfr.idx << vfr.prev_bro_idx << vfr.next_bro_idx << vfr.first_son_idx << vfr.last_son_idx;
+    oss << _type << getFullPath() <<_size << _tv_sec 
+        << vfr.fa_idx << vfr.idx << vfr.prev_bro_idx 
+        << vfr.next_bro_idx << vfr.first_son_idx 
+        << vfr.last_son_idx;
+
     _hash = getBufMD5(oss.str().c_str(), oss.str().size());
     return true;
 }
 
-
-bool Vvfs::updateHashFromVFOpLogFile()
+bool Vvfs::restoreStateFromOpLog()
 {
     ifstream ifs = ifstream(vFOpLogFile);
     int op;
-    long long opTime;
-    string path;
+    time_t opTime;
+    string srcPath;
     string dstPath;
+    string stateHash;
     while(!ifs.eof())
     {
         ifs>>op;
-        if(ifs.fail()) break;
-        if(ifs.eof()) break;
-        if(op == Msg::MV_OP)
+        if(ifs.fail() || ifs.eof()) 
+            break;
+        ifs >> op >> srcPath >> dstPath >> stateHash >> opTime;
+        if(ifs.fail())
         {
-            ifs >> path >> dstPath >> opTime;
-            if(ifs.fail())
-            {
-                logger.fatal("read op log fail");
-                break;
-            }
-            updateHashByMvFileOp(path, dstPath, opTime);
+            logger.fatal("read op log fail");
+            break;
         }
-        else
-        {
-            ifs >> path >> opTime;
-            if(ifs.fail())
-            {
-                logger.fatal("read op log fail");
-                break;
-            }
-            if(op == Msg::NEW_OP) 
-                updateHashByNewFileOp(path, opTime);
-            else if(op == Msg::RM_OP) 
-                updateHashByRmFileOp(path, opTime);
-        }
+        operationList.emplace_back((Msg::FileOpType)op, srcPath, dstPath, stateHash, opTime);
+        updateHash(stateHash);
     }
     ifs.close();
     return true;
 }
 
-bool Vvfs::createRootVF()
+bool Vvfs::createRootVF(time_t opTime)
 {
     string rootPath = "/";
     int rootIdx = 0;
     VFRelation rootVfr(rootIdx, -1, -1, -1, -1, -1);
     vRelations[rootPath] = rootVfr;
+    if(opTime == -1)
+        opTime = getSystemTime();
+
     if(vFiles.size() == 0)
     {
-        vFiles.emplace_back("root", VFT_DIR, rootPath, 0, getTimeSpec());
+        vFiles.emplace_back("root", VFT_DIR, rootPath, 0, opTime);
     }else
     {
         logger.fatal("vFiles is not empty, can't create root vf");
@@ -82,10 +73,11 @@ bool Vvfs::createRootVF()
     vFiles[0].active();
     if(!vFiles[0].updateHash(rootVfr))
         return false;
-    if(!writeNewFileOpLog(rootPath))
+    if(!newDirEndingWork(rootPath, opTime))
+    {
+        logger.fatal("new file ending work error");
         return false;
-    if(!updateHashByNewFileOp(rootPath))
-        return false;
+    }
     logger.debug("success craete root vf");
     return true;
 }
@@ -107,7 +99,7 @@ int Vvfs::allocIdx()
 
 bool Vvfs::buildVFS()
 {
-    if(!updateHashFromVFOpLogFile()) 
+    if(!restoreStateFromOpLog()) 
     {
         logger.fatal("hash init fail");
         return false;
@@ -192,8 +184,8 @@ bool Vvfs::buildVFS()
         }
         
         vRelations[fullPath] = vfr;
-        timespec tspc = {tv_sec, tv_nsec};
-        vFiles[idx] = VFile(name, (FileType)type, dirPath, size, tspc);
+        // timespec tspc = {tv_sec, tv_nsec};
+        vFiles[idx] = VFile(name, (FileType)type, dirPath, size, tv_sec);
         vFiles[idx].active();
     }
 
@@ -208,28 +200,33 @@ bool Vvfs::buildVFS()
     return true;
 }
 
-bool Vvfs::mkVDir(const string & name, string & err)
+bool Vvfs::mkVDir(const string &path, string & err, time_t opTime)
 {
     string diskPath;
-    return newVF(name, 0, err, diskPath, VFT_DIR);
+    return newVF(path, 0, err, diskPath, VFT_DIR, opTime);
 }
 
-int Vvfs::pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, struct timespec mtime)
+int Vvfs::pushVf2vFiles(const string & name, FileType type, const string & dirPath, off_t size, time_t opTime)
 {
     int newIdx = allocIdx();
+
+    if(opTime = -1){
+        opTime = getSystemTime();
+    }
+
     if(newIdx == -1)
     {
         newIdx = vFiles.size();
-        vFiles.emplace_back(name, type, dirPath, size, getTimeSpec());
+        vFiles.emplace_back(name, type, dirPath, size, opTime);
     }else
     {
-        vFiles[newIdx] = VFile(name, type, dirPath, size, getTimeSpec());
+        vFiles[newIdx] = VFile(name, type, dirPath, size, opTime);
     }
 
-    return newIdx;    
+    return newIdx;
 }
 
-bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskPath, FileType type)
+bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskPath, FileType type, time_t opTime)
 {
     if (path.size() == 0 || path == " ") 
     {
@@ -250,7 +247,7 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskP
     if(!getDirPathAndName(path, dirPath, name, err))
         return false;
 
-    int newIdx = pushVf2vFiles(name, type, dirPath, totalSize, getTimeSpec());
+    int newIdx = pushVf2vFiles(name, type, dirPath, totalSize, opTime);
     VFile &newVf = vFiles[newIdx];
     vRelations[path] = VFRelation(newIdx, -1, -1, -1, -1, -1);
     logger.debug(dirPath);
@@ -271,7 +268,6 @@ bool Vvfs::newVF(const string &path, off_t totalSize, string &err, string &diskP
     diskPath = newVf.getDiskPath();
     return true;
 }
-
 
 bool Vvfs::pushbackVf(VFRelation & dirVfr, VFile &vf)
 {
@@ -295,7 +291,6 @@ bool Vvfs::pushbackVf(VFRelation & dirVfr, VFile &vf)
 
     return true;
 }
-
 
 bool Vvfs::removeVfRelation(VFile &vf, bool isVfDestory)
 {
@@ -351,7 +346,7 @@ bool Vvfs::changeVfDirRelation(VFile &vf, VFRelation &newDirVfr, const string &n
 }
 
 
-bool Vvfs::mvVF(const string &srcPath, const string &dstPath, string &err)
+bool Vvfs::mvVF(const string &srcPath, const string &dstPath, string &err, time_t opTime)
 {
     if (srcPath.size() == 0 || srcPath == " " || dstPath.size() == 0 || dstPath == " ") 
     {
@@ -388,9 +383,19 @@ bool Vvfs::mvVF(const string &srcPath, const string &dstPath, string &err)
 
     vRelations[dstPath] = VFRelation(srcVfr.idx, dstDirVfr.idx, -1, -1, -1, -1);
 
+    if(opTime == -1){
+        opTime = getSystemTime();
+    }
+
     if(!changeVfDirRelation(srcVf, dstDirVfr, dstDirPath))
     {
         err = "change vf relation error";
+        return false;
+    }
+
+    if(!mvFileEndingWork(srcPath, dstPath))
+    {
+        logger.fatal("mv file ending work error");
         return false;
     }
 
@@ -435,7 +440,7 @@ bool Vvfs::copyDiskFile(const string& srcPath, const string &dstPath)
     }
 }
 
-bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err)
+bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err, time_t opTime)
 {
     if (srcPath.size() == 0 || srcPath == " " || dstPath.size() == 0 || dstPath == " ") 
     {
@@ -470,7 +475,7 @@ bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err)
     VFile &dstDirVf       = vFiles[dstDirVfr.idx];
     VFile &srcDirVf       = vFiles[srcDirVfr.idx];
 
-    int newIdx = pushVf2vFiles(srcVf.getName(), srcVf.getType(), dstDirPath, srcVf.getSize(), srcVf.getMtime());
+    int newIdx = pushVf2vFiles(srcVf.getName(), srcVf.getType(), dstDirPath, srcVf.getSize());
     VFile &newVf = vFiles[newIdx];
     vRelations[dstPath] = VFRelation(newIdx, dstDirVfr.idx, -1, -1, -1, -1);
     VFRelation & newVfr = vRelations[dstPath];
@@ -487,6 +492,16 @@ bool Vvfs::cpVF(const string &srcPath, const string &dstPath, string &err)
         return false;
     }
     newVf.active();
+
+    if(opTime == -1){
+        opTime = getSystemTime();
+    }
+
+    if(!cpFileEndingWork(srcPath, dstPath, opTime))
+    {
+        logger.fatal("cp file ending work error");
+        return false;
+    }
 
     return true;
 }
@@ -523,16 +538,78 @@ bool Vvfs::activeVF(const string &path, string & err)
 
     if(!vf.updateHash(vfr) || !dirVf.updateHash(dirVfr))
         return false;
-    if(!writeNewFileOpLog(path)) 
+
+    if(vf.getType() == VFT_FILE && !newFileEndingWork(path, vf.getTvSec()))
+    {
+        logger.fatal("new file ending work error");
         return false;
-    if(!updateHashByNewFileOp(path))
+    }
+
+    if(vf.getType() == VFT_DIR && !newDirEndingWork(path, vf.getTvSec()))
+    {
+        logger.fatal("new dir ending work error");
         return false;
+    }
 
     logger.log(LDEBUG, "vFile size:%d, now active:%d", vFiles.size(), vfr.idx);
     logger.debug("new hash:" + hash);
     return true;
 }
 
+bool Vvfs::syncNewVfOp(const string &path, const string &hash, time_t opTime)
+{
+    // return newVF(path, );
+}
+
+bool Vvfs::syncNewVDirOp(const string &path, const string &hash, time_t opTime)
+{
+    string err;
+    if(path == "/")
+    {
+        if(!createRootVF(opTime))
+            logger.fatal("create root vf fail");
+    }else
+    {
+        if(!mkVDir(path, err, opTime))
+        {
+            logger.fatal(err);
+        }
+    }
+
+    if(hash != this->hash)
+    {
+        string tip =  "sync hash not same, src hash: " + hash + " after create dir hash: " + this->hash + ", now rollbacking....";
+        logger.log(tip);
+        if(!rollback()){
+            logger.fatal("rollback error");
+        }
+        return false;
+    }
+
+    return true;
+}
+
+bool Vvfs::syncRmVfOp(const string &path, const string &hash, time_t opTime)
+{
+
+}
+
+bool Vvfs::syncMvVfOp(const string &srcPath, const string &dstPath, const string &hash, time_t opTime)
+{
+
+}
+
+bool Vvfs::syncCpVfOp(const string &srcPath, const string &dstPath, const string &hash, time_t opTime)
+{
+
+}
+
+
+bool Vvfs::rollback()
+{
+    //todo
+    return false;
+}
 
 string Vvfs::getVFPhasicalPath(VFile & vf)
 {
@@ -544,7 +621,7 @@ string Vvfs::getVFPhasicalPath(string &vfDiskPath)
     return vfsPath + "/" + vfDiskPath;
 }
 
-bool Vvfs::rmSubVFS(VFile &vf, string &err)
+bool Vvfs::rmSubfolder(VFile &vf, string &err)
 {
     if(vf.getSize() == 0) return true;
 
@@ -583,7 +660,7 @@ bool Vvfs::rmSubVFS(VFile &vf, string &err)
     return true;
 }
 
-bool Vvfs::rmVF(const string &path, string &err)
+bool Vvfs::rmVF(const string &path, string &err, time_t opTime)
 {
     if (path.size() == 0 || path == " ") {
         err = "file name error!";
@@ -611,7 +688,7 @@ bool Vvfs::rmVF(const string &path, string &err)
         return false;
     }
 
-    if(vf.getType() == VFT_DIR && !rmSubVFS(vf, err))
+    if(vf.getType() == VFT_DIR && !rmSubfolder(vf, err))
         return false;
 
     // perent has one son
@@ -645,51 +722,30 @@ bool Vvfs::rmVF(const string &path, string &err)
     vfDir.decSize();
 
     err = "";
-    if(!updateHashByRmFileOp(path))
-    {
-        logger.fatal("rm hash update error");
+    // if(!updateHashByRmFileOp(path))
+    // {
+    //     logger.fatal("rm hash update error");
+    // }
+
+    // if(!writeRmFileOpLog(path))
+    // {
+    //     logger.fatal("rm log write error");
+    // }
+
+    if(opTime == -1){
+        opTime = getSystemTime();
     }
 
-    if(!writeRmFileOpLog(path))
+    if(!rmFileEndingWork(path), opTime)
     {
-        logger.fatal("rm log write error");
+        logger.fatal("remove file ending work error");
+        return false;
     }
-    
+
     // logger.debug("rm file:"+name+"ok");
     logger.log(LDEBUG, "rm op ok, path:%s, new hash:%s", path.c_str(), hash.c_str());
     return true;
 }
-
-bool Vvfs::newFileEndingWork(const string &path)
-{
-    appenNewFileOperation(move(FileOperation(Msg::NEW_OP, path, "")));
-    updateHashByNewFileOp(path);
-    writeNewFileOpLog(path);
-    return true;
-}
-
-bool Vvfs::rmFileEndingWork(const string &path)
-{
-    appenNewFileOperation(move(FileOperation(Msg::RM_OP, path, "")));
-    updateHashByRmFileOp(path);
-    writeRmFileOpLog(path);
-    return true;
-}
-
-
-bool Vvfs::mvFileEndingWork(const string &srcPath, const string &dstPath)
-{
-    appenNewFileOperation(move(FileOperation(Msg::MV_OP, srcPath, dstPath)));
-    updateHashByMvFileOp(srcPath, dstPath);
-    writeMvFileOpLog(srcPath, dstPath);
-    return true;
-}
-
-bool Vvfs::cpFileEndingWork(const string &srcPath, const string &dstPath)
-{
-
-}
-
 
 
 
@@ -766,20 +822,20 @@ bool Vvfs::lsVF(const string & path, Msg::Message &msg)
     VFRelation &vfr = vRelations[path];
     VFile &vf = vFiles[vfr.idx];
 
-    AddAttributeToFileMsg(msg, vf.getName(), vf.getSize(), (Msg::FileType)vf.getType(), getTimeStringFromTvSec(vf.getTvSec()));
+    AddAttributeToLsFileMsg(msg, vf.getName(), vf.getSize(), (Msg::FileType)vf.getType(), getTimeStringFromTvSec(vf.getTvSec()));
     if(vf.getType() == VFT_FILE || vf.getSize() == 0)
         return true;
 
     // cout<<vfr.first_son_idx<<endl;
     VFRelation &firstSonVfr = getVfrByIdx(vfr.first_son_idx);
     VFile &firstSonVf = vFiles[vfr.first_son_idx];
-    AddAttributeToFileMsg(msg, firstSonVf.getName(), firstSonVf.getSize(), (Msg::FileType)firstSonVf.getType(), getTimeStringFromTvSec(firstSonVf.getTvSec()));
+    AddAttributeToLsFileMsg(msg, firstSonVf.getName(), firstSonVf.getSize(), (Msg::FileType)firstSonVf.getType(), getTimeStringFromTvSec(firstSonVf.getTvSec()));
     int tmpVfrIdx = firstSonVfr.next_bro_idx;
     while (tmpVfrIdx != -1)
     {
         VFRelation & tmpVfr = getVfrByIdx(tmpVfrIdx);
         VFile & tmpVf = vFiles[tmpVfrIdx];
-        AddAttributeToFileMsg(msg, tmpVf.getName(), tmpVf.getSize(), (Msg::FileType)tmpVf.getType(), getTimeStringFromTvSec(tmpVf.getTvSec()));
+        AddAttributeToLsFileMsg(msg, tmpVf.getName(), tmpVf.getSize(), (Msg::FileType)tmpVf.getType(), getTimeStringFromTvSec(tmpVf.getTvSec()));
         tmpVfrIdx = tmpVfr.next_bro_idx;
     }
     LsFileMsgResInst(msg, Msg::MSG_RES_OK, "ok");
@@ -811,62 +867,55 @@ bool Vvfs::getDirPathAndName(const string &path, string &dirPath, string &name, 
 }
 
 
-bool Vvfs::updateHashByNewFileOp(const string &path)
-{
-    return updateHashByNewFileOp(path, getSystemTime());
-}
-
-bool Vvfs::updateHashByNewFileOp(const string &path, long long opTime)
+string Vvfs::updateHashByNewFileOp(const string &path, time_t opTime)
 {
     ostringstream oss;
     oss << "op:" << Msg::NEW_OP << "path:" << path << "time:" << opTime;
     hashpkg.update(oss.str().c_str(), oss.str().size());
-    hash = hashpkg.getMD5Hex();
-    return true;
+    string newestHash = hashpkg.getMD5Hex();
+    updateHash(newestHash);
+    return newestHash;
 }
 
-bool Vvfs::updateHashByRmFileOp(const string &path)
-{
-    return updateHashByRmFileOp(path, getSystemTime());
-}
-
-bool Vvfs::updateHashByRmFileOp(const string &path, long long opTime)
+string Vvfs::updateHashByRmFileOp(const string &path, time_t opTime)
 {
     ostringstream oss;
-    oss << Msg::RM_OP << path << opTime;
+    oss << "op:" << Msg::RM_OP << "path:" << path << "time:" << opTime;
     hashpkg.update(oss.str().c_str(), oss.str().size());
-    hash = hashpkg.getMD5Hex();
-    return true;
+    string newestHash = hashpkg.getMD5Hex();
+    updateHash(newestHash);
+    return newestHash;
 }
 
-bool Vvfs::updateHashByMvFileOp(const string &srcPath, const string &dstPath)
-{
-    return updateHashByMvFileOp(srcPath, dstPath, getSystemTime());
-}
-
-bool Vvfs::updateHashByMvFileOp(const string &srcPath, const string &dstPath, long long opTime)
+string Vvfs::updateHashByMvFileOp(const string &srcPath, const string &dstPath, time_t opTime)
 {
     ostringstream oss;
     oss << "op:" << Msg::RM_OP << "srcPath:" << srcPath << "dstPath:" << dstPath << "time:" << opTime;
     hashpkg.update(oss.str().c_str(), oss.str().size());
-    hash = hashpkg.getMD5Hex();
+    string newestHash = hashpkg.getMD5Hex();
+    updateHash(newestHash);
+    return newestHash;
+}
+
+string Vvfs::updateHashByCpFileOp(const string &srcPath, const string &dstPath, time_t opTime)
+{
+    ostringstream oss;
+    oss << "op:" << Msg::RM_OP << "srcPath:" << srcPath << "dstPath:" << dstPath << "time:" << opTime;
+    hashpkg.update(oss.str().c_str(), oss.str().size());
+    string newestHash = hashpkg.getMD5Hex();
+    updateHash(newestHash);
+    return newestHash;
+}
+
+bool Vvfs::updateHash(const string &newestHash)
+{
+    hash = newestHash;
     return true;
 }
 
-bool Vvfs::writeOpLog(Msg::FileOpType op, const string & pathString)
-{
-    *pVFOpLogFileFstream << op << " " << pathString << " " << getSystemTime() <<endl;
-    if(pVFOpLogFileFstream->fail())
-    {
-        cout<<"write log error"<<endl;
-        return false;
-    }
-    return true;
-}
 
 bool Vvfs::writeMvFileOpLogTest()
 {
-    // pVFOpLogFileFstream->write("132");
     (*pVFOpLogFileFstream)<<"4323"<<endl;
 
     if(pVFOpLogFileFstream->fail())
@@ -877,18 +926,31 @@ bool Vvfs::writeMvFileOpLogTest()
     return true;
 }
 
-bool Vvfs::writeNewFileOpLog(const string &path)
+bool Vvfs::writeOpLog(Msg::FileOpType op, const string & pathString, const string &hash)
 {
-    if(!writeOpLog(Msg::NEW_OP, path))
+    *pVFOpLogFileFstream << op << " " << pathString << " "<< hash << " " << getSystemTime() <<endl;
+    if(pVFOpLogFileFstream->fail())
+    {
+        cout<<"write log error"<<endl;
+        return false;
+    }
+    return true;
+}
+
+bool Vvfs::writeNewFileOpLog(const string &path, const string &hash)
+{
+    string pathString  = path + " " + "null";
+    if(!writeOpLog(Msg::NEW_OP, pathString, hash))
     {
         logger.fatal("write new file log fail");
         return false;
     }
     return true;
 }
-bool Vvfs::writeRmFileOpLog(const string &path)
+bool Vvfs::writeRmFileOpLog(const string &path, const string &hash)
 {
-    if(!writeOpLog(Msg::RM_OP, path))
+    string pathString  = path + " " + "null";
+    if(!writeOpLog(Msg::RM_OP, pathString, hash))
     {
         logger.fatal("write rm log fail");
         return false;
@@ -896,10 +958,22 @@ bool Vvfs::writeRmFileOpLog(const string &path)
     return true;
 }
 
-bool Vvfs::writeMvFileOpLog(const string &srcPath, const string &dstPath)
+bool Vvfs::writeMvFileOpLog(const string &srcPath, const string &dstPath, const string &hash)
 {
     string pathString = srcPath + " " + dstPath;
-    if(!writeOpLog(Msg::RM_OP, pathString))
+    if(!writeOpLog(Msg::RM_OP, pathString, hash))
+    {
+        logger.fatal("write mv log fail");
+        return false;
+    }
+    return true;
+}
+
+
+bool Vvfs::writeCpFileOpLog(const string &srcPath, const string &dstPath, const string &hash)
+{
+    string pathString = srcPath + " " + dstPath;
+    if(!writeOpLog(Msg::CP_OP, pathString, hash))
     {
         logger.fatal("write mv log fail");
         return false;
@@ -911,7 +985,7 @@ bool Vvfs::appenNewFileOperation(FileOperation && op)
 {
     try
     {
-        operationList.push_back(op);
+        operationList.push_back(move(op));
         return true;
     }
     catch(const std::exception& e)
@@ -919,6 +993,84 @@ bool Vvfs::appenNewFileOperation(FileOperation && op)
         logger.fatal(e.what());
         return false;
     }
+}
+
+bool Vvfs::newFileEndingWork(const string &path, time_t opTime)
+{
+    logger.debug("new file ending work");
+    // time_t opTime = getSystemTime();
+    if(opTime == -1)
+        opTime = getSystemTime();
+    string newestHash = updateHashByNewFileOp(path, opTime);
+    appenNewFileOperation(move(FileOperation(Msg::NEW_OP, path, "", newestHash, opTime)));
+    // writeNewFileOpLog(path);
+    return true;
+}
+
+bool Vvfs::newDirEndingWork(const string &path, time_t opTime)
+{
+    logger.debug("new file ending work");
+    if(opTime == -1)
+        opTime = getSystemTime();
+    string newestHash = updateHashByNewFileOp(path, opTime);
+    appenNewFileOperation(move(FileOperation(Msg::NEW_DIR_OP, path, "", newestHash, opTime)));
+    // writeNewFileOpLog(path);
+    return true;
+}
+
+bool Vvfs::rmFileEndingWork(const string &path, time_t opTime)
+{
+    logger.debug("rm file ending work");
+    if(opTime == -1)
+        opTime = getSystemTime();
+    string newestHash = updateHashByRmFileOp(path, opTime);
+    appenNewFileOperation(move(FileOperation(Msg::RM_OP, path, "", newestHash, opTime)));
+    // writeRmFileOpLog(path);
+    return true;
+}
+
+
+bool Vvfs::mvFileEndingWork(const string &srcPath, const string &dstPath, time_t opTime)
+{
+    logger.debug("mv file ending work");
+    if(opTime == -1)
+        opTime = getSystemTime();
+    string newestHash = updateHashByMvFileOp(srcPath, dstPath, opTime);
+    appenNewFileOperation(move(FileOperation(Msg::MV_OP, srcPath, dstPath, newestHash, opTime)));
+    // writeMvFileOpLog(srcPath, dstPath);
+    return true;
+}
+
+bool Vvfs::cpFileEndingWork(const string &srcPath, const string &dstPath, time_t opTime)
+{
+    logger.debug("cp file ending work");
+    if(opTime == -1)
+        opTime = getSystemTime();
+    string newestHash = updateHashByCpFileOp(srcPath, dstPath, opTime);
+    appenNewFileOperation(move(FileOperation(Msg::CP_OP, srcPath, dstPath, newestHash, opTime)));
+    // writeCpFileOpLog(srcPath, dstPath);
+    return true;
+}
+
+
+bool Vvfs::getLeftFileOpsToMsg(Msg::Message &msg, const string &hash)
+{
+    list<FileOperation>::iterator tmpIter = operationList.begin();
+    while (tmpIter->stateHash != hash && tmpIter != operationList.end())
+    {
+        tmpIter++;
+    }
+
+    // not found
+    if(tmpIter == operationList.end())
+        tmpIter = operationList.begin();
+    while (tmpIter != operationList.end())
+    {
+        AddOperationToOpsMsg(msg, tmpIter->type, tmpIter->srcPath,
+            tmpIter->dstPath, tmpIter->stateHash, tmpIter->opTime);
+        tmpIter++;
+    }
+    return true;
 }
 
 
@@ -1042,6 +1194,5 @@ bool Vvfs::watchVFS()
 	buf[sizeof(buf) - 1] = 0;
 
     //todo watch changes of files
-    
     return true;
 }

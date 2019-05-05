@@ -64,8 +64,6 @@ bool Tp::newVF(const string & localPath, const string & remotePath, Msg::FileTyp
     
 
     // create new file message
-    
-
     Msg::Message sendMsg, recvMsg;
     NewFileMsgReqInst(sendMsg, remotePath, type, totalPackSize, totalBufSize);
     char sendbuf[MAXBUFSIZE], recvBuf[MAXBUFSIZE];
@@ -102,8 +100,6 @@ bool Tp::newVF(const string & localPath, const string & remotePath, Msg::FileTyp
     int packIdx = 0, fileIdx = 0;
 
     memset(sendbuf, 0, sizeof(sendbuf));
-    //vector<int> packFileIdxMap(totalPackSize);
-
     // send file data
     // todo design of high performance
     int readedSize;
@@ -117,7 +113,6 @@ bool Tp::newVF(const string & localPath, const string & remotePath, Msg::FileTyp
         }
         catch(const std::exception& e)
         {
-            // std::cerr << e.what() << '\n';
             logger.fatal(e.what());
         }
 
@@ -293,7 +288,6 @@ bool Tp::init()
     port = 8080;
     return true;
 }
-
 
 #define VVFS_DEBUG
 int main(int argc, char *argv[])

@@ -1,5 +1,5 @@
 #pragma once
-#include "logger.hpp"
+#include <logger.hpp>
 #include <thread>
 #include <mutex>
 #include <iostream>
@@ -88,6 +88,7 @@ class PushFileServer:UdpServer
         bool listen(int port);
         bool test();
 
+        PushFileServer(){};
         PushFileServer(Vvfs *pVvfs)
         {
             this->pVvfs = pVvfs;

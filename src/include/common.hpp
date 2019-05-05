@@ -30,7 +30,8 @@ using namespace std;
  * time
 */
 struct timespec getTimeSpec();
-long long getSystemTime();
+time_t getSystemTime();
+long long getSystemLongTime();
 string getTimeStringFromTvSec(int tv_sec);
 
 /*

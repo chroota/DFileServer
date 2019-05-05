@@ -18,7 +18,13 @@
 
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CpFileRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FileAttribute_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FileOperation_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FilePost_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileChunkRequest_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileChunkResponse_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileOpsRequest_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileRequest_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileResponse_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateResponse_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_JoinRequest_msg_2eproto;
@@ -30,9 +36,10 @@ extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::S
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RmFileRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdateStateHashRequest_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdateStatusRequest_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<12> scc_info_Request_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_GetFileOpsResponse_msg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_LsFileResponse_msg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_Response_msg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<9> scc_info_Request_msg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_msg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<7> scc_info_Response_msg_2eproto;
 namespace Msg {
 class FileOpDefaultTypeInternal {
  public:
@@ -62,6 +69,18 @@ class GetStateResponseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetStateResponse> _instance;
 } _GetStateResponse_default_instance_;
+class FileOperationDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<FileOperation> _instance;
+} _FileOperation_default_instance_;
+class GetFileOpsRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileOpsRequest> _instance;
+} _GetFileOpsRequest_default_instance_;
+class GetFileOpsResponseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileOpsResponse> _instance;
+} _GetFileOpsResponse_default_instance_;
 class NewFileRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NewFileRequest> _instance;
@@ -70,6 +89,22 @@ class NewFileResponseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NewFileResponse> _instance;
 } _NewFileResponse_default_instance_;
+class GetFileRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileRequest> _instance;
+} _GetFileRequest_default_instance_;
+class GetFileResponseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileResponse> _instance;
+} _GetFileResponse_default_instance_;
+class GetFileChunkRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileChunkRequest> _instance;
+} _GetFileChunkRequest_default_instance_;
+class GetFileChunkResponseDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetFileChunkResponse> _instance;
+} _GetFileChunkResponse_default_instance_;
 class RmFileRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RmFileRequest> _instance;
@@ -217,6 +252,49 @@ static void InitDefaultsGetStateResponse_msg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetStateResponse_msg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetStateResponse_msg_2eproto}, {}};
 
+static void InitDefaultsFileOperation_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_FileOperation_default_instance_;
+    new (ptr) ::Msg::FileOperation();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::FileOperation::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FileOperation_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFileOperation_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileOpsRequest_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileOpsRequest_default_instance_;
+    new (ptr) ::Msg::GetFileOpsRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileOpsRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileOpsRequest_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetFileOpsRequest_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileOpsResponse_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileOpsResponse_default_instance_;
+    new (ptr) ::Msg::GetFileOpsResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileOpsResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_GetFileOpsResponse_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsGetFileOpsResponse_msg_2eproto}, {
+      &scc_info_FileOperation_msg_2eproto.base,}};
+
 static void InitDefaultsNewFileRequest_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -244,6 +322,62 @@ static void InitDefaultsNewFileResponse_msg_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NewFileResponse_msg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsNewFileResponse_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileRequest_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileRequest_default_instance_;
+    new (ptr) ::Msg::GetFileRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileRequest_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetFileRequest_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileResponse_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileResponse_default_instance_;
+    new (ptr) ::Msg::GetFileResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileResponse_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetFileResponse_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileChunkRequest_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileChunkRequest_default_instance_;
+    new (ptr) ::Msg::GetFileChunkRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileChunkRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileChunkRequest_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetFileChunkRequest_msg_2eproto}, {}};
+
+static void InitDefaultsGetFileChunkResponse_msg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Msg::_GetFileChunkResponse_default_instance_;
+    new (ptr) ::Msg::GetFileChunkResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Msg::GetFileChunkResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetFileChunkResponse_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsGetFileChunkResponse_msg_2eproto}, {}};
 
 static void InitDefaultsRmFileRequest_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -383,8 +517,8 @@ static void InitDefaultsRequest_msg_2eproto() {
   ::Msg::Request::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<9> scc_info_Request_msg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 9, InitDefaultsRequest_msg_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<12> scc_info_Request_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 12, InitDefaultsRequest_msg_2eproto}, {
       &scc_info_JoinRequest_msg_2eproto.base,
       &scc_info_UpdateStatusRequest_msg_2eproto.base,
       &scc_info_GetStateRequest_msg_2eproto.base,
@@ -393,7 +527,10 @@ static void InitDefaultsRequest_msg_2eproto() {
       &scc_info_RmFileRequest_msg_2eproto.base,
       &scc_info_LsFileRequest_msg_2eproto.base,
       &scc_info_MvFileRequest_msg_2eproto.base,
-      &scc_info_CpFileRequest_msg_2eproto.base,}};
+      &scc_info_CpFileRequest_msg_2eproto.base,
+      &scc_info_GetFileOpsRequest_msg_2eproto.base,
+      &scc_info_GetFileRequest_msg_2eproto.base,
+      &scc_info_GetFileChunkRequest_msg_2eproto.base,}};
 
 static void InitDefaultsResponse_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -406,12 +543,15 @@ static void InitDefaultsResponse_msg_2eproto() {
   ::Msg::Response::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_Response_msg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, InitDefaultsResponse_msg_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<7> scc_info_Response_msg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 7, InitDefaultsResponse_msg_2eproto}, {
       &scc_info_GetStateResponse_msg_2eproto.base,
       &scc_info_NewFileResponse_msg_2eproto.base,
       &scc_info_LsFileResponse_msg_2eproto.base,
-      &scc_info_JoinResponse_msg_2eproto.base,}};
+      &scc_info_JoinResponse_msg_2eproto.base,
+      &scc_info_GetFileOpsResponse_msg_2eproto.base,
+      &scc_info_GetFileResponse_msg_2eproto.base,
+      &scc_info_GetFileChunkResponse_msg_2eproto.base,}};
 
 static void InitDefaultsMessage_msg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -438,8 +578,15 @@ void InitDefaults_msg_2eproto() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UpdateStateHashRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetStateResponse_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_FileOperation_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileOpsRequest_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileOpsResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NewFileResponse_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileRequest_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileResponse_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileChunkRequest_msg_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GetFileChunkResponse_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RmFileRequest_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_FilePost_msg_2eproto.base);
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_EndFilePostRequest_msg_2eproto.base);
@@ -454,7 +601,7 @@ void InitDefaults_msg_2eproto() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Message_msg_2eproto.base);
 }
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_msg_2eproto[21];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_msg_2eproto[28];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_msg_2eproto[4];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_msg_2eproto = nullptr;
 
@@ -528,6 +675,39 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::GetStateResponse, hash_),
   0,
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, type_),
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, src_path_),
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, dst_path_),
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, state_hash_),
+  PROTOBUF_FIELD_OFFSET(::Msg::FileOperation, optime_),
+  4,
+  0,
+  1,
+  2,
+  3,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsRequest, name_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsRequest, auth_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsRequest, newest_hash_),
+  0,
+  1,
+  2,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileOpsResponse, ops_),
+  ~0u,
   PROTOBUF_FIELD_OFFSET(::Msg::NewFileRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::NewFileRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -547,6 +727,44 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Msg::NewFileResponse, post_session_id_),
+  0,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileRequest, name_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileRequest, path_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileRequest, auth_),
+  0,
+  1,
+  2,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileResponse, session_key_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileResponse, total_file_size_),
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkRequest, path_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkRequest, fileidx_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkRequest, session_key_),
+  0,
+  2,
+  1,
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Msg::GetFileChunkResponse, data_),
   0,
   PROTOBUF_FIELD_OFFSET(::Msg::RmFileRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::RmFileRequest, _internal_metadata_),
@@ -647,6 +865,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   PROTOBUF_FIELD_OFFSET(::Msg::Request, ls_file_req_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, mv_file_req_),
   PROTOBUF_FIELD_OFFSET(::Msg::Request, cp_file_req_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Request, get_file_ops_req_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Request, get_file_req_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Request, get_file_chunk_req_),
   0,
   1,
   2,
@@ -656,6 +877,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   6,
   7,
   8,
+  9,
+  10,
+  11,
   PROTOBUF_FIELD_OFFSET(::Msg::Response, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -667,12 +891,18 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBU
   PROTOBUF_FIELD_OFFSET(::Msg::Response, new_file_response_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, ls_file_res_),
   PROTOBUF_FIELD_OFFSET(::Msg::Response, join_res_),
-  5,
+  PROTOBUF_FIELD_OFFSET(::Msg::Response, get_file_ops_res_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Response, get_file_res_),
+  PROTOBUF_FIELD_OFFSET(::Msg::Response, get_file_chunk_res_),
+  8,
   0,
   1,
   2,
   3,
   4,
+  5,
+  6,
+  7,
   PROTOBUF_FIELD_OFFSET(::Msg::Message, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::Msg::Message, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -695,20 +925,27 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 42, 50, sizeof(::Msg::UpdateStateHashRequest)},
   { 53, 60, sizeof(::Msg::GetStateRequest)},
   { 62, 68, sizeof(::Msg::GetStateResponse)},
-  { 69, 78, sizeof(::Msg::NewFileRequest)},
-  { 82, 88, sizeof(::Msg::NewFileResponse)},
-  { 89, 95, sizeof(::Msg::RmFileRequest)},
-  { 96, 107, sizeof(::Msg::FilePost)},
-  { 113, 119, sizeof(::Msg::EndFilePostRequest)},
-  { 120, 127, sizeof(::Msg::EndFilePostResponse)},
-  { 129, 135, sizeof(::Msg::LsFileRequest)},
-  { 136, 145, sizeof(::Msg::FileAttribute)},
-  { 149, 155, sizeof(::Msg::LsFileResponse)},
-  { 156, 163, sizeof(::Msg::MvFileRequest)},
-  { 165, 172, sizeof(::Msg::CpFileRequest)},
-  { 174, 188, sizeof(::Msg::Request)},
-  { 197, 208, sizeof(::Msg::Response)},
-  { 214, 223, sizeof(::Msg::Message)},
+  { 69, 79, sizeof(::Msg::FileOperation)},
+  { 84, 92, sizeof(::Msg::GetFileOpsRequest)},
+  { 95, 101, sizeof(::Msg::GetFileOpsResponse)},
+  { 102, 111, sizeof(::Msg::NewFileRequest)},
+  { 115, 121, sizeof(::Msg::NewFileResponse)},
+  { 122, 130, sizeof(::Msg::GetFileRequest)},
+  { 133, 140, sizeof(::Msg::GetFileResponse)},
+  { 142, 150, sizeof(::Msg::GetFileChunkRequest)},
+  { 153, 159, sizeof(::Msg::GetFileChunkResponse)},
+  { 160, 166, sizeof(::Msg::RmFileRequest)},
+  { 167, 178, sizeof(::Msg::FilePost)},
+  { 184, 190, sizeof(::Msg::EndFilePostRequest)},
+  { 191, 198, sizeof(::Msg::EndFilePostResponse)},
+  { 200, 206, sizeof(::Msg::LsFileRequest)},
+  { 207, 216, sizeof(::Msg::FileAttribute)},
+  { 220, 226, sizeof(::Msg::LsFileResponse)},
+  { 227, 234, sizeof(::Msg::MvFileRequest)},
+  { 236, 243, sizeof(::Msg::CpFileRequest)},
+  { 245, 262, sizeof(::Msg::Request)},
+  { 274, 288, sizeof(::Msg::Response)},
+  { 297, 306, sizeof(::Msg::Message)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -719,8 +956,15 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_UpdateStateHashRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetStateResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_FileOperation_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileOpsRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileOpsResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_NewFileResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileChunkRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_GetFileChunkResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_RmFileRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_FilePost_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Msg::_EndFilePostRequest_default_instance_),
@@ -738,7 +982,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 static ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptorsTable assign_descriptors_table_msg_2eproto = {
   {}, AddDescriptors_msg_2eproto, "msg.proto", schemas,
   file_default_instances, TableStruct_msg_2eproto::offsets,
-  file_level_metadata_msg_2eproto, 21, file_level_enum_descriptors_msg_2eproto, file_level_service_descriptors_msg_2eproto,
+  file_level_metadata_msg_2eproto, 28, file_level_enum_descriptors_msg_2eproto, file_level_service_descriptors_msg_2eproto,
 };
 
 const char descriptor_table_protodef_msg_2eproto[] =
@@ -752,63 +996,87 @@ const char descriptor_table_protodef_msg_2eproto[] =
   "eStateHashRequest\022\014\n\004name\030\001 \002(\t\022\014\n\004hash\030"
   "\002 \002(\t\022\014\n\004auth\030\003 \002(\014\"-\n\017GetStateRequest\022\014"
   "\n\004name\030\001 \002(\t\022\014\n\004auth\030\002 \002(\014\" \n\020GetStateRe"
-  "sponse\022\014\n\004hash\030\002 \001(\014\"m\n\016NewFileRequest\022\014"
-  "\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileTyp"
-  "e\022\027\n\017total_pack_size\030\003 \002(\005\022\027\n\017total_file"
-  "_size\030\004 \002(\005\"*\n\017NewFileResponse\022\027\n\017post_s"
-  "ession_id\030\001 \001(\005\"\035\n\rRmFileRequest\022\014\n\004path"
-  "\030\001 \002(\t\"v\n\010FilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017post"
-  "_session_id\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020\n\010f"
-  "ile_idx\030\004 \002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_size"
-  "\030\006 \002(\005\"\"\n\022EndFilePostRequest\022\014\n\004name\030\001 \002"
-  "(\t\"8\n\023EndFilePostResponse\022\n\n\002ok\030\001 \002(\010\022\025\n"
-  "\rlost_pack_idx\030\002 \001(\005\"\035\n\rLsFileRequest\022\014\n"
-  "\004path\030\001 \002(\t\"V\n\rFileAttribute\022\014\n\004name\030\001 \002"
-  "(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\014\n\004size\030"
-  "\003 \002(\005\022\014\n\004time\030\004 \002(\t\"3\n\016LsFileResponse\022!\n"
-  "\005files\030\001 \003(\0132\022.Msg.FileAttribute\"1\n\rMvFi"
-  "leRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n\007dstPath\030\002 "
-  "\002(\t\"1\n\rCpFileRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n"
-  "\007dstPath\030\002 \002(\t\"\364\002\n\007Request\022\036\n\004join\030\001 \001(\013"
-  "2\020.Msg.JoinRequest\022/\n\rupdate_status\030\002 \001("
-  "\0132\030.Msg.UpdateStatusRequest\022+\n\rget_state"
-  "_req\030\003 \001(\0132\024.Msg.GetStateRequest\022*\n\005stat"
-  "e\030\004 \001(\0132\033.Msg.UpdateStateHashRequest\022!\n\004"
-  "file\030\005 \001(\0132\023.Msg.NewFileRequest\022!\n\005rm_op"
-  "\030\006 \001(\0132\022.Msg.RmFileRequest\022\'\n\013ls_file_re"
-  "q\030\007 \001(\0132\022.Msg.LsFileRequest\022\'\n\013mv_file_r"
-  "eq\030\010 \001(\0132\022.Msg.MvFileRequest\022\'\n\013cp_file_"
-  "req\030\t \001(\0132\022.Msg.CpFileRequest\"\351\001\n\010Respon"
-  "se\022!\n\006status\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n"
-  "\004info\030\002 \001(\t\022,\n\rget_state_res\030\003 \001(\0132\025.Msg"
-  ".GetStateResponse\022/\n\021new_file_response\030\004"
-  " \001(\0132\024.Msg.NewFileResponse\022(\n\013ls_file_re"
-  "s\030\005 \001(\0132\023.Msg.LsFileResponse\022#\n\010join_res"
-  "\030\006 \001(\0132\021.Msg.JoinResponse\"\207\001\n\007Message\022\032\n"
-  "\004type\030\001 \002(\0162\014.Msg.MsgType\022\035\n\007request\030\002 \001"
-  "(\0132\014.Msg.Request\022\037\n\010response\030\003 \001(\0132\r.Msg"
-  ".Response\022 \n\tfile_post\030\004 \001(\0132\r.Msg.FileP"
-  "ost*\325\003\n\007MsgType\022\020\n\014Join_Request\020\001\022\021\n\rJoi"
-  "n_Response\020\002\022\030\n\024UpdateStatus_Request\020\003\022\027"
-  "\n\023UpdateState_Request\020\004\022\024\n\020GetState_Requ"
-  "est\020\005\022\025\n\021GetState_Response\020\006\022\023\n\017Common_R"
-  "esponse\020\007\022\033\n\027MasterNotifyCmd_Request\020\010\022\023"
-  "\n\017NewFile_Request\020\t\022\024\n\020NewFile_Response\020"
-  "\n\022\r\n\tFile_Post\020\013\022\031\n\025End_File_Post_Reques"
-  "t\020\014\022\032\n\026End_File_Post_Response\020\r\022\023\n\017Rm_Fi"
-  "le_Request\020\016\022\022\n\016FileOp_Request\020\017\022\022\n\016LsFi"
-  "le_Request\020\020\022\023\n\017LsFile_Response\020\021\022\022\n\016MvF"
-  "ile_Request\020\022\022\023\n\017MvFile_Response\020\023\022\022\n\016Cp"
-  "File_Request\020\024\022\023\n\017CpFile_Response\020\025*#\n\010F"
-  "ileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR\020\002*.\n\nFile"
-  "OpType\022\n\n\006NEW_OP\020\001\022\t\n\005RM_OP\020\002\022\t\n\005MV_OP\020\003"
-  "*1\n\014MsgResStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_"
-  "RES_ERROR\020\002"
+  "sponse\022\014\n\004hash\030\002 \001(\014\"v\n\rFileOperation\022\035\n"
+  "\004type\030\001 \002(\0162\017.Msg.FileOpType\022\020\n\010src_path"
+  "\030\002 \002(\t\022\020\n\010dst_path\030\003 \002(\t\022\022\n\nstate_hash\030\004"
+  " \002(\t\022\016\n\006opTime\030\005 \002(\003\"D\n\021GetFileOpsReques"
+  "t\022\014\n\004name\030\001 \002(\t\022\014\n\004auth\030\002 \002(\014\022\023\n\013newest_"
+  "hash\030\003 \002(\t\"5\n\022GetFileOpsResponse\022\037\n\003ops\030"
+  "\002 \003(\0132\022.Msg.FileOperation\"m\n\016NewFileRequ"
+  "est\022\014\n\004name\030\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.Fi"
+  "leType\022\027\n\017total_pack_size\030\003 \002(\005\022\027\n\017total"
+  "_file_size\030\004 \002(\005\"*\n\017NewFileResponse\022\027\n\017p"
+  "ost_session_id\030\001 \001(\005\":\n\016GetFileRequest\022\014"
+  "\n\004name\030\001 \002(\t\022\014\n\004path\030\002 \002(\t\022\014\n\004auth\030\003 \001(\014"
+  "\"\?\n\017GetFileResponse\022\023\n\013session_key\030\002 \002(\t"
+  "\022\027\n\017total_file_size\030\003 \002(\005\"I\n\023GetFileChun"
+  "kRequest\022\014\n\004path\030\001 \002(\t\022\017\n\007fileIdx\030\002 \002(\005\022"
+  "\023\n\013session_key\030\003 \002(\t\"$\n\024GetFileChunkResp"
+  "onse\022\014\n\004data\030\001 \002(\014\"\035\n\rRmFileRequest\022\014\n\004p"
+  "ath\030\001 \002(\t\"v\n\010FilePost\022\014\n\004name\030\001 \002(\t\022\027\n\017p"
+  "ost_session_id\030\002 \002(\003\022\020\n\010pack_idx\030\003 \002(\005\022\020"
+  "\n\010file_idx\030\004 \002(\005\022\014\n\004data\030\005 \002(\014\022\021\n\tdata_s"
+  "ize\030\006 \002(\005\"\"\n\022EndFilePostRequest\022\014\n\004name\030"
+  "\001 \002(\t\"8\n\023EndFilePostResponse\022\n\n\002ok\030\001 \002(\010"
+  "\022\025\n\rlost_pack_idx\030\002 \001(\005\"\035\n\rLsFileRequest"
+  "\022\014\n\004path\030\001 \002(\t\"V\n\rFileAttribute\022\014\n\004name\030"
+  "\001 \002(\t\022\033\n\004type\030\002 \002(\0162\r.Msg.FileType\022\014\n\004si"
+  "ze\030\003 \002(\005\022\014\n\004time\030\004 \002(\t\"3\n\016LsFileResponse"
+  "\022!\n\005files\030\001 \003(\0132\022.Msg.FileAttribute\"1\n\rM"
+  "vFileRequest\022\017\n\007srcPath\030\001 \002(\t\022\017\n\007dstPath"
+  "\030\002 \002(\t\"1\n\rCpFileRequest\022\017\n\007srcPath\030\001 \002(\t"
+  "\022\017\n\007dstPath\030\002 \002(\t\"\207\004\n\007Request\022\036\n\004join\030\001 "
+  "\001(\0132\020.Msg.JoinRequest\022/\n\rupdate_status\030\002"
+  " \001(\0132\030.Msg.UpdateStatusRequest\022+\n\rget_st"
+  "ate_req\030\003 \001(\0132\024.Msg.GetStateRequest\022*\n\005s"
+  "tate\030\004 \001(\0132\033.Msg.UpdateStateHashRequest\022"
+  "!\n\004file\030\005 \001(\0132\023.Msg.NewFileRequest\022!\n\005rm"
+  "_op\030\006 \001(\0132\022.Msg.RmFileRequest\022\'\n\013ls_file"
+  "_req\030\007 \001(\0132\022.Msg.LsFileRequest\022\'\n\013mv_fil"
+  "e_req\030\010 \001(\0132\022.Msg.MvFileRequest\022\'\n\013cp_fi"
+  "le_req\030\t \001(\0132\022.Msg.CpFileRequest\0220\n\020get_"
+  "file_ops_req\030\n \001(\0132\026.Msg.GetFileOpsReque"
+  "st\022)\n\014get_file_req\030\013 \001(\0132\023.Msg.GetFileRe"
+  "quest\0224\n\022get_file_chunk_req\030\014 \001(\0132\030.Msg."
+  "GetFileChunkRequest\"\377\002\n\010Response\022!\n\006stat"
+  "us\030\001 \002(\0162\021.Msg.MsgResStatus\022\014\n\004info\030\002 \001("
+  "\t\022,\n\rget_state_res\030\003 \001(\0132\025.Msg.GetStateR"
+  "esponse\022/\n\021new_file_response\030\004 \001(\0132\024.Msg"
+  ".NewFileResponse\022(\n\013ls_file_res\030\005 \001(\0132\023."
+  "Msg.LsFileResponse\022#\n\010join_res\030\006 \001(\0132\021.M"
+  "sg.JoinResponse\0221\n\020get_file_ops_res\030\007 \001("
+  "\0132\027.Msg.GetFileOpsResponse\022*\n\014get_file_r"
+  "es\030\010 \001(\0132\024.Msg.GetFileResponse\0225\n\022get_fi"
+  "le_chunk_res\030\t \001(\0132\031.Msg.GetFileChunkRes"
+  "ponse\"\207\001\n\007Message\022\032\n\004type\030\001 \002(\0162\014.Msg.Ms"
+  "gType\022\035\n\007request\030\002 \001(\0132\014.Msg.Request\022\037\n\010"
+  "response\030\003 \001(\0132\r.Msg.Response\022 \n\tfile_po"
+  "st\030\004 \001(\0132\r.Msg.FilePost*\346\004\n\007MsgType\022\020\n\014J"
+  "oin_Request\020\001\022\021\n\rJoin_Response\020\002\022\030\n\024Upda"
+  "teStatus_Request\020\003\022\027\n\023UpdateState_Reques"
+  "t\020\004\022\024\n\020GetState_Request\020\005\022\025\n\021GetState_Re"
+  "sponse\020\006\022\023\n\017Common_Response\020\007\022\033\n\027MasterN"
+  "otifyCmd_Request\020\010\022\023\n\017NewFile_Request\020\t\022"
+  "\024\n\020NewFile_Response\020\n\022\r\n\tFile_Post\020\013\022\031\n\025"
+  "End_File_Post_Request\020\014\022\032\n\026End_File_Post"
+  "_Response\020\r\022\023\n\017Rm_File_Request\020\016\022\022\n\016File"
+  "Op_Request\020\017\022\022\n\016LsFile_Request\020\020\022\023\n\017LsFi"
+  "le_Response\020\021\022\022\n\016MvFile_Request\020\022\022\023\n\017MvF"
+  "ile_Response\020\023\022\022\n\016CpFile_Request\020\024\022\023\n\017Cp"
+  "File_Response\020\025\022\026\n\022GetFileOps_Request\020\026\022"
+  "\027\n\023GetFileOps_Response\020\027\022\023\n\017GetFile_Requ"
+  "est\020\030\022\024\n\020GetFile_Response\020\031\022\030\n\024GetFileCh"
+  "unk_Request\020\032\022\031\n\025GetFileChunk_Response\020\033"
+  "*#\n\010FileType\022\013\n\007FT_FILE\020\001\022\n\n\006FT_DIR\020\002*I\n"
+  "\nFileOpType\022\n\n\006NEW_OP\020\001\022\016\n\nNEW_DIR_OP\020\002\022"
+  "\t\n\005RM_OP\020\003\022\t\n\005MV_OP\020\004\022\t\n\005CP_OP\020\005*1\n\014MsgR"
+  "esStatus\022\016\n\nMSG_RES_OK\020\001\022\021\n\rMSG_RES_ERRO"
+  "R\020\002"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {
   false, InitDefaults_msg_2eproto, 
   descriptor_table_protodef_msg_2eproto,
-  "msg.proto", &assign_descriptors_table_msg_2eproto, 2451,
+  "msg.proto", &assign_descriptors_table_msg_2eproto, 3403,
 };
 
 void AddDescriptors_msg_2eproto() {
@@ -848,6 +1116,12 @@ bool MsgType_IsValid(int value) {
     case 19:
     case 20:
     case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
       return true;
     default:
       return false;
@@ -877,6 +1151,8 @@ bool FileOpType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -3653,6 +3929,1294 @@ void GetStateResponse::InternalSwap(GetStateResponse* other) {
 
 // ===================================================================
 
+void FileOperation::InitAsDefaultInstance() {
+}
+class FileOperation::HasBitSetters {
+ public:
+  static void set_has_type(FileOperation* msg) {
+    msg->_has_bits_[0] |= 0x00000010u;
+  }
+  static void set_has_src_path(FileOperation* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_dst_path(FileOperation* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+  static void set_has_state_hash(FileOperation* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
+  static void set_has_optime(FileOperation* msg) {
+    msg->_has_bits_[0] |= 0x00000008u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FileOperation::kTypeFieldNumber;
+const int FileOperation::kSrcPathFieldNumber;
+const int FileOperation::kDstPathFieldNumber;
+const int FileOperation::kStateHashFieldNumber;
+const int FileOperation::kOpTimeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+FileOperation::FileOperation()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.FileOperation)
+}
+FileOperation::FileOperation(const FileOperation& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  src_path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_src_path()) {
+    src_path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.src_path_);
+  }
+  dst_path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_dst_path()) {
+    dst_path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.dst_path_);
+  }
+  state_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_state_hash()) {
+    state_hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.state_hash_);
+  }
+  ::memcpy(&optime_, &from.optime_,
+    static_cast<size_t>(reinterpret_cast<char*>(&type_) -
+    reinterpret_cast<char*>(&optime_)) + sizeof(type_));
+  // @@protoc_insertion_point(copy_constructor:Msg.FileOperation)
+}
+
+void FileOperation::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_FileOperation_msg_2eproto.base);
+  src_path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  dst_path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  state_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  optime_ = PROTOBUF_LONGLONG(0);
+  type_ = 1;
+}
+
+FileOperation::~FileOperation() {
+  // @@protoc_insertion_point(destructor:Msg.FileOperation)
+  SharedDtor();
+}
+
+void FileOperation::SharedDtor() {
+  src_path_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  dst_path_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  state_hash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void FileOperation::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const FileOperation& FileOperation::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_FileOperation_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void FileOperation::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.FileOperation)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      src_path_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      dst_path_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      state_hash_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  if (cached_has_bits & 0x00000018u) {
+    optime_ = PROTOBUF_LONGLONG(0);
+    type_ = 1;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* FileOperation::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required .Msg.FileOpType type = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 8) goto handle_unusual;
+        ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        if (!::Msg::FileOpType_IsValid(val)) {
+          ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          break;
+        }
+        set_type(static_cast<::Msg::FileOpType>(val));
+        break;
+      }
+      // required string src_path = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_src_path(), ptr, ctx, "Msg.FileOperation.src_path");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string dst_path = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_dst_path(), ptr, ctx, "Msg.FileOperation.dst_path");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string state_hash = 4;
+      case 4: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 34) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_state_hash(), ptr, ctx, "Msg.FileOperation.state_hash");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required int64 opTime = 5;
+      case 5: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 40) goto handle_unusual;
+        set_optime(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool FileOperation::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.FileOperation)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Msg.FileOpType type = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
+          int value = 0;
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Msg::FileOpType_IsValid(value)) {
+            set_type(static_cast< ::Msg::FileOpType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(
+                1, static_cast<::PROTOBUF_NAMESPACE_ID::uint64>(value));
+          }
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string src_path = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_src_path()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->src_path().data(), static_cast<int>(this->src_path().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.FileOperation.src_path");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string dst_path = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_dst_path()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->dst_path().data(), static_cast<int>(this->dst_path().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.FileOperation.dst_path");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string state_hash = 4;
+      case 4: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (34 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_state_hash()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->state_hash().data(), static_cast<int>(this->state_hash().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.FileOperation.state_hash");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required int64 opTime = 5;
+      case 5: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
+          HasBitSetters::set_has_optime(this);
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
+                 input, &optime_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.FileOperation)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.FileOperation)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void FileOperation::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.FileOperation)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required .Msg.FileOpType type = 1;
+  if (cached_has_bits & 0x00000010u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
+  }
+
+  // required string src_path = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->src_path().data(), static_cast<int>(this->src_path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.src_path");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->src_path(), output);
+  }
+
+  // required string dst_path = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dst_path().data(), static_cast<int>(this->dst_path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.dst_path");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->dst_path(), output);
+  }
+
+  // required string state_hash = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->state_hash().data(), static_cast<int>(this->state_hash().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.state_hash");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->state_hash(), output);
+  }
+
+  // required int64 opTime = 5;
+  if (cached_has_bits & 0x00000008u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64(5, this->optime(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.FileOperation)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* FileOperation::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.FileOperation)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required .Msg.FileOpType type = 1;
+  if (cached_has_bits & 0x00000010u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
+  }
+
+  // required string src_path = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->src_path().data(), static_cast<int>(this->src_path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.src_path");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        2, this->src_path(), target);
+  }
+
+  // required string dst_path = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dst_path().data(), static_cast<int>(this->dst_path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.dst_path");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        3, this->dst_path(), target);
+  }
+
+  // required string state_hash = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->state_hash().data(), static_cast<int>(this->state_hash().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.FileOperation.state_hash");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        4, this->state_hash(), target);
+  }
+
+  // required int64 opTime = 5;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(5, this->optime(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.FileOperation)
+  return target;
+}
+
+size_t FileOperation::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.FileOperation)
+  size_t total_size = 0;
+
+  if (has_src_path()) {
+    // required string src_path = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->src_path());
+  }
+
+  if (has_dst_path()) {
+    // required string dst_path = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->dst_path());
+  }
+
+  if (has_state_hash()) {
+    // required string state_hash = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->state_hash());
+  }
+
+  if (has_optime()) {
+    // required int64 opTime = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->optime());
+  }
+
+  if (has_type()) {
+    // required .Msg.FileOpType type = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->type());
+  }
+
+  return total_size;
+}
+size_t FileOperation::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.FileOperation)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
+    // required string src_path = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->src_path());
+
+    // required string dst_path = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->dst_path());
+
+    // required string state_hash = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->state_hash());
+
+    // required int64 opTime = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        this->optime());
+
+    // required .Msg.FileOpType type = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->type());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void FileOperation::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.FileOperation)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FileOperation* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<FileOperation>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.FileOperation)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.FileOperation)
+    MergeFrom(*source);
+  }
+}
+
+void FileOperation::MergeFrom(const FileOperation& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.FileOperation)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x0000001fu) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      src_path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.src_path_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      dst_path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.dst_path_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      state_hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.state_hash_);
+    }
+    if (cached_has_bits & 0x00000008u) {
+      optime_ = from.optime_;
+    }
+    if (cached_has_bits & 0x00000010u) {
+      type_ = from.type_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void FileOperation::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.FileOperation)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void FileOperation::CopyFrom(const FileOperation& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.FileOperation)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileOperation::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+  return true;
+}
+
+void FileOperation::Swap(FileOperation* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void FileOperation::InternalSwap(FileOperation* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  src_path_.Swap(&other->src_path_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  dst_path_.Swap(&other->dst_path_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  state_hash_.Swap(&other->state_hash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(optime_, other->optime_);
+  swap(type_, other->type_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata FileOperation::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileOpsRequest::InitAsDefaultInstance() {
+}
+class GetFileOpsRequest::HasBitSetters {
+ public:
+  static void set_has_name(GetFileOpsRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_auth(GetFileOpsRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+  static void set_has_newest_hash(GetFileOpsRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileOpsRequest::kNameFieldNumber;
+const int GetFileOpsRequest::kAuthFieldNumber;
+const int GetFileOpsRequest::kNewestHashFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileOpsRequest::GetFileOpsRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileOpsRequest)
+}
+GetFileOpsRequest::GetFileOpsRequest(const GetFileOpsRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name()) {
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_auth()) {
+    auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+  }
+  newest_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_newest_hash()) {
+    newest_hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.newest_hash_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileOpsRequest)
+}
+
+void GetFileOpsRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileOpsRequest_msg_2eproto.base);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  newest_hash_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+GetFileOpsRequest::~GetFileOpsRequest() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileOpsRequest)
+  SharedDtor();
+}
+
+void GetFileOpsRequest::SharedDtor() {
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  newest_hash_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void GetFileOpsRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileOpsRequest& GetFileOpsRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileOpsRequest_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileOpsRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileOpsRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      auth_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      newest_hash_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileOpsRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.GetFileOpsRequest.name");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required bytes auth = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_auth(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string newest_hash = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_newest_hash(), ptr, ctx, "Msg.GetFileOpsRequest.newest_hash");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileOpsRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileOpsRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileOpsRequest.name");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required bytes auth = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_auth()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string newest_hash = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_newest_hash()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->newest_hash().data(), static_cast<int>(this->newest_hash().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileOpsRequest.newest_hash");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileOpsRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileOpsRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileOpsRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileOpsRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileOpsRequest.name");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // required bytes auth = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      2, this->auth(), output);
+  }
+
+  // required string newest_hash = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->newest_hash().data(), static_cast<int>(this->newest_hash().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileOpsRequest.newest_hash");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->newest_hash(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileOpsRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileOpsRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileOpsRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileOpsRequest.name");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // required bytes auth = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        2, this->auth(), target);
+  }
+
+  // required string newest_hash = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->newest_hash().data(), static_cast<int>(this->newest_hash().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileOpsRequest.newest_hash");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        3, this->newest_hash(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileOpsRequest)
+  return target;
+}
+
+size_t GetFileOpsRequest::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.GetFileOpsRequest)
+  size_t total_size = 0;
+
+  if (has_name()) {
+    // required string name = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  if (has_auth()) {
+    // required bytes auth = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->auth());
+  }
+
+  if (has_newest_hash()) {
+    // required string newest_hash = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->newest_hash());
+  }
+
+  return total_size;
+}
+size_t GetFileOpsRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileOpsRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required string name = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+
+    // required bytes auth = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->auth());
+
+    // required string newest_hash = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->newest_hash());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileOpsRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileOpsRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileOpsRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileOpsRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileOpsRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileOpsRequest)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileOpsRequest::MergeFrom(const GetFileOpsRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileOpsRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      newest_hash_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.newest_hash_);
+    }
+  }
+}
+
+void GetFileOpsRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileOpsRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileOpsRequest::CopyFrom(const GetFileOpsRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileOpsRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileOpsRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  return true;
+}
+
+void GetFileOpsRequest::Swap(GetFileOpsRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileOpsRequest::InternalSwap(GetFileOpsRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  newest_hash_.Swap(&other->newest_hash_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileOpsRequest::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileOpsResponse::InitAsDefaultInstance() {
+}
+class GetFileOpsResponse::HasBitSetters {
+ public:
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileOpsResponse::kOpsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileOpsResponse::GetFileOpsResponse()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileOpsResponse)
+}
+GetFileOpsResponse::GetFileOpsResponse(const GetFileOpsResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_),
+      ops_(from.ops_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileOpsResponse)
+}
+
+void GetFileOpsResponse::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileOpsResponse_msg_2eproto.base);
+}
+
+GetFileOpsResponse::~GetFileOpsResponse() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileOpsResponse)
+  SharedDtor();
+}
+
+void GetFileOpsResponse::SharedDtor() {
+}
+
+void GetFileOpsResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileOpsResponse& GetFileOpsResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileOpsResponse_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileOpsResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileOpsResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ops_.Clear();
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileOpsResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // repeated .Msg.FileOperation ops = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        do {
+          ptr = ctx->ParseMessage(add_ops(), ptr);
+          GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+          if (ctx->Done(&ptr)) return ptr;
+        } while ((::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<::PROTOBUF_NAMESPACE_ID::uint64>(ptr) & 255) == 18 && (ptr += 1));
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileOpsResponse::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileOpsResponse)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .Msg.FileOperation ops = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+                input, add_ops()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileOpsResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileOpsResponse)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileOpsResponse::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileOpsResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .Msg.FileOperation ops = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->ops_size()); i < n; i++) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2,
+      this->ops(static_cast<int>(i)),
+      output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileOpsResponse)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileOpsResponse::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileOpsResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .Msg.FileOperation ops = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->ops_size()); i < n; i++) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        2, this->ops(static_cast<int>(i)), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileOpsResponse)
+  return target;
+}
+
+size_t GetFileOpsResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileOpsResponse)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .Msg.FileOperation ops = 2;
+  {
+    unsigned int count = static_cast<unsigned int>(this->ops_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          this->ops(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileOpsResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileOpsResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileOpsResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileOpsResponse>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileOpsResponse)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileOpsResponse)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileOpsResponse::MergeFrom(const GetFileOpsResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileOpsResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  ops_.MergeFrom(from.ops_);
+}
+
+void GetFileOpsResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileOpsResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileOpsResponse::CopyFrom(const GetFileOpsResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileOpsResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileOpsResponse::IsInitialized() const {
+  if (!::PROTOBUF_NAMESPACE_ID::internal::AllAreInitialized(this->ops())) return false;
+  return true;
+}
+
+void GetFileOpsResponse::Swap(GetFileOpsResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileOpsResponse::InternalSwap(GetFileOpsResponse* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  CastToBase(&ops_)->InternalSwap(CastToBase(&other->ops_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileOpsResponse::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void NewFileRequest::InitAsDefaultInstance() {
 }
 class NewFileRequest::HasBitSetters {
@@ -4389,6 +5953,1513 @@ void NewFileResponse::InternalSwap(NewFileResponse* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NewFileResponse::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileRequest::InitAsDefaultInstance() {
+}
+class GetFileRequest::HasBitSetters {
+ public:
+  static void set_has_name(GetFileRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_path(GetFileRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+  static void set_has_auth(GetFileRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileRequest::kNameFieldNumber;
+const int GetFileRequest::kPathFieldNumber;
+const int GetFileRequest::kAuthFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileRequest::GetFileRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileRequest)
+}
+GetFileRequest::GetFileRequest(const GetFileRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name()) {
+    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_path()) {
+    path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.path_);
+  }
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_auth()) {
+    auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileRequest)
+}
+
+void GetFileRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileRequest_msg_2eproto.base);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+GetFileRequest::~GetFileRequest() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileRequest)
+  SharedDtor();
+}
+
+void GetFileRequest::SharedDtor() {
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  path_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  auth_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void GetFileRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileRequest& GetFileRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileRequest_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      path_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      auth_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_name(), ptr, ctx, "Msg.GetFileRequest.name");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string path = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_path(), ptr, ctx, "Msg.GetFileRequest.path");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional bytes auth = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_auth(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileRequest.name");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string path = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_path()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->path().data(), static_cast<int>(this->path().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileRequest.path");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional bytes auth = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_auth()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileRequest.name");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // required string path = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->path().data(), static_cast<int>(this->path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileRequest.path");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->path(), output);
+  }
+
+  // optional bytes auth = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      3, this->auth(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileRequest.name");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // required string path = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->path().data(), static_cast<int>(this->path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileRequest.path");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        2, this->path(), target);
+  }
+
+  // optional bytes auth = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        3, this->auth(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileRequest)
+  return target;
+}
+
+size_t GetFileRequest::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.GetFileRequest)
+  size_t total_size = 0;
+
+  if (has_name()) {
+    // required string name = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  if (has_path()) {
+    // required string path = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->path());
+  }
+
+  return total_size;
+}
+size_t GetFileRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required string name = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->name());
+
+    // required string path = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->path());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional bytes auth = 3;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000004u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->auth());
+  }
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileRequest)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileRequest::MergeFrom(const GetFileRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.path_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      auth_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.auth_);
+    }
+  }
+}
+
+void GetFileRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileRequest::CopyFrom(const GetFileRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  return true;
+}
+
+void GetFileRequest::Swap(GetFileRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileRequest::InternalSwap(GetFileRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  path_.Swap(&other->path_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  auth_.Swap(&other->auth_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileRequest::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileResponse::InitAsDefaultInstance() {
+}
+class GetFileResponse::HasBitSetters {
+ public:
+  static void set_has_session_key(GetFileResponse* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_total_file_size(GetFileResponse* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileResponse::kSessionKeyFieldNumber;
+const int GetFileResponse::kTotalFileSizeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileResponse::GetFileResponse()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileResponse)
+}
+GetFileResponse::GetFileResponse(const GetFileResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_session_key()) {
+    session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+  }
+  total_file_size_ = from.total_file_size_;
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileResponse)
+}
+
+void GetFileResponse::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileResponse_msg_2eproto.base);
+  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  total_file_size_ = 0;
+}
+
+GetFileResponse::~GetFileResponse() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileResponse)
+  SharedDtor();
+}
+
+void GetFileResponse::SharedDtor() {
+  session_key_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void GetFileResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileResponse& GetFileResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileResponse_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    session_key_.ClearNonDefaultToEmptyNoArena();
+  }
+  total_file_size_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required string session_key = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 18) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_session_key(), ptr, ctx, "Msg.GetFileResponse.session_key");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required int32 total_file_size = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 24) goto handle_unusual;
+        set_total_file_size(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileResponse::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileResponse)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string session_key = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_session_key()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->session_key().data(), static_cast<int>(this->session_key().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileResponse.session_key");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required int32 total_file_size = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
+          HasBitSetters::set_has_total_file_size(this);
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, &total_file_size_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileResponse)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileResponse::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string session_key = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->session_key().data(), static_cast<int>(this->session_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileResponse.session_key");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->session_key(), output);
+  }
+
+  // required int32 total_file_size = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(3, this->total_file_size(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileResponse)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileResponse::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string session_key = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->session_key().data(), static_cast<int>(this->session_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileResponse.session_key");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        2, this->session_key(), target);
+  }
+
+  // required int32 total_file_size = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->total_file_size(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileResponse)
+  return target;
+}
+
+size_t GetFileResponse::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.GetFileResponse)
+  size_t total_size = 0;
+
+  if (has_session_key()) {
+    // required string session_key = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->session_key());
+  }
+
+  if (has_total_file_size()) {
+    // required int32 total_file_size = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->total_file_size());
+  }
+
+  return total_size;
+}
+size_t GetFileResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileResponse)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required string session_key = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->session_key());
+
+    // required int32 total_file_size = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->total_file_size());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileResponse>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileResponse)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileResponse)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileResponse::MergeFrom(const GetFileResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      total_file_size_ = from.total_file_size_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void GetFileResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileResponse::CopyFrom(const GetFileResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  return true;
+}
+
+void GetFileResponse::Swap(GetFileResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileResponse::InternalSwap(GetFileResponse* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  session_key_.Swap(&other->session_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(total_file_size_, other->total_file_size_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileResponse::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileChunkRequest::InitAsDefaultInstance() {
+}
+class GetFileChunkRequest::HasBitSetters {
+ public:
+  static void set_has_path(GetFileChunkRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_fileidx(GetFileChunkRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
+  static void set_has_session_key(GetFileChunkRequest* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileChunkRequest::kPathFieldNumber;
+const int GetFileChunkRequest::kFileIdxFieldNumber;
+const int GetFileChunkRequest::kSessionKeyFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileChunkRequest::GetFileChunkRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileChunkRequest)
+}
+GetFileChunkRequest::GetFileChunkRequest(const GetFileChunkRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_path()) {
+    path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.path_);
+  }
+  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_session_key()) {
+    session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+  }
+  fileidx_ = from.fileidx_;
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileChunkRequest)
+}
+
+void GetFileChunkRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileChunkRequest_msg_2eproto.base);
+  path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  fileidx_ = 0;
+}
+
+GetFileChunkRequest::~GetFileChunkRequest() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileChunkRequest)
+  SharedDtor();
+}
+
+void GetFileChunkRequest::SharedDtor() {
+  path_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  session_key_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void GetFileChunkRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileChunkRequest& GetFileChunkRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileChunkRequest_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileChunkRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileChunkRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      path_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      session_key_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  fileidx_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileChunkRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required string path = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_path(), ptr, ctx, "Msg.GetFileChunkRequest.path");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required int32 fileIdx = 2;
+      case 2: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 16) goto handle_unusual;
+        set_fileidx(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // required string session_key = 3;
+      case 3: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 26) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8Verify(mutable_session_key(), ptr, ctx, "Msg.GetFileChunkRequest.session_key");
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileChunkRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileChunkRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string path = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_path()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->path().data(), static_cast<int>(this->path().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileChunkRequest.path");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required int32 fileIdx = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
+          HasBitSetters::set_has_fileidx(this);
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, &fileidx_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required string session_key = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_session_key()));
+          ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->session_key().data(), static_cast<int>(this->session_key().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::PARSE,
+            "Msg.GetFileChunkRequest.session_key");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileChunkRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileChunkRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileChunkRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileChunkRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string path = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->path().data(), static_cast<int>(this->path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileChunkRequest.path");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->path(), output);
+  }
+
+  // required int32 fileIdx = 2;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->fileidx(), output);
+  }
+
+  // required string session_key = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->session_key().data(), static_cast<int>(this->session_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileChunkRequest.session_key");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->session_key(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileChunkRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileChunkRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileChunkRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string path = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->path().data(), static_cast<int>(this->path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileChunkRequest.path");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        1, this->path(), target);
+  }
+
+  // required int32 fileIdx = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->fileidx(), target);
+  }
+
+  // required string session_key = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->session_key().data(), static_cast<int>(this->session_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "Msg.GetFileChunkRequest.session_key");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        3, this->session_key(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileChunkRequest)
+  return target;
+}
+
+size_t GetFileChunkRequest::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Msg.GetFileChunkRequest)
+  size_t total_size = 0;
+
+  if (has_path()) {
+    // required string path = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->path());
+  }
+
+  if (has_session_key()) {
+    // required string session_key = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->session_key());
+  }
+
+  if (has_fileidx()) {
+    // required int32 fileIdx = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->fileidx());
+  }
+
+  return total_size;
+}
+size_t GetFileChunkRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileChunkRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required string path = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->path());
+
+    // required string session_key = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->session_key());
+
+    // required int32 fileIdx = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->fileidx());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileChunkRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileChunkRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileChunkRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileChunkRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileChunkRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileChunkRequest)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileChunkRequest::MergeFrom(const GetFileChunkRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileChunkRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.path_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      fileidx_ = from.fileidx_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void GetFileChunkRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileChunkRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileChunkRequest::CopyFrom(const GetFileChunkRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileChunkRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileChunkRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  return true;
+}
+
+void GetFileChunkRequest::Swap(GetFileChunkRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileChunkRequest::InternalSwap(GetFileChunkRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  path_.Swap(&other->path_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  session_key_.Swap(&other->session_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(fileidx_, other->fileidx_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileChunkRequest::GetMetadata() const {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
+  return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetFileChunkResponse::InitAsDefaultInstance() {
+}
+class GetFileChunkResponse::HasBitSetters {
+ public:
+  static void set_has_data(GetFileChunkResponse* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetFileChunkResponse::kDataFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetFileChunkResponse::GetFileChunkResponse()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Msg.GetFileChunkResponse)
+}
+GetFileChunkResponse::GetFileChunkResponse(const GetFileChunkResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.has_data()) {
+    data_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.data_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Msg.GetFileChunkResponse)
+}
+
+void GetFileChunkResponse::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
+      &scc_info_GetFileChunkResponse_msg_2eproto.base);
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+GetFileChunkResponse::~GetFileChunkResponse() {
+  // @@protoc_insertion_point(destructor:Msg.GetFileChunkResponse)
+  SharedDtor();
+}
+
+void GetFileChunkResponse::SharedDtor() {
+  data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void GetFileChunkResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetFileChunkResponse& GetFileChunkResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetFileChunkResponse_msg_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetFileChunkResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:Msg.GetFileChunkResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    data_.ClearNonDefaultToEmptyNoArena();
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* GetFileChunkResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required bytes data = 1;
+      case 1: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_data(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          return ptr;
+        }
+        ptr = UnknownFieldParse(tag,
+          _internal_metadata_.mutable_unknown_fields(), ptr, ctx);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        break;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool GetFileChunkResponse::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Msg.GetFileChunkResponse)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required bytes data = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_data()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Msg.GetFileChunkResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Msg.GetFileChunkResponse)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void GetFileChunkResponse::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Msg.GetFileChunkResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required bytes data = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      1, this->data(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Msg.GetFileChunkResponse)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetFileChunkResponse::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Msg.GetFileChunkResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required bytes data = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        1, this->data(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Msg.GetFileChunkResponse)
+  return target;
+}
+
+size_t GetFileChunkResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Msg.GetFileChunkResponse)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required bytes data = 1;
+  if (has_data()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->data());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetFileChunkResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Msg.GetFileChunkResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetFileChunkResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetFileChunkResponse>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Msg.GetFileChunkResponse)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Msg.GetFileChunkResponse)
+    MergeFrom(*source);
+  }
+}
+
+void GetFileChunkResponse::MergeFrom(const GetFileChunkResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Msg.GetFileChunkResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_data()) {
+    _has_bits_[0] |= 0x00000001u;
+    data_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.data_);
+  }
+}
+
+void GetFileChunkResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Msg.GetFileChunkResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFileChunkResponse::CopyFrom(const GetFileChunkResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Msg.GetFileChunkResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFileChunkResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void GetFileChunkResponse::Swap(GetFileChunkResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetFileChunkResponse::InternalSwap(GetFileChunkResponse* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  data_.Swap(&other->data_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetFileChunkResponse::GetMetadata() const {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::assign_descriptors_table_msg_2eproto);
   return ::file_level_metadata_msg_2eproto[kIndexInFileMessages];
 }
@@ -7706,6 +10777,12 @@ void Request::InitAsDefaultInstance() {
       ::Msg::MvFileRequest::internal_default_instance());
   ::Msg::_Request_default_instance_._instance.get_mutable()->cp_file_req_ = const_cast< ::Msg::CpFileRequest*>(
       ::Msg::CpFileRequest::internal_default_instance());
+  ::Msg::_Request_default_instance_._instance.get_mutable()->get_file_ops_req_ = const_cast< ::Msg::GetFileOpsRequest*>(
+      ::Msg::GetFileOpsRequest::internal_default_instance());
+  ::Msg::_Request_default_instance_._instance.get_mutable()->get_file_req_ = const_cast< ::Msg::GetFileRequest*>(
+      ::Msg::GetFileRequest::internal_default_instance());
+  ::Msg::_Request_default_instance_._instance.get_mutable()->get_file_chunk_req_ = const_cast< ::Msg::GetFileChunkRequest*>(
+      ::Msg::GetFileChunkRequest::internal_default_instance());
 }
 class Request::HasBitSetters {
  public:
@@ -7745,6 +10822,18 @@ class Request::HasBitSetters {
   static void set_has_cp_file_req(Request* msg) {
     msg->_has_bits_[0] |= 0x00000100u;
   }
+  static const ::Msg::GetFileOpsRequest& get_file_ops_req(const Request* msg);
+  static void set_has_get_file_ops_req(Request* msg) {
+    msg->_has_bits_[0] |= 0x00000200u;
+  }
+  static const ::Msg::GetFileRequest& get_file_req(const Request* msg);
+  static void set_has_get_file_req(Request* msg) {
+    msg->_has_bits_[0] |= 0x00000400u;
+  }
+  static const ::Msg::GetFileChunkRequest& get_file_chunk_req(const Request* msg);
+  static void set_has_get_file_chunk_req(Request* msg) {
+    msg->_has_bits_[0] |= 0x00000800u;
+  }
 };
 
 const ::Msg::JoinRequest&
@@ -7783,6 +10872,18 @@ const ::Msg::CpFileRequest&
 Request::HasBitSetters::cp_file_req(const Request* msg) {
   return *msg->cp_file_req_;
 }
+const ::Msg::GetFileOpsRequest&
+Request::HasBitSetters::get_file_ops_req(const Request* msg) {
+  return *msg->get_file_ops_req_;
+}
+const ::Msg::GetFileRequest&
+Request::HasBitSetters::get_file_req(const Request* msg) {
+  return *msg->get_file_req_;
+}
+const ::Msg::GetFileChunkRequest&
+Request::HasBitSetters::get_file_chunk_req(const Request* msg) {
+  return *msg->get_file_chunk_req_;
+}
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Request::kJoinFieldNumber;
 const int Request::kUpdateStatusFieldNumber;
@@ -7793,6 +10894,9 @@ const int Request::kRmOpFieldNumber;
 const int Request::kLsFileReqFieldNumber;
 const int Request::kMvFileReqFieldNumber;
 const int Request::kCpFileReqFieldNumber;
+const int Request::kGetFileOpsReqFieldNumber;
+const int Request::kGetFileReqFieldNumber;
+const int Request::kGetFileChunkReqFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Request::Request()
@@ -7850,6 +10954,21 @@ Request::Request(const Request& from)
   } else {
     cp_file_req_ = nullptr;
   }
+  if (from.has_get_file_ops_req()) {
+    get_file_ops_req_ = new ::Msg::GetFileOpsRequest(*from.get_file_ops_req_);
+  } else {
+    get_file_ops_req_ = nullptr;
+  }
+  if (from.has_get_file_req()) {
+    get_file_req_ = new ::Msg::GetFileRequest(*from.get_file_req_);
+  } else {
+    get_file_req_ = nullptr;
+  }
+  if (from.has_get_file_chunk_req()) {
+    get_file_chunk_req_ = new ::Msg::GetFileChunkRequest(*from.get_file_chunk_req_);
+  } else {
+    get_file_chunk_req_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:Msg.Request)
 }
 
@@ -7857,8 +10976,8 @@ void Request::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(
       &scc_info_Request_msg_2eproto.base);
   ::memset(&join_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&cp_file_req_) -
-      reinterpret_cast<char*>(&join_)) + sizeof(cp_file_req_));
+      reinterpret_cast<char*>(&get_file_chunk_req_) -
+      reinterpret_cast<char*>(&join_)) + sizeof(get_file_chunk_req_));
 }
 
 Request::~Request() {
@@ -7876,6 +10995,9 @@ void Request::SharedDtor() {
   if (this != internal_default_instance()) delete ls_file_req_;
   if (this != internal_default_instance()) delete mv_file_req_;
   if (this != internal_default_instance()) delete cp_file_req_;
+  if (this != internal_default_instance()) delete get_file_ops_req_;
+  if (this != internal_default_instance()) delete get_file_req_;
+  if (this != internal_default_instance()) delete get_file_chunk_req_;
 }
 
 void Request::SetCachedSize(int size) const {
@@ -7928,9 +11050,23 @@ void Request::Clear() {
       mv_file_req_->Clear();
     }
   }
-  if (cached_has_bits & 0x00000100u) {
-    GOOGLE_DCHECK(cp_file_req_ != nullptr);
-    cp_file_req_->Clear();
+  if (cached_has_bits & 0x00000f00u) {
+    if (cached_has_bits & 0x00000100u) {
+      GOOGLE_DCHECK(cp_file_req_ != nullptr);
+      cp_file_req_->Clear();
+    }
+    if (cached_has_bits & 0x00000200u) {
+      GOOGLE_DCHECK(get_file_ops_req_ != nullptr);
+      get_file_ops_req_->Clear();
+    }
+    if (cached_has_bits & 0x00000400u) {
+      GOOGLE_DCHECK(get_file_req_ != nullptr);
+      get_file_req_->Clear();
+    }
+    if (cached_has_bits & 0x00000800u) {
+      GOOGLE_DCHECK(get_file_chunk_req_ != nullptr);
+      get_file_chunk_req_->Clear();
+    }
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -8004,6 +11140,27 @@ const char* Request::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
       case 9: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 74) goto handle_unusual;
         ptr = ctx->ParseMessage(mutable_cp_file_req(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileOpsRequest get_file_ops_req = 10;
+      case 10: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 82) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_ops_req(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileRequest get_file_req = 11;
+      case 11: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 90) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_req(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileChunkRequest get_file_chunk_req = 12;
+      case 12: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 98) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_chunk_req(), ptr);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -8132,6 +11289,39 @@ bool Request::MergePartialFromCodedStream(
         break;
       }
 
+      // optional .Msg.GetFileOpsRequest get_file_ops_req = 10;
+      case 10: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (82 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_ops_req()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional .Msg.GetFileRequest get_file_req = 11;
+      case 11: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (90 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_req()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional .Msg.GetFileChunkRequest get_file_chunk_req = 12;
+      case 12: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (98 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_chunk_req()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -8214,6 +11404,24 @@ void Request::SerializeWithCachedSizes(
       9, HasBitSetters::cp_file_req(this), output);
   }
 
+  // optional .Msg.GetFileOpsRequest get_file_ops_req = 10;
+  if (cached_has_bits & 0x00000200u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      10, HasBitSetters::get_file_ops_req(this), output);
+  }
+
+  // optional .Msg.GetFileRequest get_file_req = 11;
+  if (cached_has_bits & 0x00000400u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      11, HasBitSetters::get_file_req(this), output);
+  }
+
+  // optional .Msg.GetFileChunkRequest get_file_chunk_req = 12;
+  if (cached_has_bits & 0x00000800u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      12, HasBitSetters::get_file_chunk_req(this), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -8289,6 +11497,27 @@ void Request::SerializeWithCachedSizes(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessageToArray(
         9, HasBitSetters::cp_file_req(this), target);
+  }
+
+  // optional .Msg.GetFileOpsRequest get_file_ops_req = 10;
+  if (cached_has_bits & 0x00000200u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        10, HasBitSetters::get_file_ops_req(this), target);
+  }
+
+  // optional .Msg.GetFileRequest get_file_req = 11;
+  if (cached_has_bits & 0x00000400u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        11, HasBitSetters::get_file_req(this), target);
+  }
+
+  // optional .Msg.GetFileChunkRequest get_file_chunk_req = 12;
+  if (cached_has_bits & 0x00000800u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        12, HasBitSetters::get_file_chunk_req(this), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -8371,13 +11600,36 @@ size_t Request::ByteSizeLong() const {
     }
 
   }
-  // optional .Msg.CpFileRequest cp_file_req = 9;
-  if (cached_has_bits & 0x00000100u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *cp_file_req_);
-  }
+  if (cached_has_bits & 0x00000f00u) {
+    // optional .Msg.CpFileRequest cp_file_req = 9;
+    if (cached_has_bits & 0x00000100u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *cp_file_req_);
+    }
 
+    // optional .Msg.GetFileOpsRequest get_file_ops_req = 10;
+    if (cached_has_bits & 0x00000200u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_ops_req_);
+    }
+
+    // optional .Msg.GetFileRequest get_file_req = 11;
+    if (cached_has_bits & 0x00000400u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_req_);
+    }
+
+    // optional .Msg.GetFileChunkRequest get_file_chunk_req = 12;
+    if (cached_has_bits & 0x00000800u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_chunk_req_);
+    }
+
+  }
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -8432,8 +11684,19 @@ void Request::MergeFrom(const Request& from) {
       mutable_mv_file_req()->::Msg::MvFileRequest::MergeFrom(from.mv_file_req());
     }
   }
-  if (cached_has_bits & 0x00000100u) {
-    mutable_cp_file_req()->::Msg::CpFileRequest::MergeFrom(from.cp_file_req());
+  if (cached_has_bits & 0x00000f00u) {
+    if (cached_has_bits & 0x00000100u) {
+      mutable_cp_file_req()->::Msg::CpFileRequest::MergeFrom(from.cp_file_req());
+    }
+    if (cached_has_bits & 0x00000200u) {
+      mutable_get_file_ops_req()->::Msg::GetFileOpsRequest::MergeFrom(from.get_file_ops_req());
+    }
+    if (cached_has_bits & 0x00000400u) {
+      mutable_get_file_req()->::Msg::GetFileRequest::MergeFrom(from.get_file_req());
+    }
+    if (cached_has_bits & 0x00000800u) {
+      mutable_get_file_chunk_req()->::Msg::GetFileChunkRequest::MergeFrom(from.get_file_chunk_req());
+    }
   }
 }
 
@@ -8479,6 +11742,15 @@ bool Request::IsInitialized() const {
   if (has_cp_file_req()) {
     if (!this->cp_file_req_->IsInitialized()) return false;
   }
+  if (has_get_file_ops_req()) {
+    if (!this->get_file_ops_req_->IsInitialized()) return false;
+  }
+  if (has_get_file_req()) {
+    if (!this->get_file_req_->IsInitialized()) return false;
+  }
+  if (has_get_file_chunk_req()) {
+    if (!this->get_file_chunk_req_->IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -8499,6 +11771,9 @@ void Request::InternalSwap(Request* other) {
   swap(ls_file_req_, other->ls_file_req_);
   swap(mv_file_req_, other->mv_file_req_);
   swap(cp_file_req_, other->cp_file_req_);
+  swap(get_file_ops_req_, other->get_file_ops_req_);
+  swap(get_file_req_, other->get_file_req_);
+  swap(get_file_chunk_req_, other->get_file_chunk_req_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Request::GetMetadata() const {
@@ -8518,11 +11793,17 @@ void Response::InitAsDefaultInstance() {
       ::Msg::LsFileResponse::internal_default_instance());
   ::Msg::_Response_default_instance_._instance.get_mutable()->join_res_ = const_cast< ::Msg::JoinResponse*>(
       ::Msg::JoinResponse::internal_default_instance());
+  ::Msg::_Response_default_instance_._instance.get_mutable()->get_file_ops_res_ = const_cast< ::Msg::GetFileOpsResponse*>(
+      ::Msg::GetFileOpsResponse::internal_default_instance());
+  ::Msg::_Response_default_instance_._instance.get_mutable()->get_file_res_ = const_cast< ::Msg::GetFileResponse*>(
+      ::Msg::GetFileResponse::internal_default_instance());
+  ::Msg::_Response_default_instance_._instance.get_mutable()->get_file_chunk_res_ = const_cast< ::Msg::GetFileChunkResponse*>(
+      ::Msg::GetFileChunkResponse::internal_default_instance());
 }
 class Response::HasBitSetters {
  public:
   static void set_has_status(Response* msg) {
-    msg->_has_bits_[0] |= 0x00000020u;
+    msg->_has_bits_[0] |= 0x00000100u;
   }
   static void set_has_info(Response* msg) {
     msg->_has_bits_[0] |= 0x00000001u;
@@ -8543,6 +11824,18 @@ class Response::HasBitSetters {
   static void set_has_join_res(Response* msg) {
     msg->_has_bits_[0] |= 0x00000010u;
   }
+  static const ::Msg::GetFileOpsResponse& get_file_ops_res(const Response* msg);
+  static void set_has_get_file_ops_res(Response* msg) {
+    msg->_has_bits_[0] |= 0x00000020u;
+  }
+  static const ::Msg::GetFileResponse& get_file_res(const Response* msg);
+  static void set_has_get_file_res(Response* msg) {
+    msg->_has_bits_[0] |= 0x00000040u;
+  }
+  static const ::Msg::GetFileChunkResponse& get_file_chunk_res(const Response* msg);
+  static void set_has_get_file_chunk_res(Response* msg) {
+    msg->_has_bits_[0] |= 0x00000080u;
+  }
 };
 
 const ::Msg::GetStateResponse&
@@ -8561,6 +11854,18 @@ const ::Msg::JoinResponse&
 Response::HasBitSetters::join_res(const Response* msg) {
   return *msg->join_res_;
 }
+const ::Msg::GetFileOpsResponse&
+Response::HasBitSetters::get_file_ops_res(const Response* msg) {
+  return *msg->get_file_ops_res_;
+}
+const ::Msg::GetFileResponse&
+Response::HasBitSetters::get_file_res(const Response* msg) {
+  return *msg->get_file_res_;
+}
+const ::Msg::GetFileChunkResponse&
+Response::HasBitSetters::get_file_chunk_res(const Response* msg) {
+  return *msg->get_file_chunk_res_;
+}
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Response::kStatusFieldNumber;
 const int Response::kInfoFieldNumber;
@@ -8568,6 +11873,9 @@ const int Response::kGetStateResFieldNumber;
 const int Response::kNewFileResponseFieldNumber;
 const int Response::kLsFileResFieldNumber;
 const int Response::kJoinResFieldNumber;
+const int Response::kGetFileOpsResFieldNumber;
+const int Response::kGetFileResFieldNumber;
+const int Response::kGetFileChunkResFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Response::Response()
@@ -8604,6 +11912,21 @@ Response::Response(const Response& from)
   } else {
     join_res_ = nullptr;
   }
+  if (from.has_get_file_ops_res()) {
+    get_file_ops_res_ = new ::Msg::GetFileOpsResponse(*from.get_file_ops_res_);
+  } else {
+    get_file_ops_res_ = nullptr;
+  }
+  if (from.has_get_file_res()) {
+    get_file_res_ = new ::Msg::GetFileResponse(*from.get_file_res_);
+  } else {
+    get_file_res_ = nullptr;
+  }
+  if (from.has_get_file_chunk_res()) {
+    get_file_chunk_res_ = new ::Msg::GetFileChunkResponse(*from.get_file_chunk_res_);
+  } else {
+    get_file_chunk_res_ = nullptr;
+  }
   status_ = from.status_;
   // @@protoc_insertion_point(copy_constructor:Msg.Response)
 }
@@ -8613,8 +11936,8 @@ void Response::SharedCtor() {
       &scc_info_Response_msg_2eproto.base);
   info_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&get_state_res_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&join_res_) -
-      reinterpret_cast<char*>(&get_state_res_)) + sizeof(join_res_));
+      reinterpret_cast<char*>(&get_file_chunk_res_) -
+      reinterpret_cast<char*>(&get_state_res_)) + sizeof(get_file_chunk_res_));
   status_ = 1;
 }
 
@@ -8629,6 +11952,9 @@ void Response::SharedDtor() {
   if (this != internal_default_instance()) delete new_file_response_;
   if (this != internal_default_instance()) delete ls_file_res_;
   if (this != internal_default_instance()) delete join_res_;
+  if (this != internal_default_instance()) delete get_file_ops_res_;
+  if (this != internal_default_instance()) delete get_file_res_;
+  if (this != internal_default_instance()) delete get_file_chunk_res_;
 }
 
 void Response::SetCachedSize(int size) const {
@@ -8647,7 +11973,7 @@ void Response::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       info_.ClearNonDefaultToEmptyNoArena();
     }
@@ -8667,8 +11993,20 @@ void Response::Clear() {
       GOOGLE_DCHECK(join_res_ != nullptr);
       join_res_->Clear();
     }
-    status_ = 1;
+    if (cached_has_bits & 0x00000020u) {
+      GOOGLE_DCHECK(get_file_ops_res_ != nullptr);
+      get_file_ops_res_->Clear();
+    }
+    if (cached_has_bits & 0x00000040u) {
+      GOOGLE_DCHECK(get_file_res_ != nullptr);
+      get_file_res_->Clear();
+    }
+    if (cached_has_bits & 0x00000080u) {
+      GOOGLE_DCHECK(get_file_chunk_res_ != nullptr);
+      get_file_chunk_res_->Clear();
+    }
   }
+  status_ = 1;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -8725,6 +12063,27 @@ const char* Response::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
       case 6: {
         if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 50) goto handle_unusual;
         ptr = ctx->ParseMessage(mutable_join_res(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileOpsResponse get_file_ops_res = 7;
+      case 7: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 58) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_ops_res(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileResponse get_file_res = 8;
+      case 8: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 66) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_res(), ptr);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        break;
+      }
+      // optional .Msg.GetFileChunkResponse get_file_chunk_res = 9;
+      case 9: {
+        if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) != 74) goto handle_unusual;
+        ptr = ctx->ParseMessage(mutable_get_file_chunk_res(), ptr);
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -8832,6 +12191,39 @@ bool Response::MergePartialFromCodedStream(
         break;
       }
 
+      // optional .Msg.GetFileOpsResponse get_file_ops_res = 7;
+      case 7: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (58 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_ops_res()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional .Msg.GetFileResponse get_file_res = 8;
+      case 8: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (66 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_res()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional .Msg.GetFileChunkResponse get_file_chunk_res = 9;
+      case 9: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (74 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
+               input, mutable_get_file_chunk_res()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -8861,7 +12253,7 @@ void Response::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required .Msg.MsgResStatus status = 1;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000100u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
       1, this->status(), output);
   }
@@ -8900,6 +12292,24 @@ void Response::SerializeWithCachedSizes(
       6, HasBitSetters::join_res(this), output);
   }
 
+  // optional .Msg.GetFileOpsResponse get_file_ops_res = 7;
+  if (cached_has_bits & 0x00000020u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      7, HasBitSetters::get_file_ops_res(this), output);
+  }
+
+  // optional .Msg.GetFileResponse get_file_res = 8;
+  if (cached_has_bits & 0x00000040u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      8, HasBitSetters::get_file_res(this), output);
+  }
+
+  // optional .Msg.GetFileChunkResponse get_file_chunk_res = 9;
+  if (cached_has_bits & 0x00000080u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
+      9, HasBitSetters::get_file_chunk_res(this), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -8915,7 +12325,7 @@ void Response::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // required .Msg.MsgResStatus status = 1;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000100u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->status(), target);
   }
@@ -8959,6 +12369,27 @@ void Response::SerializeWithCachedSizes(
         6, HasBitSetters::join_res(this), target);
   }
 
+  // optional .Msg.GetFileOpsResponse get_file_ops_res = 7;
+  if (cached_has_bits & 0x00000020u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        7, HasBitSetters::get_file_ops_res(this), target);
+  }
+
+  // optional .Msg.GetFileResponse get_file_res = 8;
+  if (cached_has_bits & 0x00000040u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        8, HasBitSetters::get_file_res(this), target);
+  }
+
+  // optional .Msg.GetFileChunkResponse get_file_chunk_res = 9;
+  if (cached_has_bits & 0x00000080u) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        9, HasBitSetters::get_file_chunk_res(this), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -8986,7 +12417,7 @@ size_t Response::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x000000ffu) {
     // optional string info = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -9022,6 +12453,27 @@ size_t Response::ByteSizeLong() const {
           *join_res_);
     }
 
+    // optional .Msg.GetFileOpsResponse get_file_ops_res = 7;
+    if (cached_has_bits & 0x00000020u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_ops_res_);
+    }
+
+    // optional .Msg.GetFileResponse get_file_res = 8;
+    if (cached_has_bits & 0x00000040u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_res_);
+    }
+
+    // optional .Msg.GetFileChunkResponse get_file_chunk_res = 9;
+    if (cached_has_bits & 0x00000080u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *get_file_chunk_res_);
+    }
+
   }
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
@@ -9051,7 +12503,7 @@ void Response::MergeFrom(const Response& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       info_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.info_);
@@ -9069,9 +12521,17 @@ void Response::MergeFrom(const Response& from) {
       mutable_join_res()->::Msg::JoinResponse::MergeFrom(from.join_res());
     }
     if (cached_has_bits & 0x00000020u) {
-      status_ = from.status_;
+      mutable_get_file_ops_res()->::Msg::GetFileOpsResponse::MergeFrom(from.get_file_ops_res());
     }
-    _has_bits_[0] |= cached_has_bits;
+    if (cached_has_bits & 0x00000040u) {
+      mutable_get_file_res()->::Msg::GetFileResponse::MergeFrom(from.get_file_res());
+    }
+    if (cached_has_bits & 0x00000080u) {
+      mutable_get_file_chunk_res()->::Msg::GetFileChunkResponse::MergeFrom(from.get_file_chunk_res());
+    }
+  }
+  if (cached_has_bits & 0x00000100u) {
+    set_status(from.status());
   }
 }
 
@@ -9090,12 +12550,21 @@ void Response::CopyFrom(const Response& from) {
 }
 
 bool Response::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000020) != 0x00000020) return false;
+  if ((_has_bits_[0] & 0x00000100) != 0x00000100) return false;
   if (has_ls_file_res()) {
     if (!this->ls_file_res_->IsInitialized()) return false;
   }
   if (has_join_res()) {
     if (!this->join_res_->IsInitialized()) return false;
+  }
+  if (has_get_file_ops_res()) {
+    if (!this->get_file_ops_res_->IsInitialized()) return false;
+  }
+  if (has_get_file_res()) {
+    if (!this->get_file_res_->IsInitialized()) return false;
+  }
+  if (has_get_file_chunk_res()) {
+    if (!this->get_file_chunk_res_->IsInitialized()) return false;
   }
   return true;
 }
@@ -9114,6 +12583,9 @@ void Response::InternalSwap(Response* other) {
   swap(new_file_response_, other->new_file_response_);
   swap(ls_file_res_, other->ls_file_res_);
   swap(join_res_, other->join_res_);
+  swap(get_file_ops_res_, other->get_file_ops_res_);
+  swap(get_file_res_, other->get_file_res_);
+  swap(get_file_chunk_res_, other->get_file_chunk_res_);
   swap(status_, other->status_);
 }
 
@@ -9634,11 +13106,32 @@ template<> PROTOBUF_NOINLINE ::Msg::GetStateRequest* Arena::CreateMaybeMessage< 
 template<> PROTOBUF_NOINLINE ::Msg::GetStateResponse* Arena::CreateMaybeMessage< ::Msg::GetStateResponse >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::GetStateResponse >(arena);
 }
+template<> PROTOBUF_NOINLINE ::Msg::FileOperation* Arena::CreateMaybeMessage< ::Msg::FileOperation >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::FileOperation >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileOpsRequest* Arena::CreateMaybeMessage< ::Msg::GetFileOpsRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileOpsRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileOpsResponse* Arena::CreateMaybeMessage< ::Msg::GetFileOpsResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileOpsResponse >(arena);
+}
 template<> PROTOBUF_NOINLINE ::Msg::NewFileRequest* Arena::CreateMaybeMessage< ::Msg::NewFileRequest >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::NewFileRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Msg::NewFileResponse* Arena::CreateMaybeMessage< ::Msg::NewFileResponse >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::NewFileResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileRequest* Arena::CreateMaybeMessage< ::Msg::GetFileRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileResponse* Arena::CreateMaybeMessage< ::Msg::GetFileResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileChunkRequest* Arena::CreateMaybeMessage< ::Msg::GetFileChunkRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileChunkRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Msg::GetFileChunkResponse* Arena::CreateMaybeMessage< ::Msg::GetFileChunkResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::Msg::GetFileChunkResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Msg::RmFileRequest* Arena::CreateMaybeMessage< ::Msg::RmFileRequest >(Arena* arena) {
   return Arena::CreateInternal< ::Msg::RmFileRequest >(arena);

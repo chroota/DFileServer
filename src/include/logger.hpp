@@ -31,4 +31,6 @@ public:
     void debugAction(const string & action);
     string getTimeFmtString();
     bool saveLog(const string & info);
+
+    // todo mutiple thread mutex
 };
